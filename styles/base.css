@@ -247,6 +247,8 @@ main {
   height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+  user-select: none;
+  -webkit-user-select: none;
   object-position: top left;
   transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }

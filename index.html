@@ -23,7 +23,7 @@
     window.scrollTo(0, 0);
 
     // Theme selection: shuffle ON = random (never same twice), shuffle OFF = keep same theme
-    const themes = ['aero', 'hacker', 'groovy', 'retro'];
+    const themes = ['aero', 'bubbly', 'hacker', 'groovy', 'retro'];
     const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false'; // default true
     const lastTheme = localStorage.getItem('mynes-last-theme');
     let selectedTheme;
@@ -90,6 +90,7 @@
 
     <div class="theme-toggles">
       <button class="theme-btn active" data-theme="aero">Aero</button>
+      <button class="theme-btn" data-theme="bubbly">Bubbly</button>
       <button class="theme-btn" data-theme="hacker">Hacker</button>
       <button class="theme-btn" data-theme="groovy">Groovy</button>
       <button class="theme-btn" data-theme="retro">Retro</button>

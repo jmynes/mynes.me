@@ -583,6 +583,13 @@ body {
   opacity: 0.3;
 }
 
+/* Hide footer during crawl (it's outside main, so would show at top) */
+.starwars-crawl-active ~ .site-footer,
+body:has(.starwars-crawl-active) .site-footer {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
 /* Page content crawl effect */
 main.starwars-page-crawl {
   position: fixed !important;

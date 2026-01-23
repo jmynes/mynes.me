@@ -62,15 +62,20 @@ export async function animate(overlay, isCancelled) {
   // Now apply crawl effect to actual page content
   const main = document.querySelector('main');
   const header = document.querySelector('.site-header');
+  const footer = document.querySelector('.site-footer');
 
   if (main) {
     // Add crawl class to main content
     main.classList.add('starwars-page-crawl');
 
-    // Hide header during crawl
+    // Hide header and footer during crawl
     if (header) {
       header.style.opacity = '0';
       header.style.visibility = 'hidden';
+    }
+    if (footer) {
+      footer.style.opacity = '0';
+      footer.style.visibility = 'hidden';
     }
 
     // Make overlay semi-transparent to show content behind
@@ -86,6 +91,10 @@ export async function animate(overlay, isCancelled) {
         header.style.opacity = '';
         header.style.visibility = '';
       }
+      if (footer) {
+        footer.style.opacity = '';
+        footer.style.visibility = '';
+      }
       return;
     }
 
@@ -98,11 +107,16 @@ export async function animate(overlay, isCancelled) {
     // Fade out overlay to reveal content smoothly
     overlay.classList.add('starwars-fade-out');
 
-    // Show header with fade
+    // Show header and footer with fade
     if (header) {
       header.style.transition = 'opacity 0.8s ease-out';
       header.style.opacity = '';
       header.style.visibility = '';
+    }
+    if (footer) {
+      footer.style.transition = 'opacity 0.8s ease-out';
+      footer.style.opacity = '';
+      footer.style.visibility = '';
     }
 
     await sleep(800);
@@ -111,6 +125,9 @@ export async function animate(overlay, isCancelled) {
     // Cleanup
     if (header) {
       header.style.transition = '';
+    }
+    if (footer) {
+      footer.style.transition = '';
     }
   }
 }

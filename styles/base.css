@@ -418,10 +418,9 @@ main {
 
   /* Shuffle button in header row (same line as logo) */
   .shuffle-btn {
-    position: absolute;
-    top: 0.75rem;
-    right: 1.25rem;
-    margin-left: 0;
+    position: static;
+    order: 2;
+    margin-left: auto;
     z-index: 2;
   }
 

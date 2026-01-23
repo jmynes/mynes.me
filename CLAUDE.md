@@ -4,21 +4,32 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-mynes.me is a static portfolio landing page with 13 switchable visual themes. No build step — just open `index.html` in a browser.
+mynes.me is a static portfolio landing page with 13 switchable visual themes.
+
+## Build
+
+```bash
+pnpm install        # Install dependencies
+pnpm run build      # Build CSS and JS to dist/
+pnpm run watch      # Watch for changes during development
+```
+
+The `dist/` directory is gitignored — compiled assets are generated from source.
 
 ## Architecture
 
-**Theme System**: Themes are implemented as separate CSS files that override base styles. Each theme defines colors, fonts, animations, and decorative effects (bubbles, particles, scanlines, etc.) using the `.theme-bg`, `.theme-effects`, and `.theme-overlay` layers.
+**Theme System**: Themes are SCSS files in `src/scss/themes/` that compile to `dist/css/themes/`. Each theme defines colors, fonts, animations, and decorative effects using the `.theme-bg`, `.theme-effects`, and `.theme-overlay` layers.
 
-- `base.css` — Layout structure, component scaffolding, responsive breakpoints
-- Theme files — Visual styling only: `aero.css`, `bubbly.css`, `christmas.css`, `fireflies.css`, `groovy.css`, `hacker.css`, `halloween.css`, `lilypond.css`, `powerpc.css`, `retrogame.css`, `starwars.css`, `synthwave.css`, `underworld.css`
+- `src/scss/base.scss` — Layout structure, component scaffolding, responsive breakpoints
+- `src/scss/themes/*.scss` — Theme-specific visual styling
 
-**Theme Switching**: JavaScript in `index.html` handles theme selection via localStorage (`mynes-shuffle`, `mynes-last-theme`). Shuffle mode (default on) prevents the same theme from loading twice in a row.
+**Theme Switching**: JavaScript in `src/js/` handles theme selection via localStorage (`mynes-shuffle`, `mynes-last-theme`). Shuffle mode (default on) prevents the same theme from loading twice in a row.
 
 **Lightbox**: Built-in screenshot viewer for project images, triggered by clicking `.project-screenshot-wrapper` elements.
 
 ## Adding a New Theme
 
-1. Create `styles/{name}.css` following the pattern of existing theme files
+1. Create `src/scss/themes/{name}.scss` following the pattern of existing theme files
 2. Add button to `.theme-toggles` in `index.html`
 3. Add theme name to the `themes` array in the `<script>` block
+4. Run `pnpm run build` to compile

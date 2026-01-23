@@ -19,27 +19,37 @@ Turn any lyrics into a Pokemon sprite karaoke performance. Map words to Pokemon,
 
 ## Development
 
-Open `index.html` in a browser. No build step required.
+```bash
+pnpm install        # Install dependencies
+pnpm run build      # Build CSS and JS to dist/
+pnpm run watch      # Watch for changes during development
+```
+
+Then open `index.html` in a browser.
 
 ## Structure
 
 ```
-index.html          # Main page
-styles/
-  base.css          # Shared layout and components
-  aero.css          # Vista Aurora glass effects
-  bubbly.css        # Frutiger Aero bubbles
-  christmas.css     # Holiday snow and lights
-  fireflies.css     # Glowing firefly particles
-  groovy.css        # 70s psychedelic waves
-  hacker.css        # Matrix rain terminal
-  halloween.css     # Spooky pumpkins and bats
-  lilypond.css      # Monet's Giverny garden
-  powerpc.css       # Classic Mac OS platinum
-  retrogame.css     # Arcade pixel aesthetic
-  starwars.css      # Hyperspace star field
-  synthwave.css     # 80s neon grid
-  underworld.css    # Volcanic ember particles
+index.html              # Main page
+src/
+  scss/
+    base.scss           # Shared layout and components
+    themes/
+      aero.scss         # Vista Aurora glass effects
+      bubbly.scss       # Frutiger Aero bubbles
+      christmas.scss    # Holiday snow and lights
+      fireflies.scss    # Glowing firefly particles
+      groovy.scss       # 70s psychedelic waves
+      hacker.scss       # Matrix rain terminal
+      halloween.scss    # Spooky pumpkins and bats
+      lilypond.scss     # Monet's Giverny garden
+      powerpc.scss      # Classic Mac OS platinum
+      retrogame.scss    # Arcade pixel aesthetic
+      starwars.scss     # Hyperspace star field
+      synthwave.scss    # 80s neon grid
+      underworld.scss   # Volcanic ember particles
+  js/                   # JavaScript modules
+dist/                   # Compiled assets (gitignored)
 ```
 
 ## License

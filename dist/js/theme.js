@@ -84,8 +84,10 @@ export async function initTheme() {
   const currentTheme = document.documentElement.dataset.theme;
   const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false';
 
-  // Show loader animation on initial page load (if one exists for this theme)
-  await showLoader(currentTheme);
+  // Show loader animation on initial page load (if enabled and one exists for this theme)
+  if (introsEnabled()) {
+    await showLoader(currentTheme);
+  }
 
   // Update CSS link to match selected theme
   if (themeCssLink && currentTheme) {
@@ -109,6 +111,14 @@ export async function initTheme() {
   if (shuffleBtn) {
     shuffleBtn.classList.toggle('active', shuffleEnabled);
     shuffleBtn.addEventListener('click', toggleShuffle);
+  }
+
+  // Set initial intros button state
+  const introsOn = localStorage.getItem('mynes-intros') !== 'false'; // default true
+  const introsBtn = document.getElementById('intros-btn');
+  if (introsBtn) {
+    introsBtn.classList.toggle('active', introsOn);
+    introsBtn.addEventListener('click', toggleIntros);
   }
 
   // Scroll active button into view on mobile
@@ -163,8 +173,10 @@ async function setTheme(themeName) {
   // Update data attribute (triggers effect observers)
   document.documentElement.dataset.theme = themeName;
 
-  // Show loader animation (if one exists for this theme)
-  await showLoader(themeName);
+  // Show loader animation (if enabled and one exists for this theme)
+  if (introsEnabled()) {
+    await showLoader(themeName);
+  }
 
   // Save as last theme
   localStorage.setItem('mynes-last-theme', themeName);
@@ -191,6 +203,24 @@ function toggleShuffle() {
 }
 
 /**
+ * Toggle intro animations on/off
+ */
+function toggleIntros() {
+  const introsBtn = document.getElementById('intros-btn');
+  if (introsBtn) {
+    const isActive = introsBtn.classList.toggle('active');
+    localStorage.setItem('mynes-intros', isActive ? 'true' : 'false');
+  }
+}
+
+/**
+ * Check if intro animations are enabled
+ */
+function introsEnabled() {
+  return localStorage.getItem('mynes-intros') !== 'false';
+}
+
+/**
  * Scroll the active theme button to center of the container (for mobile)
  */
 function scrollActiveButtonIntoView() {
@@ -200,13 +230,10 @@ function scrollActiveButtonIntoView() {
   if (!container || !activeBtn) return;
 
   // Calculate scroll position to center the button
-  const containerRect = container.getBoundingClientRect();
   const buttonRect = activeBtn.getBoundingClientRect();
 
   const scrollLeft =
-    activeBtn.offsetLeft -
-    container.offsetWidth / 2 +
-    buttonRect.width / 2;
+    activeBtn.offsetLeft - container.offsetWidth / 2 + buttonRect.width / 2;
 
   container.scrollTo({
     left: Math.max(0, scrollLeft),

@@ -229,6 +229,8 @@ body {
   border: 3px solid var(--nes-white);
   box-shadow: 6px 6px 0 var(--nes-gray);
   font-family: var(--font-body);
+  font-size: 1rem;
+  width: 300px;
 }
 
 .shuffle-tooltip::before {

@@ -215,7 +215,7 @@ body {
   letter-spacing: 0.1em;
 }
 
-.theme-btn:hover:not(:disabled) {
+.theme-btn:hover:not(:disabled):not(.active) {
   border-color: var(--green);
   color: var(--green);
   box-shadow: 0 0 10px var(--green-subtle);
@@ -226,7 +226,9 @@ body {
   cursor: not-allowed;
 }
 
-.theme-btn.active {
+.theme-btn.active,
+.theme-btn.active:hover,
+.theme-btn.active:focus {
   background: var(--green);
   border-color: var(--green);
   color: var(--black);

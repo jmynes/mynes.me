@@ -120,11 +120,15 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  opacity: 0.5;
   margin-left: 0.5rem;
 }
 
-.shuffle-btn.active {
+.shuffle-btn svg {
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.shuffle-btn.active svg {
   opacity: 1;
 }
 

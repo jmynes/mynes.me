@@ -22,13 +22,21 @@
     }
     window.scrollTo(0, 0);
 
-    // Random theme on page load (shuffle mode prevents same theme twice)
+    // Theme selection: shuffle ON = random (never same twice), shuffle OFF = keep same theme
     const themes = ['aero', 'hacker', 'groovy', 'retro'];
     const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false'; // default true
     const lastTheme = localStorage.getItem('mynes-last-theme');
-    const availableThemes = shuffleEnabled && lastTheme ? themes.filter(t => t !== lastTheme) : themes;
-    const randomTheme = availableThemes[Math.floor(Math.random() * availableThemes.length)];
-    localStorage.setItem('mynes-last-theme', randomTheme);
+    let selectedTheme;
+    if (shuffleEnabled) {
+      // Random theme, excluding the last one
+      const availableThemes = lastTheme ? themes.filter(t => t !== lastTheme) : themes;
+      selectedTheme = availableThemes[Math.floor(Math.random() * availableThemes.length)];
+    } else {
+      // Keep same theme, or pick random if none saved
+      selectedTheme = lastTheme && themes.includes(lastTheme) ? lastTheme : themes[Math.floor(Math.random() * themes.length)];
+    }
+    localStorage.setItem('mynes-last-theme', selectedTheme);
+    const randomTheme = selectedTheme; // keep variable name for compatibility below
 
     // Set theme immediately to prevent flash
     document.documentElement.dataset.theme = randomTheme;
@@ -208,6 +216,9 @@
       // Update CSS link
       themeCssLink.href = `styles/${themeName}.css`;
       document.documentElement.dataset.theme = themeName;
+
+      // Save as last theme for shuffle-off mode
+      localStorage.setItem('mynes-last-theme', themeName);
 
       // Update active button
       themeButtons.forEach(btn => {

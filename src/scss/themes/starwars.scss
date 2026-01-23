@@ -594,23 +594,66 @@ main.starwars-page-crawl {
   transform: perspective(300px) rotateX(20deg);
   transform-origin: 50% 0%;
   animation: starwarsPageCrawl 4s linear forwards;
+  max-height: none !important;
+  overflow: visible !important;
 
-  // Make content yellow during crawl
-  .intro h1,
-  .intro h1 em,
-  .intro-sub,
-  .project-title,
-  .project-desc,
-  .tech-tag {
-    color: var(--sw-yellow) !important;
-    text-shadow: none !important;
-    -webkit-text-fill-color: var(--sw-yellow) !important;
+  // Style the intro section
+  section.intro {
+    * {
+      color: var(--sw-yellow) !important;
+      text-shadow: none !important;
+      -webkit-text-fill-color: var(--sw-yellow) !important;
+    }
   }
 
-  // Hide non-text elements during crawl
-  .project-screenshot-wrapper,
-  .project-links {
-    opacity: 0;
+  // Style the projects section
+  section.projects {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  // Style each project article
+  section.projects article.project {
+    background: transparent !important;
+    border: 1px solid var(--sw-yellow) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    max-width: 600px;
+    margin: 0 auto;
+
+    // Yellow text in projects
+    .project-title,
+    .project-desc,
+    .tech-tag {
+      color: var(--sw-yellow) !important;
+      text-shadow: none !important;
+      -webkit-text-fill-color: var(--sw-yellow) !important;
+      background: transparent !important;
+    }
+
+    .tech-tag {
+      border-color: var(--sw-yellow) !important;
+    }
+
+    // Constrain screenshot size
+    .project-screenshot-wrapper {
+      max-width: 100%;
+    }
+
+    .project-screenshot {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      object-fit: cover;
+      object-position: top left;
+    }
+
+    // Hide links during crawl
+    .project-links {
+      display: none;
+    }
   }
 }
 

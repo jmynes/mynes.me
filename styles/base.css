@@ -20,7 +20,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  padding-top: 5.5rem; /* Space for fixed header */
+  padding-top: 5rem; /* Space for fixed header */
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -61,28 +61,22 @@ body {
    Header Structure
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Mask strip that hides content scrolling above the fixed header */
+/* Header mask - hidden, kept for potential theme use */
 .header-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1.25rem;
-  background: #000;
-  z-index: 99;
-  pointer-events: none;
+  display: none;
 }
 
 .site-header {
   position: fixed;
-  top: 1.25rem;
-  left: 1.5rem;
-  right: 1.5rem;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.875rem 2rem;
+  padding: 1rem 2rem;
+  margin: 0;
 }
 
 

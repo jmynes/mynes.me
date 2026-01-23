@@ -547,6 +547,25 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   Firefox Performance Fix
+   backdrop-filter is slow in Firefox - use opaque fallback
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@supports (-moz-appearance: none) {
+  .site-header,
+  .project {
+    background: rgba(10, 26, 36, 0.92);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .lightbox {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    Responsive Adjustments
    ═══════════════════════════════════════════════════════════════════════════ */
 

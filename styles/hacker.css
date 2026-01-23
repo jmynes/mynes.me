@@ -499,7 +499,6 @@ body {
 .site-header {
   animation: hackerGlitch 0.6s steps(10) forwards;
   will-change: transform, opacity;
-  overflow: hidden;
 }
 
 .intro {

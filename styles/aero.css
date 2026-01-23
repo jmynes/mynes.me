@@ -24,13 +24,14 @@
   --glow-cyan: rgba(0, 255, 255, 0.5);
   --glow-blue: rgba(64, 128, 255, 0.4);
 
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --glass-shine: rgba(255, 255, 255, 0.15);
+  --glass-bg: rgba(10, 26, 36, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-shine: rgba(255, 255, 255, 0.1);
+  --glass-frost: rgba(10, 26, 36, 0.75);
 
   --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --text-dim: rgba(255, 255, 255, 0.5);
+  --text-secondary: rgba(255, 255, 255, 0.9);
+  --text-dim: rgba(255, 255, 255, 0.6);
 
   --font-display: 'Segoe UI', -apple-system, sans-serif;
   --font-body: 'Open Sans', 'Segoe UI', sans-serif;
@@ -234,14 +235,15 @@ body {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .site-header {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--glass-frost);
+  backdrop-filter: blur(32px) saturate(1.2);
+  -webkit-backdrop-filter: blur(32px) saturate(1.2);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 var(--glass-shine);
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 var(--glass-shine),
+    inset 0 0 60px rgba(0, 0, 0, 0.2);
 }
 
 .site-header::before {
@@ -342,6 +344,7 @@ body {
 
 .intro-sub {
   color: var(--text-secondary);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -349,12 +352,14 @@ body {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .project {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--glass-frost);
+  backdrop-filter: blur(40px) saturate(1.3);
+  -webkit-backdrop-filter: blur(40px) saturate(1.3);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.5),
+    inset 0 0 80px rgba(0, 0, 0, 0.15);
 }
 
 .project:hover {
@@ -428,15 +433,18 @@ body {
 
 .project-desc {
   color: var(--text-secondary);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  line-height: 1.7;
 }
 
 .tech-tag {
   font-family: var(--font-body);
   font-weight: 600;
   color: var(--text-primary);
-  background: var(--glass-bg);
+  background: rgba(0, 0, 0, 0.3);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-pill);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -445,6 +453,7 @@ body {
 
 .site-footer {
   color: var(--text-dim);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .site-footer strong {

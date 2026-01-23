@@ -34,6 +34,11 @@ body {
   overflow: hidden;
 }
 
+/* Aurora SVG hidden by default - aero theme shows it */
+.aurora-svg {
+  display: none;
+}
+
 .theme-effects {
   position: fixed;
   inset: 0;

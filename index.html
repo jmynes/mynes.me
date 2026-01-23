@@ -61,7 +61,118 @@
 </head>
 <body>
   <!-- Theme Background Layer -->
-  <div class="theme-bg" aria-hidden="true"></div>
+  <div class="theme-bg" aria-hidden="true">
+    <!-- Vista Aurora SVG - shown only for aero theme -->
+    <svg class="aurora-svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <!-- Primary ribbon gradient: gold edge → cyan → green -->
+        <linearGradient id="aurora-grad-1" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ffd700" stop-opacity="0.9"/>
+          <stop offset="20%" stop-color="#00ffff" stop-opacity="1"/>
+          <stop offset="50%" stop-color="#00ffc8" stop-opacity="0.95"/>
+          <stop offset="80%" stop-color="#7fff7f" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#7fff7f" stop-opacity="0"/>
+        </linearGradient>
+
+        <!-- Secondary ribbon gradient: yellow → green → cyan -->
+        <linearGradient id="aurora-grad-2" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ffff00" stop-opacity="0.8"/>
+          <stop offset="25%" stop-color="#c8ff64" stop-opacity="0.95"/>
+          <stop offset="50%" stop-color="#7fff7f" stop-opacity="1"/>
+          <stop offset="75%" stop-color="#00ffc8" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#00ffff" stop-opacity="0"/>
+        </linearGradient>
+
+        <!-- Tertiary ribbon gradient: cyan dominant -->
+        <linearGradient id="aurora-grad-3" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#00ffff" stop-opacity="0.7"/>
+          <stop offset="40%" stop-color="#00ffc8" stop-opacity="0.9"/>
+          <stop offset="70%" stop-color="#7fff7f" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#c8ff64" stop-opacity="0"/>
+        </linearGradient>
+
+        <!-- Horizontal wave gradient -->
+        <linearGradient id="wave-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#00ffff" stop-opacity="0"/>
+          <stop offset="20%" stop-color="#00ffff" stop-opacity="0.6"/>
+          <stop offset="50%" stop-color="#00ffff" stop-opacity="1"/>
+          <stop offset="80%" stop-color="#00ffff" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#00ffff" stop-opacity="0"/>
+        </linearGradient>
+
+        <!-- Glow filter for soft edges -->
+        <filter id="aurora-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <!-- Stronger glow for wave -->
+        <filter id="wave-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
+      <!-- Primary ribbon - main flowing S-curve -->
+      <path class="aurora-ribbon ribbon-1"
+            d="M -200 1100
+               C 100 1000, 300 850, 500 750
+               S 900 550, 1200 450
+               S 1600 300, 1900 200
+               C 2100 150, 2200 100, 2300 50"
+            fill="none"
+            stroke="url(#aurora-grad-1)"
+            stroke-width="70"
+            stroke-linecap="round"
+            filter="url(#aurora-glow)"/>
+
+      <!-- Secondary ribbon - offset curve, thinner -->
+      <path class="aurora-ribbon ribbon-2"
+            d="M -150 1150
+               C 150 1050, 350 920, 580 820
+               S 980 640, 1300 540
+               S 1700 390, 2000 290
+               C 2150 240, 2250 190, 2350 140"
+            fill="none"
+            stroke="url(#aurora-grad-2)"
+            stroke-width="50"
+            stroke-linecap="round"
+            filter="url(#aurora-glow)"/>
+
+      <!-- Tertiary ribbon - higher, more subtle -->
+      <path class="aurora-ribbon ribbon-3"
+            d="M -100 1050
+               C 200 950, 400 800, 650 700
+               S 1050 500, 1400 400
+               S 1800 250, 2100 150
+               C 2250 100, 2350 60, 2450 20"
+            fill="none"
+            stroke="url(#aurora-grad-3)"
+            stroke-width="40"
+            stroke-linecap="round"
+            filter="url(#aurora-glow)"
+            opacity="0.7"/>
+
+      <!-- Horizontal wave/ridge near bottom -->
+      <path class="aurora-wave"
+            d="M 0 780
+               Q 320 750, 640 780
+               T 1280 780
+               T 1920 780"
+            fill="none"
+            stroke="url(#wave-grad)"
+            stroke-width="3"
+            stroke-linecap="round"
+            filter="url(#wave-glow)"/>
+    </svg>
+  </div>
 
   <!-- Theme Effects Layer (bubbles, particles, etc) -->
   <div class="theme-effects" aria-hidden="true">

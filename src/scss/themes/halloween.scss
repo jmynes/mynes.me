@@ -257,20 +257,20 @@ body {
 }
 
 /* Shuffle Button */
-.shuffle-btn {
+.toggle-btn {
   background: var(--glass-bg);
   border-radius: var(--radius-md);
   color: var(--text-secondary);
   border: 1px solid var(--glass-border);
 }
 
-.shuffle-btn.active {
+.toggle-btn.active {
   border-color: var(--halloween-slime);
   color: var(--halloween-slime);
   box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
 }
 
-.shuffle-tooltip {
+.toggle-tooltip {
   background: var(--halloween-purple);
   color: var(--text-primary);
   border-radius: var(--radius-md);
@@ -280,7 +280,7 @@ body {
   -webkit-backdrop-filter: blur(20px);
 }
 
-.shuffle-tooltip::before {
+.toggle-tooltip::before {
   background: var(--halloween-purple);
   border-top: 1px solid var(--halloween-orange);
   border-left: 1px solid var(--halloween-orange);

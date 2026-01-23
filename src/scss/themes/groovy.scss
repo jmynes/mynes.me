@@ -237,19 +237,19 @@ body {
 }
 
 /* Shuffle Button */
-.shuffle-btn {
+.toggle-btn {
   background: rgba(255, 245, 230, 0.2);
   border-radius: var(--radius-pill);
   color: var(--text-secondary);
   border: 1px solid rgba(255, 245, 230, 0.3);
 }
 
-.shuffle-btn.active {
+.toggle-btn.active {
   background: rgba(255, 245, 230, 0.4);
   color: var(--cream);
 }
 
-.shuffle-tooltip {
+.toggle-tooltip {
   background: rgba(255, 245, 230, 0.95);
   color: var(--text-dark);
   border-radius: var(--radius-md);
@@ -257,7 +257,7 @@ body {
   box-shadow: 0 8px 32px rgba(45, 27, 78, 0.4);
 }
 
-.shuffle-tooltip::before {
+.toggle-tooltip::before {
   background: rgba(255, 245, 230, 0.95);
 }
 

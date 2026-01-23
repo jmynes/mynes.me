@@ -304,7 +304,7 @@ body {
 }
 
 /* Shuffle Button */
-.shuffle-btn {
+.toggle-btn {
   background: var(--glass-bg);
   border-radius: var(--radius-md);
   color: var(--text-secondary);
@@ -313,13 +313,13 @@ body {
   border: 1px solid var(--glass-border);
 }
 
-.shuffle-btn.active {
+.toggle-btn.active {
   background: rgba(255, 68, 0, 0.25);
   color: var(--uw-molten);
   border-color: var(--uw-flame);
 }
 
-.shuffle-tooltip {
+.toggle-tooltip {
   background: rgba(45, 24, 16, 0.98);
   color: var(--text-primary);
   border-radius: var(--radius-md);
@@ -329,7 +329,7 @@ body {
   -webkit-backdrop-filter: blur(20px);
 }
 
-.shuffle-tooltip::before {
+.toggle-tooltip::before {
   background: rgba(45, 24, 16, 0.98);
   border-top: 1px solid var(--glass-border);
   border-left: 1px solid var(--glass-border);

@@ -132,8 +132,16 @@ body {
   }
 }
 
-// Shuffle Button
-.shuffle-btn {
+// Header Toggles Container
+.header-toggles {
+  display: flex;
+  gap: 0.5rem;
+  order: 2;
+  margin-left: auto;
+}
+
+// Toggle Button (shuffle, intros, etc.)
+.toggle-btn {
   position: relative;
   width: 36px;
   height: 36px;
@@ -143,8 +151,6 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-left: 0.5rem;
-  order: 3;
 
   svg {
     opacity: 0.5;
@@ -160,8 +166,8 @@ body {
   }
 }
 
-// Shuffle Tooltip
-.shuffle-tooltip {
+// Toggle Tooltip
+.toggle-tooltip {
   position: absolute;
   top: calc(100% + 12px);
   right: 0;
@@ -180,7 +186,7 @@ body {
   pointer-events: none;
   z-index: 1000;
 
-  .shuffle-btn:hover & {
+  .toggle-btn:hover & {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -500,9 +506,8 @@ main {
     display: none;
   }
 
-  // Shuffle button in header row (same line as logo)
-  .shuffle-btn {
-    position: static;
+  // Toggle buttons in header row (same line as logo)
+  .header-toggles {
     order: 2;
     margin-left: auto;
     z-index: 2;

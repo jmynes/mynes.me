@@ -328,7 +328,7 @@ body {
 }
 
 // Shuffle Button
-.shuffle-btn {
+.toggle-btn {
   background: var(--glass-bg);
   border-radius: var(--radius-md);
   color: var(--text-secondary);
@@ -341,7 +341,7 @@ body {
   }
 }
 
-.shuffle-tooltip {
+.toggle-tooltip {
   background: var(--firefly-dark);
   color: var(--text-primary);
   border-radius: var(--radius-md);

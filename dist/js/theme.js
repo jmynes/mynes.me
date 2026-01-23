@@ -113,10 +113,40 @@ export async function initTheme() {
 }
 
 /**
+ * Load a CSS file and wait for it to be applied
+ */
+function loadThemeCss(themeName) {
+  return new Promise((resolve) => {
+    const themeCssLink = document.getElementById('theme-css');
+    if (!themeCssLink) {
+      resolve();
+      return;
+    }
+
+    const newHref = `dist/css/themes/${themeName}.css`;
+
+    // If already loaded, resolve immediately
+    if (themeCssLink.href.endsWith(newHref)) {
+      resolve();
+      return;
+    }
+
+    // Wait for the stylesheet to load
+    const onLoad = () => {
+      themeCssLink.removeEventListener('load', onLoad);
+      resolve();
+    };
+    themeCssLink.addEventListener('load', onLoad);
+
+    // Add cache-busting parameter and update href
+    themeCssLink.href = `${newHref}?v=${Date.now()}`;
+  });
+}
+
+/**
  * Switch to a specific theme
  */
 async function setTheme(themeName) {
-  const themeCssLink = document.getElementById('theme-css');
   const themeButtons = document.querySelectorAll('.theme-btn');
 
   // Disable buttons during transition
@@ -124,16 +154,14 @@ async function setTheme(themeName) {
     btn.classList.add('disabled');
   });
 
-  // Show loader animation (if one exists for this theme)
-  await showLoader(themeName);
-
-  // Update CSS link
-  if (themeCssLink) {
-    themeCssLink.href = `dist/css/themes/${themeName}.css`;
-  }
+  // Load theme CSS first so loader has proper styling
+  await loadThemeCss(themeName);
 
   // Update data attribute (triggers effect observers)
   document.documentElement.dataset.theme = themeName;
+
+  // Show loader animation (if one exists for this theme)
+  await showLoader(themeName);
 
   // Save as last theme
   localStorage.setItem('mynes-last-theme', themeName);

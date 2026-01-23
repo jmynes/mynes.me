@@ -223,7 +223,9 @@ body {
   cursor: not-allowed;
 }
 
-.theme-btn.active {
+.theme-btn.active,
+.theme-btn.active:hover,
+.theme-btn.active:focus {
   background: var(--green);
   border-color: var(--green);
   color: var(--black);

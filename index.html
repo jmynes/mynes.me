@@ -22,10 +22,12 @@
     }
     window.scrollTo(0, 0);
 
-    // Random theme on page load
+    // Random theme on page load (never same as last)
     const themes = ['aero', 'hacker', 'groovy', 'retro'];
-    const availableThemes = ['aero', 'hacker', 'groovy', 'retro']; // All themes!
+    const lastTheme = localStorage.getItem('jobi-last-theme');
+    const availableThemes = themes.filter(t => t !== lastTheme);
     const randomTheme = availableThemes[Math.floor(Math.random() * availableThemes.length)];
+    localStorage.setItem('jobi-last-theme', randomTheme);
 
     // Set theme immediately to prevent flash
     document.documentElement.dataset.theme = randomTheme;

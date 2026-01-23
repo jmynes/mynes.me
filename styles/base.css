@@ -423,8 +423,17 @@ main {
 
 .lightbox-caption {
   margin-top: 1.25rem;
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.lightbox-description {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 600px;
+  opacity: 0.85;
+  text-align: center;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

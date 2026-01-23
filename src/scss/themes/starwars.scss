@@ -587,7 +587,7 @@ body {
   background: var(--sw-black) !important;
 }
 
-/* Hide static theme stars during and after the animation */
+/* Hide static theme stars and make theme-bg transparent so animated stars show */
 body:has(.theme-loader--starwars) .theme-bg::before,
 body:has(.theme-loader--starwars) .theme-bg::after,
 body:has(.theme-loader--starwars) .theme-effects .bubble,
@@ -595,6 +595,10 @@ body.starwars-intro-complete .theme-bg::before,
 body.starwars-intro-complete .theme-bg::after,
 body.starwars-intro-complete .theme-effects .bubble {
   opacity: 0 !important;
+}
+
+body.starwars-intro-complete .theme-bg {
+  background: transparent !important;
 }
 
 /* Hide footer during crawl (it's outside main, so would show at top) */

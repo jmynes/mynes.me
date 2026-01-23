@@ -97,6 +97,7 @@ body {
   gap: 0.5rem;
   position: relative;
   z-index: 1;
+  order: 2;
 }
 
 .theme-btn {
@@ -126,6 +127,7 @@ body {
   cursor: pointer;
   transition: all 0.2s ease;
   margin-left: 0.5rem;
+  order: 3;
 }
 
 .shuffle-btn svg {

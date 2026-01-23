@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>jobi — Vibed Demos</title>
+  <title>mynes.me — Vibed Demos</title>
   <meta name="description" content="A collection of projects built with vibes - showcasing PUNT and Pokeraoke">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="jobi — Vibed Demos">
+  <meta property="og:title" content="mynes.me — Vibed Demos">
   <meta property="og:description" content="A collection of projects built with vibes">
 
   <!-- Styles -->
@@ -24,11 +24,11 @@
 
     // Random theme on page load (shuffle mode prevents same theme twice)
     const themes = ['aero', 'hacker', 'groovy', 'retro'];
-    const shuffleEnabled = localStorage.getItem('jobi-shuffle') !== 'false'; // default true
-    const lastTheme = localStorage.getItem('jobi-last-theme');
+    const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false'; // default true
+    const lastTheme = localStorage.getItem('mynes-last-theme');
     const availableThemes = shuffleEnabled && lastTheme ? themes.filter(t => t !== lastTheme) : themes;
     const randomTheme = availableThemes[Math.floor(Math.random() * availableThemes.length)];
-    localStorage.setItem('jobi-last-theme', randomTheme);
+    localStorage.setItem('mynes-last-theme', randomTheme);
 
     // Set theme immediately to prevent flash
     document.documentElement.dataset.theme = randomTheme;
@@ -77,7 +77,7 @@
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
         </svg>
       </div>
-      <span class="logo-text">jobi</span>
+      <span class="logo-text">mynes.me</span>
     </div>
 
     <div class="theme-toggles">
@@ -131,7 +131,7 @@
               </svg>
             </a>
           </div>
-          <p class="project-desc">A local-first Jira clone with Kanban board, backlog management, sprint planning, and real-time collaboration. Built for teams who want powerful project tracking without the cloud dependency.</p>
+          <p class="project-desc">A self-hosted issue tracker with backlog and Kanban views. Features drag-and-drop boards, sprint planning with carryover tracking, multi-select bulk actions, undo/redo, and real-time sync via SSE. Keep your data on your own infrastructure.</p>
           <div class="project-tech">
             <span class="tech-tag">Next.js</span>
             <span class="tech-tag">SQLite</span>
@@ -227,7 +227,7 @@
     const shuffleBtn = document.getElementById('shuffle-btn');
     shuffleBtn.addEventListener('click', () => {
       const isActive = shuffleBtn.classList.toggle('active');
-      localStorage.setItem('jobi-shuffle', isActive ? 'true' : 'false');
+      localStorage.setItem('mynes-shuffle', isActive ? 'true' : 'false');
     });
 
     // Lightbox functionality

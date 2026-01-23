@@ -1,0 +1,571 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   jobi — Christmas Theme
+   Warm, festive, cozy - snow, twinkling lights, candy cane accents
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Nunito:wght@400;500;600;700&display=swap');
+
+:root {
+  --christmas-night: #0d1b2a;
+  --christmas-dark: #1b2838;
+  --christmas-red: #c41e3a;
+  --christmas-green: #1a5f2a;
+  --christmas-gold: #ffd700;
+  --christmas-snow: #f8f8ff;
+  --christmas-cream: #fff4e0;
+  --christmas-pine: #0f3d0f;
+
+  --glass-bg: rgba(255, 215, 0, 0.03);
+  --glass-bg-strong: rgba(13, 27, 42, 0.9);
+  --glass-border: rgba(255, 215, 0, 0.15);
+  --glass-shine: rgba(255, 255, 255, 0.1);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
+
+  --text-primary: var(--christmas-snow);
+  --text-secondary: rgba(255, 215, 0, 0.8);
+
+  --font-display: 'Mountains of Christmas', cursive;
+  --font-body: 'Nunito', 'Segoe UI', sans-serif;
+
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-pill: 100px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Body & Background
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background: var(--christmas-night);
+  background-attachment: fixed;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Winter Night Sky with Aurora
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-bg {
+  overflow: hidden;
+  background:
+    /* Stars */
+    radial-gradient(1px 1px at 10% 20%, white 100%, transparent),
+    radial-gradient(1px 1px at 30% 15%, white 100%, transparent),
+    radial-gradient(1px 1px at 50% 25%, white 100%, transparent),
+    radial-gradient(1px 1px at 70% 10%, white 100%, transparent),
+    radial-gradient(1px 1px at 90% 30%, white 100%, transparent),
+    radial-gradient(1px 1px at 15% 35%, rgba(255,255,255,0.7) 100%, transparent),
+    radial-gradient(1px 1px at 45% 8%, rgba(255,255,255,0.8) 100%, transparent),
+    radial-gradient(1px 1px at 80% 22%, rgba(255,255,255,0.6) 100%, transparent),
+    radial-gradient(2px 2px at 25% 5%, rgba(255,215,0,0.8) 100%, transparent),
+    radial-gradient(2px 2px at 65% 18%, rgba(255,215,0,0.6) 100%, transparent),
+    /* Night gradient */
+    linear-gradient(to bottom, var(--christmas-night) 0%, var(--christmas-dark) 100%);
+}
+
+.theme-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Aurora borealis effect */
+  background:
+    radial-gradient(ellipse 80% 30% at 30% 20%, rgba(26, 95, 42, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 25% at 70% 25%, rgba(196, 30, 58, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 20% at 50% 15%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
+  animation: auroraShift 20s ease-in-out infinite alternate;
+  will-change: opacity, transform;
+}
+
+.theme-bg::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  /* Pine tree silhouettes */
+  background:
+    /* Trees */
+    linear-gradient(135deg, transparent 40%, var(--christmas-pine) 40%, var(--christmas-pine) 45%, transparent 45%),
+    linear-gradient(-135deg, transparent 40%, var(--christmas-pine) 40%, var(--christmas-pine) 45%, transparent 45%),
+    linear-gradient(to top, var(--christmas-pine) 0%, transparent 60%);
+  opacity: 0.6;
+}
+
+@keyframes auroraShift {
+  0% { transform: translateX(-10px) scale(1); opacity: 0.6; }
+  50% { transform: translateX(10px) scale(1.1); opacity: 1; }
+  100% { transform: translateX(-10px) scale(1); opacity: 0.8; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Snowflakes and Twinkling Lights
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-effects::before,
+.theme-effects::after {
+  display: none;
+}
+
+/* Snowflakes and lights */
+.theme-effects .bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--christmas-snow);
+  will-change: transform, opacity;
+}
+
+/* Snowflakes */
+.theme-effects .bubble:nth-child(1) {
+  width: 6px; height: 6px; left: 10%; top: -10px;
+  animation: snowfall 8s linear infinite;
+  animation-delay: 0s;
+}
+.theme-effects .bubble:nth-child(2) {
+  width: 4px; height: 4px; left: 25%; top: -10px;
+  animation: snowfall 10s linear infinite;
+  animation-delay: -2s;
+}
+.theme-effects .bubble:nth-child(3) {
+  width: 8px; height: 8px; left: 45%; top: -10px;
+  animation: snowfall 7s linear infinite;
+  animation-delay: -4s;
+}
+.theme-effects .bubble:nth-child(4) {
+  width: 5px; height: 5px; left: 70%; top: -10px;
+  animation: snowfall 9s linear infinite;
+  animation-delay: -1s;
+}
+.theme-effects .bubble:nth-child(5) {
+  width: 3px; height: 3px; left: 85%; top: -10px;
+  animation: snowfall 11s linear infinite;
+  animation-delay: -3s;
+}
+
+/* Twinkling lights */
+.theme-effects .bubble:nth-child(6) {
+  width: 8px; height: 8px; left: 20%; top: 30%;
+  background: var(--christmas-red);
+  box-shadow: 0 0 10px var(--christmas-red), 0 0 20px var(--christmas-red);
+  animation: twinkle 1.5s ease-in-out infinite;
+  animation-delay: 0s;
+}
+.theme-effects .bubble:nth-child(7) {
+  width: 8px; height: 8px; left: 50%; top: 45%;
+  background: var(--christmas-green);
+  box-shadow: 0 0 10px var(--christmas-green), 0 0 20px var(--christmas-green);
+  animation: twinkle 1.5s ease-in-out infinite;
+  animation-delay: -0.5s;
+}
+.theme-effects .bubble:nth-child(8) {
+  width: 8px; height: 8px; left: 75%; top: 35%;
+  background: var(--christmas-gold);
+  box-shadow: 0 0 10px var(--christmas-gold), 0 0 20px var(--christmas-gold);
+  animation: twinkle 1.5s ease-in-out infinite;
+  animation-delay: -1s;
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) translateX(30px) rotate(360deg);
+    opacity: 0.3;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Overlay - Frost Effect
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-overlay {
+  pointer-events: none;
+}
+
+.theme-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Frost on edges */
+  background:
+    radial-gradient(ellipse 50% 30% at 0% 0%, rgba(248, 248, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 30% at 100% 0%, rgba(248, 248, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 20% at 0% 100%, rgba(248, 248, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 20% at 100% 100%, rgba(248, 248, 255, 0.05) 0%, transparent 50%);
+}
+
+.theme-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Warm center vignette */
+  background: radial-gradient(ellipse at center, rgba(255, 244, 224, 0.03) 0%, transparent 50%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Header
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.site-header {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 8px 32px var(--glass-shadow),
+    0 0 40px rgba(255, 215, 0, 0.1),
+    inset 0 1px 0 var(--glass-shine);
+}
+
+.logo-mark {
+  background: var(--christmas-red);
+  border: 2px solid var(--christmas-gold);
+  border-radius: 50%;
+  color: var(--christmas-snow);
+  box-shadow:
+    0 0 20px rgba(196, 30, 58, 0.5),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--christmas-snow);
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.5),
+    2px 2px 0 var(--christmas-red);
+}
+
+/* Theme Toggle Buttons */
+.theme-btn {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+}
+
+.theme-btn:hover {
+  border-color: var(--christmas-gold);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.theme-btn.active {
+  background: rgba(196, 30, 58, 0.2);
+  border-color: var(--christmas-red);
+  color: var(--christmas-snow);
+  box-shadow: 0 0 20px rgba(196, 30, 58, 0.4);
+}
+
+/* Shuffle Button */
+.shuffle-btn {
+  background: var(--glass-bg);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  border: 1px solid var(--glass-border);
+}
+
+.shuffle-btn.active {
+  border-color: var(--christmas-green);
+  color: var(--christmas-green);
+  box-shadow: 0 0 15px rgba(26, 95, 42, 0.4);
+}
+
+.shuffle-tooltip {
+  background: var(--christmas-dark);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--christmas-gold);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.shuffle-tooltip::before {
+  background: var(--christmas-dark);
+  border-top: 1px solid var(--christmas-gold);
+  border-left: 1px solid var(--christmas-gold);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Intro
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.intro h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--christmas-snow);
+  text-shadow:
+    0 0 20px rgba(255, 215, 0, 0.4),
+    3px 3px 0 var(--christmas-red);
+}
+
+.intro h1 em {
+  color: var(--christmas-gold);
+  text-shadow:
+    0 0 20px rgba(255, 215, 0, 0.6),
+    2px 2px 0 var(--christmas-green);
+}
+
+.intro-sub {
+  color: var(--text-secondary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Project Cards
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.project {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 16px 48px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-shine);
+}
+
+.project:hover {
+  transform: translateY(-8px) scale(1.01);
+  border-color: var(--christmas-gold);
+  box-shadow:
+    0 24px 64px var(--glass-shadow),
+    0 0 40px rgba(255, 215, 0, 0.15);
+}
+
+.project::before {
+  display: none;
+}
+
+.project-screenshot-wrapper {
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+.project-screenshot {
+  border-radius: var(--radius-md);
+}
+
+.project-screenshot-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(196, 30, 58, 0.05) 0%, transparent 50%, rgba(26, 95, 42, 0.05) 100%);
+  pointer-events: none;
+  z-index: 2;
+  border-radius: var(--radius-md);
+}
+
+.screenshot-overlay {
+  background: linear-gradient(to top, rgba(13, 27, 42, 0.95) 0%, transparent 60%);
+  border-radius: var(--radius-md);
+}
+
+.zoom-hint {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--christmas-snow);
+  background: var(--christmas-red);
+  backdrop-filter: blur(15px);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--christmas-gold);
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--text-primary);
+  text-shadow: 2px 2px 0 rgba(196, 30, 58, 0.3);
+}
+
+.project-link {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--christmas-snow);
+  background: var(--christmas-red);
+  border: 2px solid var(--christmas-gold);
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 15px rgba(196, 30, 58, 0.4);
+}
+
+.project-link:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: var(--christmas-green);
+  box-shadow: 0 0 25px rgba(26, 95, 42, 0.5);
+}
+
+.project-link.coming-soon {
+  background: transparent;
+  border-color: var(--glass-border);
+  box-shadow: none;
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+.project-link.coming-soon:hover {
+  background: transparent;
+  transform: none;
+  color: var(--text-secondary);
+}
+
+.project-desc {
+  color: var(--text-secondary);
+}
+
+.tech-tag {
+  font-family: var(--font-body);
+  color: var(--christmas-green);
+  background: rgba(26, 95, 42, 0.15);
+  border: 1px solid rgba(26, 95, 42, 0.3);
+  border-radius: var(--radius-sm);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Footer
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.site-footer {
+  color: var(--text-secondary);
+}
+
+.site-footer strong {
+  font-family: var(--font-display);
+  color: var(--christmas-gold);
+  text-shadow: 1px 1px 0 var(--christmas-red);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Lightbox
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.lightbox {
+  background: rgba(13, 27, 42, 0.98);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+.lightbox-close {
+  background: var(--christmas-red);
+  border: 2px solid var(--christmas-gold);
+  border-radius: 50%;
+  color: var(--christmas-snow);
+  box-shadow: 0 0 20px rgba(196, 30, 58, 0.5);
+}
+
+.lightbox-close:hover {
+  background: var(--christmas-green);
+}
+
+.lightbox-content {
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.8),
+    0 0 60px rgba(255, 215, 0, 0.15);
+}
+
+.lightbox-image {
+  border-radius: var(--radius-lg);
+}
+
+.lightbox-caption {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--christmas-gold);
+  text-shadow: 2px 2px 0 var(--christmas-red);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Entry Animations
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes christmasFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes christmasGlow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.site-header {
+  animation: christmasFadeIn 0.7s ease-out forwards;
+}
+
+.intro {
+  animation: christmasFadeIn 0.7s ease-out 0.1s forwards;
+}
+
+.project:nth-child(1) {
+  animation: christmasFadeIn 0.7s ease-out 0.2s forwards;
+}
+
+.project:nth-child(2) {
+  animation: christmasFadeIn 0.7s ease-out 0.3s forwards;
+}
+
+.theme-bg,
+.theme-effects {
+  animation: christmasGlow 1s ease forwards;
+}
+
+.theme-overlay {
+  animation: christmasGlow 0.8s ease 0.3s forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Responsive Adjustments
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .site-header {
+    border-radius: var(--radius-md);
+  }
+
+  .project {
+    border-radius: var(--radius-md);
+  }
+
+  .project-screenshot-wrapper,
+  .project-screenshot,
+  .screenshot-overlay {
+    border-radius: var(--radius-sm);
+  }
+
+  .theme-effects .bubble:nth-child(7),
+  .theme-effects .bubble:nth-child(8) { display: none; }
+
+  .lightbox-content,
+  .lightbox-image {
+    border-radius: var(--radius-md);
+  }
+}
+
+/* Firefox fallback */
+@supports (-moz-appearance: none) {
+  .site-header,
+  .project {
+    backdrop-filter: none;
+    background: rgba(13, 27, 42, 0.98);
+  }
+}

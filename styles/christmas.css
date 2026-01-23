@@ -256,7 +256,6 @@ body {
     0 0 30px rgba(212, 43, 43, 0.2),
     0 0 60px rgba(255, 215, 0, 0.1),
     inset 0 1px 0 var(--glass-shine);
-  position: relative;
 }
 
 /* Candy cane accent stripe - along the bottom border */

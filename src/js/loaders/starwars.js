@@ -81,6 +81,7 @@ export async function animate(overlay, isCancelled) {
     if (isCancelled()) {
       // Cleanup on cancel
       main.classList.remove('starwars-page-crawl');
+      document.body.classList.remove('starwars-intro-complete');
       if (header) {
         header.style.opacity = '';
         header.style.visibility = '';
@@ -88,12 +89,18 @@ export async function animate(overlay, isCancelled) {
       return;
     }
 
-    // Remove crawl class - content settles to normal
-    main.classList.remove('starwars-page-crawl');
-    main.classList.add('starwars-page-settle');
+    // Mark intro as complete to skip entry animations
+    document.body.classList.add('starwars-intro-complete');
 
-    // Show header
+    // Remove crawl class - content is now in normal position
+    main.classList.remove('starwars-page-crawl');
+
+    // Fade out overlay to reveal content smoothly
+    overlay.classList.add('starwars-fade-out');
+
+    // Show header with fade
     if (header) {
+      header.style.transition = 'opacity 0.8s ease-out';
       header.style.opacity = '';
       header.style.visibility = '';
     }
@@ -102,6 +109,8 @@ export async function animate(overlay, isCancelled) {
     if (isCancelled()) return;
 
     // Cleanup
-    main.classList.remove('starwars-page-settle');
+    if (header) {
+      header.style.transition = '';
+    }
   }
 }

@@ -660,16 +660,44 @@ main.starwars-page-crawl {
 @keyframes starwarsPageCrawl {
   0% {
     top: 100vh;
+    transform: perspective(300px) rotateX(25deg);
+  }
+  80% {
+    top: 0;
+    transform: perspective(300px) rotateX(8deg);
   }
   100% {
-    top: -50vh;
+    top: 0;
+    transform: perspective(300px) rotateX(0deg);
   }
 }
 
-/* Settle back to normal position */
-main.starwars-page-settle {
-  transform: perspective(300px) rotateX(0deg);
-  transition: transform 0.8s ease-out;
+/* Fade out overlay at end of crawl */
+.starwars-fade-out {
+  animation: starwarsFadeOut 0.8s ease-out forwards;
+}
+
+@keyframes starwarsFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Skip entry animations after intro completes */
+.starwars-intro-complete {
+  .site-header,
+  .intro,
+  .project,
+  .theme-bg,
+  .theme-effects,
+  .theme-overlay {
+    animation: none !important;
+    opacity: 1 !important;
+  }
 }
 
 /* Firefox fallback */

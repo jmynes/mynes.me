@@ -538,6 +538,14 @@ body {
   inset: 0;
 }
 
+/* Persistent starfield attached to body after animation */
+.starwars-starfield--persistent {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
 .starwars-star {
   position: absolute;
   width: 2px;
@@ -579,10 +587,13 @@ body {
   background: var(--sw-black) !important;
 }
 
-/* Hide static theme stars during the animation */
+/* Hide static theme stars during and after the animation */
 body:has(.theme-loader--starwars) .theme-bg::before,
 body:has(.theme-loader--starwars) .theme-bg::after,
-body:has(.theme-loader--starwars) .theme-effects .bubble {
+body:has(.theme-loader--starwars) .theme-effects .bubble,
+body.starwars-intro-complete .theme-bg::before,
+body.starwars-intro-complete .theme-bg::after,
+body.starwars-intro-complete .theme-effects .bubble {
   opacity: 0 !important;
 }
 
@@ -634,19 +645,14 @@ main.starwars-page-crawl {
   }
 }
 
-/* Fade out overlay at end of crawl */
+/* Move overlay behind content at end (keeps animated stars visible) */
 .starwars-fade-out {
-  animation: starwarsFadeOut 0.8s ease-out forwards;
+  z-index: -1 !important;
+  pointer-events: none;
 }
 
-@keyframes starwarsFadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    visibility: hidden;
-  }
+.starwars-fade-out .starwars-starfield {
+  opacity: 1;
 }
 
 /* Skip entry animations after intro completes */

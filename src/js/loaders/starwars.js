@@ -118,6 +118,13 @@ export async function animate(overlay, isCancelled) {
     // Remove crawl class - content is now in normal position
     main.classList.remove('starwars-page-crawl');
 
+    // Move starfield to body so it persists after overlay removal
+    const starfield = overlay.querySelector('.starwars-starfield');
+    if (starfield) {
+      starfield.classList.add('starwars-starfield--persistent');
+      document.body.appendChild(starfield);
+    }
+
     // Fade out overlay to reveal content smoothly
     overlay.classList.add('starwars-fade-out');
 

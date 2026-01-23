@@ -553,6 +553,11 @@ body {
     margin-left: 0;
   }
 
+  .theme-btn {
+    letter-spacing: 0.02em;
+    font-size: 0.7rem;
+  }
+
   .theme-effects .bubble:nth-child(n+5) {
     display: none;
   }

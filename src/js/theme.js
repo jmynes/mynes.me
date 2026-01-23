@@ -93,8 +93,9 @@ export function initTheme() {
   const themeButtons = document.querySelectorAll('.theme-btn');
   themeButtons.forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.theme === currentTheme);
-    btn.addEventListener('click', () => {
-      if (!btn.disabled) {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault(); // Prevent navigation, handle theme switch via JS
+      if (!btn.classList.contains('disabled')) {
         setTheme(btn.dataset.theme);
       }
     });
@@ -117,7 +118,7 @@ async function setTheme(themeName) {
 
   // Disable buttons during transition
   themeButtons.forEach((btn) => {
-    btn.disabled = true;
+    btn.classList.add('disabled');
   });
 
   // Show loader animation (if one exists for this theme)
@@ -137,7 +138,7 @@ async function setTheme(themeName) {
   // Update active button and re-enable
   themeButtons.forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.theme === themeName);
-    btn.disabled = false;
+    btn.classList.remove('disabled');
   });
 }
 

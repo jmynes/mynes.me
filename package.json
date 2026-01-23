@@ -5,7 +5,7 @@
   "scripts": {
     "build:css": "sass src/scss:dist/css --style=compressed --no-source-map",
     "build:js": "cp -r src/js/* dist/js/",
-    "build": "npm run build:css && npm run build:js",
+    "build": "pnpm run build:css && pnpm run build:js",
     "watch:css": "sass src/scss:dist/css --watch",
     "watch": "npm-run-all --parallel watch:css",
     "serve": "browser-sync start --server --files 'dist/**/*' 'index.html'",

@@ -120,9 +120,15 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
+  text-decoration: none;
 
   &.active {
     transform: scale(1.05);
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
   }
 }
 

@@ -27,7 +27,17 @@
     const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false'; // default true
     const lastTheme = localStorage.getItem('mynes-last-theme');
     let selectedTheme;
-    if (shuffleEnabled) {
+
+    // Check for theme in URL parameter (for direct linking)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlTheme = urlParams.get('theme');
+    if (urlTheme && themes.includes(urlTheme)) {
+      // Use URL theme and clear the param
+      selectedTheme = urlTheme;
+      urlParams.delete('theme');
+      const newUrl = urlParams.toString() ? `${window.location.pathname}?${urlParams.toString()}` : window.location.pathname;
+      history.replaceState(null, '', newUrl);
+    } else if (shuffleEnabled) {
       // Random theme, excluding the last one
       const availableThemes = lastTheme ? themes.filter(t => t !== lastTheme) : themes;
       selectedTheme = availableThemes[Math.floor(Math.random() * availableThemes.length)];

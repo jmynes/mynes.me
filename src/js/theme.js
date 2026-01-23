@@ -32,7 +32,25 @@ export function applyInitialTheme() {
   }
   window.scrollTo(0, 0);
 
-  // Theme selection logic
+  // Check for theme in URL parameter (for direct linking)
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlTheme = urlParams.get('theme');
+
+  // If valid theme in URL, use it and clear the param
+  if (urlTheme && themes.includes(urlTheme)) {
+    // Remove the theme param from URL without reload
+    urlParams.delete('theme');
+    const newUrl = urlParams.toString()
+      ? `${window.location.pathname}?${urlParams.toString()}`
+      : window.location.pathname;
+    history.replaceState(null, '', newUrl);
+
+    localStorage.setItem('mynes-last-theme', urlTheme);
+    document.documentElement.dataset.theme = urlTheme;
+    return urlTheme;
+  }
+
+  // Normal theme selection logic
   const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false'; // default true
   const lastTheme = localStorage.getItem('mynes-last-theme');
   let selectedTheme;

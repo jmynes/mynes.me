@@ -574,61 +574,59 @@ body {
   opacity: 0;
 }
 
-/* Crawl container with perspective */
-.starwars-crawl-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  perspective: 400px;
-  overflow: hidden;
+/* Overlay becomes semi-transparent during content crawl */
+.starwars-crawl-active {
+  background: transparent !important;
 }
 
-/* The scrolling crawl text */
-.starwars-crawl {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  width: 80%;
-  max-width: 600px;
-  transform: translateX(-50%) rotateX(25deg);
-  transform-origin: 50% 100%;
-  text-align: center;
-  animation: starwarsCrawl 20s linear forwards;
+.starwars-crawl-active .starwars-starfield {
+  opacity: 0.3;
 }
 
-@keyframes starwarsCrawl {
+/* Page content crawl effect */
+main.starwars-page-crawl {
+  position: fixed !important;
+  top: 100vh;
+  left: 0;
+  right: 0;
+  z-index: 10002;
+  transform-style: preserve-3d;
+  transform: perspective(300px) rotateX(20deg);
+  transform-origin: 50% 0%;
+  animation: starwarsPageCrawl 4s linear forwards;
+
+  // Make content yellow during crawl
+  .intro h1,
+  .intro h1 em,
+  .intro-sub,
+  .project-title,
+  .project-desc,
+  .tech-tag {
+    color: var(--sw-yellow) !important;
+    text-shadow: none !important;
+    -webkit-text-fill-color: var(--sw-yellow) !important;
+  }
+
+  // Hide non-text elements during crawl
+  .project-screenshot-wrapper,
+  .project-links {
+    opacity: 0;
+  }
+}
+
+@keyframes starwarsPageCrawl {
   0% {
-    top: 100%;
+    top: 100vh;
   }
   100% {
-    top: -200%;
+    top: -50vh;
   }
 }
 
-.starwars-crawl__title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  color: var(--sw-yellow);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-bottom: 0.5em;
-}
-
-.starwars-crawl__subtitle {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  color: var(--sw-yellow);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 1.5em;
-}
-
-.starwars-crawl__body {
-  font-family: var(--font-body);
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
-  color: var(--sw-yellow);
-  line-height: 1.8;
-  white-space: pre-line;
+/* Settle back to normal position */
+main.starwars-page-settle {
+  transform: perspective(300px) rotateX(0deg);
+  transition: transform 0.8s ease-out;
 }
 
 /* Firefox fallback */

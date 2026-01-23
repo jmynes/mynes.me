@@ -1,25 +1,11 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // Star Wars Theme Loader — Opening Crawl Effect
-// Classic perspective text scroll with starfield background
+// Classic perspective text scroll using actual page content
 // ═══════════════════════════════════════════════════════════════════════════
 
 export const themeName = 'starwars';
 
 const introText = 'A long time ago in a galaxy far, far away....';
-
-const crawlTitle = 'EPISODE VIBES';
-const crawlSubtitle = 'THE THEME AWAKENS';
-const crawlBody = `The galaxy is in turmoil. A brave
-developer has discovered the
-legendary STAR WARS theme.
-
-As the dark void of space gives
-way to vibrant colors and
-iconic styling, a new hope
-emerges for portfolio design.
-
-The Force is strong with this
-theme selection....`;
 
 /**
  * Sleep utility
@@ -70,35 +56,52 @@ export async function animate(overlay, isCancelled) {
   await sleep(500);
   if (isCancelled()) return;
 
-  // Remove intro
+  // Remove intro text
   intro.remove();
 
-  // Create crawl container
-  const crawlContainer = document.createElement('div');
-  crawlContainer.className = 'starwars-crawl-container';
+  // Now apply crawl effect to actual page content
+  const main = document.querySelector('main');
+  const header = document.querySelector('.site-header');
 
-  const crawl = document.createElement('div');
-  crawl.className = 'starwars-crawl';
+  if (main) {
+    // Add crawl class to main content
+    main.classList.add('starwars-page-crawl');
 
-  const title = document.createElement('h1');
-  title.className = 'starwars-crawl__title';
-  title.textContent = crawlTitle;
+    // Hide header during crawl
+    if (header) {
+      header.style.opacity = '0';
+      header.style.visibility = 'hidden';
+    }
 
-  const subtitle = document.createElement('h2');
-  subtitle.className = 'starwars-crawl__subtitle';
-  subtitle.textContent = crawlSubtitle;
+    // Make overlay semi-transparent to show content behind
+    overlay.classList.add('starwars-crawl-active');
 
-  const body = document.createElement('p');
-  body.className = 'starwars-crawl__body';
-  body.textContent = crawlBody;
+    // Wait for crawl animation
+    await sleep(4000);
+    if (isCancelled()) {
+      // Cleanup on cancel
+      main.classList.remove('starwars-page-crawl');
+      if (header) {
+        header.style.opacity = '';
+        header.style.visibility = '';
+      }
+      return;
+    }
 
-  crawl.appendChild(title);
-  crawl.appendChild(subtitle);
-  crawl.appendChild(body);
-  crawlContainer.appendChild(crawl);
-  overlay.appendChild(crawlContainer);
+    // Remove crawl class - content settles to normal
+    main.classList.remove('starwars-page-crawl');
+    main.classList.add('starwars-page-settle');
 
-  // Let the crawl animate
-  await sleep(4000);
-  if (isCancelled()) return;
+    // Show header
+    if (header) {
+      header.style.opacity = '';
+      header.style.visibility = '';
+    }
+
+    await sleep(800);
+    if (isCancelled()) return;
+
+    // Cleanup
+    main.classList.remove('starwars-page-settle');
+  }
 }

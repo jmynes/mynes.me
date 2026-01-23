@@ -79,10 +79,13 @@ export function applyInitialTheme() {
 /**
  * Initialize theme UI after DOM is ready
  */
-export function initTheme() {
+export async function initTheme() {
   const themeCssLink = document.getElementById('theme-css');
   const currentTheme = document.documentElement.dataset.theme;
   const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false';
+
+  // Show loader animation on initial page load (if one exists for this theme)
+  await showLoader(currentTheme);
 
   // Update CSS link to match selected theme
   if (themeCssLink && currentTheme) {

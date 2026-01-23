@@ -74,7 +74,6 @@ body {
   z-index: 100;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 1rem 2rem;
   margin: 0;
 }
@@ -85,6 +84,7 @@ body {
   gap: 0.75rem;
   position: relative;
   z-index: 1;
+  flex-shrink: 0;
 }
 
 .logo-mark {
@@ -102,13 +102,14 @@ body {
   font-weight: 700;
 }
 
-// Theme Toggles
+// Theme Toggles (centered on desktop)
 .theme-toggles {
   display: flex;
   gap: 0.5rem;
   position: relative;
   z-index: 1;
-  order: 2;
+  flex: 1;
+  justify-content: center;
 }
 
 .theme-btn {
@@ -132,12 +133,11 @@ body {
   }
 }
 
-// Header Toggles Container
+// Header Toggles Container (shuffle/intros - right side)
 .header-toggles {
   display: flex;
   gap: 0.5rem;
-  order: 2;
-  margin-left: auto;
+  flex-shrink: 0;
 }
 
 // Toggle Button (shuffle, intros, etc.)
@@ -516,9 +516,11 @@ main {
   // Theme toggles - full width scrollable row below
   .theme-toggles {
     order: 3;
+    flex: none;
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: 0.5rem;
     padding-bottom: 0.5rem;
     overflow-x: auto;

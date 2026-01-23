@@ -154,6 +154,7 @@ body {
 .site-header {
   background: var(--black-light);
   border: 1px solid var(--green-dark);
+  border-left: 3px solid var(--green);
   border-radius: var(--radius-lg);
   box-shadow:
     0 0 20px var(--green-subtle),
@@ -285,6 +286,7 @@ body {
 .project {
   background: var(--black-light);
   border: 1px solid var(--green-dark);
+  border-left: 3px solid var(--green);
   border-radius: var(--radius-lg);
   box-shadow: 0 0 30px var(--green-subtle);
 }
@@ -488,12 +490,12 @@ body {
 }
 
 @keyframes hackerFlicker {
-  0%, 100% { opacity: 0; }
+  0% { opacity: 0; }
   10% { opacity: 0.5; }
   20% { opacity: 0.2; }
   40% { opacity: 0.8; }
   60% { opacity: 0.4; }
-  80% { opacity: 1; }
+  80%, 100% { opacity: 1; }
 }
 
 .site-header {
@@ -502,9 +504,20 @@ body {
 }
 
 .intro {
-  animation: hackerGlitch 0.6s steps(10) 0.2s forwards;
-  will-change: transform, opacity;
+  animation: hackerTypeIn 0.8s ease-out 0.2s forwards;
+  will-change: clip-path, opacity;
   overflow: hidden;
+}
+
+@keyframes hackerTypeIn {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 .project:nth-child(1) {

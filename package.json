@@ -4,7 +4,7 @@
   "description": "Static portfolio with switchable visual themes",
   "scripts": {
     "build:css": "sass src/scss:dist/css --style=compressed --no-source-map",
-    "build:js": "cp -r src/js/* dist/js/",
+    "build:js": "mkdir -p dist/js && cp -r src/js/* dist/js/",
     "build": "pnpm run build:css && pnpm run build:js",
     "watch:css": "sass src/scss:dist/css --watch",
     "watch": "npm-run-all --parallel watch:css",

@@ -574,13 +574,16 @@ body {
   opacity: 0;
 }
 
-/* Overlay becomes semi-transparent during content crawl */
+/* During crawl, keep animated starfield visible behind content */
 .starwars-crawl-active {
-  background: transparent !important;
+  background: var(--sw-black) !important;
 }
 
-.starwars-crawl-active .starwars-starfield {
-  opacity: 0.3;
+/* Hide static theme stars during the animation */
+body:has(.theme-loader--starwars) .theme-bg::before,
+body:has(.theme-loader--starwars) .theme-bg::after,
+body:has(.theme-loader--starwars) .theme-effects .bubble {
+  opacity: 0 !important;
 }
 
 /* Hide footer during crawl (it's outside main, so would show at top) */

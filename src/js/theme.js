@@ -3,6 +3,8 @@
 // Handles theme selection, shuffle mode, and localStorage persistence
 // ═══════════════════════════════════════════════════════════════════════════
 
+import { showLoader } from './loaders/index.js';
+
 const themes = [
   'aero',
   'bubbly',
@@ -91,9 +93,17 @@ export function initTheme() {
 /**
  * Switch to a specific theme
  */
-function setTheme(themeName) {
+async function setTheme(themeName) {
   const themeCssLink = document.getElementById('theme-css');
   const themeButtons = document.querySelectorAll('.theme-btn');
+
+  // Disable buttons during transition
+  themeButtons.forEach((btn) => {
+    btn.disabled = true;
+  });
+
+  // Show loader animation (if one exists for this theme)
+  await showLoader(themeName);
 
   // Update CSS link
   if (themeCssLink) {
@@ -106,9 +116,10 @@ function setTheme(themeName) {
   // Save as last theme
   localStorage.setItem('mynes-last-theme', themeName);
 
-  // Update active button
+  // Update active button and re-enable
   themeButtons.forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.theme === themeName);
+    btn.disabled = false;
   });
 }
 

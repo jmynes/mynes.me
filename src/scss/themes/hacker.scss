@@ -567,3 +567,46 @@ body {
     display: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Hacker Theme Loader — Typewriter Terminal Effect
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-loader--hacker {
+  background: rgba(0, 0, 0, 0.97);
+  pointer-events: auto;
+}
+
+.hacker-terminal {
+  font-family: 'Share Tech Mono', 'VT323', monospace;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  color: var(--green);
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.3);
+  padding: 2rem;
+  max-width: 90vw;
+}
+
+.hacker-terminal__line {
+  display: flex;
+  align-items: center;
+}
+
+.hacker-terminal__prompt {
+  color: var(--green-dim);
+  margin-right: 0.25em;
+}
+
+.hacker-terminal__text {
+  white-space: pre;
+}
+
+.hacker-terminal__cursor {
+  animation: hackerCursorBlink 0.8s step-end infinite;
+  margin-left: 2px;
+  color: var(--green);
+}
+
+@keyframes hackerCursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}

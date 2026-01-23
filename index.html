@@ -23,7 +23,7 @@
     window.scrollTo(0, 0);
 
     // Theme selection: shuffle ON = random (never same twice), shuffle OFF = keep same theme
-    const themes = ['aero', 'bubbly', 'hacker', 'groovy', 'retro'];
+    const themes = ['aero', 'bubbly', 'hacker', 'groovy', 'retro', 'kaleidoscope', 'synthwave', 'space', 'starwars', 'volcano', 'lilypond'];
     const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false'; // default true
     const lastTheme = localStorage.getItem('mynes-last-theme');
     let selectedTheme;
@@ -211,6 +211,12 @@
       <button class="theme-btn" data-theme="hacker">Hacker</button>
       <button class="theme-btn" data-theme="groovy">Groovy</button>
       <button class="theme-btn" data-theme="retro">Retro</button>
+      <button class="theme-btn" data-theme="kaleidoscope">Kaleidoscope</button>
+      <button class="theme-btn" data-theme="synthwave">Synthwave</button>
+      <button class="theme-btn" data-theme="space">Space</button>
+      <button class="theme-btn" data-theme="starwars">Star Wars</button>
+      <button class="theme-btn" data-theme="volcano">Volcano</button>
+      <button class="theme-btn" data-theme="lilypond">Lily Pond</button>
     </div>
   </header>
 

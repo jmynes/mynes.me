@@ -110,6 +110,9 @@ export async function initTheme() {
     shuffleBtn.classList.toggle('active', shuffleEnabled);
     shuffleBtn.addEventListener('click', toggleShuffle);
   }
+
+  // Scroll active button into view on mobile
+  scrollActiveButtonIntoView();
 }
 
 /**
@@ -171,6 +174,9 @@ async function setTheme(themeName) {
     btn.classList.toggle('active', btn.dataset.theme === themeName);
     btn.classList.remove('disabled');
   });
+
+  // Scroll active button into view on mobile
+  scrollActiveButtonIntoView();
 }
 
 /**
@@ -182,6 +188,30 @@ function toggleShuffle() {
     const isActive = shuffleBtn.classList.toggle('active');
     localStorage.setItem('mynes-shuffle', isActive ? 'true' : 'false');
   }
+}
+
+/**
+ * Scroll the active theme button to center of the container (for mobile)
+ */
+function scrollActiveButtonIntoView() {
+  const container = document.querySelector('.theme-toggles');
+  const activeBtn = document.querySelector('.theme-btn.active');
+
+  if (!container || !activeBtn) return;
+
+  // Calculate scroll position to center the button
+  const containerRect = container.getBoundingClientRect();
+  const buttonRect = activeBtn.getBoundingClientRect();
+
+  const scrollLeft =
+    activeBtn.offsetLeft -
+    container.offsetWidth / 2 +
+    buttonRect.width / 2;
+
+  container.scrollTo({
+    left: Math.max(0, scrollLeft),
+    behavior: 'smooth',
+  });
 }
 
 // Export for potential external use

@@ -579,6 +579,14 @@ body {
   animation: underworldFadeIn 1.2s ease 0.5s forwards;
 }
 
+/* Canvas positioning for JavaScript ember effects */
+#underworld-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    Responsive Adjustments
    ═══════════════════════════════════════════════════════════════════════════ */

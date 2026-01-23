@@ -263,6 +263,37 @@ body {
   box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
+/* Shuffle Button */
+.shuffle-btn {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+}
+
+.shuffle-btn.active {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--accent);
+}
+
+.shuffle-tooltip {
+  background: var(--glass-bg-strong);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.shuffle-tooltip::before {
+  background: var(--glass-bg-strong);
+  border-top: 1px solid var(--glass-border);
+  border-left: 1px solid var(--glass-border);
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    Intro
    ═══════════════════════════════════════════════════════════════════════════ */

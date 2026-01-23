@@ -109,6 +109,66 @@ body {
   transform: scale(1.05);
 }
 
+/* Shuffle Button */
+.shuffle-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0.5;
+  margin-left: 0.5rem;
+}
+
+.shuffle-btn.active {
+  opacity: 1;
+}
+
+.shuffle-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Shuffle Tooltip */
+.shuffle-tooltip {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 260px;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.shuffle-btn:hover .shuffle-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.shuffle-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    Main Content Structure
    ═══════════════════════════════════════════════════════════════════════════ */

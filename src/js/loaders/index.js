@@ -4,10 +4,12 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import * as hackerLoader from './hacker.js';
+import * as starwarsLoader from './starwars.js';
 
 // Registry of loaders by theme name
 const loaders = {
   hacker: hackerLoader,
+  starwars: starwarsLoader,
 };
 
 // State management

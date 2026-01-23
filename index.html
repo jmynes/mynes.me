@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jobi — Vibed Demos</title>
+  <meta name="description" content="A collection of projects built with vibes - showcasing PUNT and Pokeraoke">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="jobi — Vibed Demos">
+  <meta property="og:description" content="A collection of projects built with vibes">
+
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Prevent scroll restoration on refresh
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  </script>
+</head>
+<body>
+  <!-- Floating bubbles background -->
+  <div class="bubbles" aria-hidden="true">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+
+  <!-- Aurora light effect -->
+  <div class="aurora" aria-hidden="true"></div>
+
+  <!-- Lens flare -->
+  <div class="lens-flare" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </div>
+      <span class="logo-text">jobi</span>
+    </div>
+    <span class="header-tag">vibed demos</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>Projects built<br><em>with vibes</em></h1>
+      <p class="intro-sub">Click any screenshot to view full detail</p>
+    </section>
+
+    <section class="projects">
+
+      <article class="project">
+        <div class="project-screenshot-wrapper" data-project="punt">
+          <img
+            src="punt-screenshot.webp"
+            alt="PUNT - Kanban board interface showing tickets organized in columns"
+            class="project-screenshot"
+            loading="lazy"
+          >
+          <div class="screenshot-overlay">
+            <span class="zoom-hint">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+                <path d="M11 8v6M8 11h6"/>
+              </svg>
+              Click to expand
+            </span>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-header">
+            <h2 class="project-title">PUNT</h2>
+            <a href="#" class="project-link coming-soon">
+              Coming Soon
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+          <p class="project-desc">A local-first Jira clone with Kanban board, backlog management, sprint planning, and real-time collaboration. Built for teams who want powerful project tracking without the cloud dependency.</p>
+          <div class="project-tech">
+            <span class="tech-tag">Next.js</span>
+            <span class="tech-tag">SQLite</span>
+            <span class="tech-tag">Zustand</span>
+            <span class="tech-tag">Prisma</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-screenshot-wrapper" data-project="pokeraoke">
+          <img
+            src="pokeraoke-screenshot.png"
+            alt="Pokeraoke - Pokemon sprite karaoke interface with lyrics and sprites"
+            class="project-screenshot"
+            loading="lazy"
+          >
+          <div class="screenshot-overlay">
+            <span class="zoom-hint">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+                <path d="M11 8v6M8 11h6"/>
+              </svg>
+              Click to expand
+            </span>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-header">
+            <h2 class="project-title">Pokeraoke</h2>
+            <a href="https://pokeraoke.pages.dev" class="project-link" target="_blank" rel="noopener">
+              Visit Live
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </a>
+          </div>
+          <p class="project-desc">Turn any lyrics into a Pokemon sprite karaoke performance. Map words to Pokemon, sync with timed LRC files, and watch sprites bounce along to the music. A delightfully absurd way to experience your favorite songs.</p>
+          <div class="project-tech">
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">Tailwind</span>
+            <span class="tech-tag">Web Audio</span>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Built with vibes by <strong>Jordan Mynes</strong></p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" aria-label="Close lightbox">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    <div class="lightbox-content">
+      <img src="" alt="" class="lightbox-image" id="lightbox-image">
+    </div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <script>
+    // Lightbox functionality
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const screenshotWrappers = document.querySelectorAll('.project-screenshot-wrapper');
+
+    const captions = {
+      'punt': 'PUNT — Local-first project management',
+      'pokeraoke': 'Pokeraoke — Pokemon sprite karaoke'
+    };
+
+    screenshotWrappers.forEach(wrapper => {
+      wrapper.addEventListener('click', () => {
+        const img = wrapper.querySelector('img');
+        const project = wrapper.dataset.project;
+        lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt;
+        lightboxCaption.textContent = captions[project] || '';
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.closest('.lightbox-close')) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.getAttribute('aria-hidden') === 'false') {
+        closeLightbox();
+      }
+    });
+  </script>
+</body>
+</html>

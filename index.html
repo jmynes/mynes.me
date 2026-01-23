@@ -23,7 +23,7 @@
     window.scrollTo(0, 0);
 
     // Theme selection: shuffle ON = random (never same twice), shuffle OFF = keep same theme
-    const themes = ['aero', 'bubbly', 'christmas', 'fireflies', 'groovy', 'hacker', 'halloween', 'lilypond', 'powerpc', 'retro', 'starwars', 'synthwave', 'volcano'];
+    const themes = ['aero', 'bubbly', 'christmas', 'fireflies', 'groovy', 'hacker', 'halloween', 'lilypond', 'powerpc', 'retro', 'starwars', 'synthwave', 'underworld'];
     const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false'; // default true
     const lastTheme = localStorage.getItem('mynes-last-theme');
     let selectedTheme;
@@ -218,7 +218,7 @@
       <button class="theme-btn" data-theme="retro">Retro</button>
       <button class="theme-btn" data-theme="starwars">Star Wars</button>
       <button class="theme-btn" data-theme="synthwave">Synthwave</button>
-      <button class="theme-btn" data-theme="volcano">Volcano</button>
+      <button class="theme-btn" data-theme="underworld">Underworld</button>
     </div>
   </header>
 
@@ -431,17 +431,27 @@
 
     // ═══════════════════════════════════════════════════════════════════════════
     // Lily Pond Theme — Interactive Effects
-    // Fireflies + Water Ripples (only active when lilypond theme is selected)
+    // Falling Wisteria Petals + Fireflies + Water Ripples
     // ═══════════════════════════════════════════════════════════════════════════
 
     (function initLilyPondEffects() {
       let canvas = null;
       let ctx = null;
+      let petals = [];
       let fireflies = [];
       let animationId = null;
       let isActive = false;
 
-      // Firefly class
+      // Wisteria color palette
+      const wisteriaColors = [
+        { h: 270, s: 50, l: 85 },  // Pale lavender
+        { h: 275, s: 45, l: 78 },  // Light purple
+        { h: 268, s: 40, l: 70 },  // Medium lavender
+        { h: 280, s: 55, l: 65 },  // Deeper purple
+        { h: 285, s: 35, l: 90 },  // Almost white purple
+      ];
+
+      // Firefly class - warm golden glowing particles
       class Firefly {
         constructor() {
           this.reset();
@@ -451,23 +461,23 @@
           this.x = Math.random() * window.innerWidth;
           this.y = Math.random() * window.innerHeight;
           this.size = 2 + Math.random() * 3;
-          this.speedX = (Math.random() - 0.5) * 0.5;
-          this.speedY = (Math.random() - 0.5) * 0.4;
+          this.speedX = (Math.random() - 0.5) * 0.4;
+          this.speedY = (Math.random() - 0.5) * 0.3;
           this.brightness = Math.random();
-          this.brightnessSpeed = 0.01 + Math.random() * 0.02;
+          this.brightnessSpeed = 0.008 + Math.random() * 0.015;
           this.brightnessDir = Math.random() > 0.5 ? 1 : -1;
-          this.hue = 45 + Math.random() * 20; // Warm gold to amber
-          this.maxBrightness = 0.6 + Math.random() * 0.4;
+          this.hue = 50 + Math.random() * 25; // Warm gold to amber
+          this.maxBrightness = 0.5 + Math.random() * 0.4;
         }
 
         update() {
           // Gentle floating movement
-          this.x += this.speedX + Math.sin(Date.now() * 0.001 + this.y * 0.01) * 0.3;
-          this.y += this.speedY + Math.cos(Date.now() * 0.001 + this.x * 0.01) * 0.2;
+          this.x += this.speedX + Math.sin(Date.now() * 0.0008 + this.y * 0.01) * 0.25;
+          this.y += this.speedY + Math.cos(Date.now() * 0.0008 + this.x * 0.01) * 0.2;
 
           // Pulsing glow
           this.brightness += this.brightnessSpeed * this.brightnessDir;
-          if (this.brightness >= this.maxBrightness || this.brightness <= 0.1) {
+          if (this.brightness >= this.maxBrightness || this.brightness <= 0.05) {
             this.brightnessDir *= -1;
           }
 
@@ -480,16 +490,16 @@
 
         draw(ctx) {
           const alpha = this.brightness;
-          const glowSize = this.size * (2 + this.brightness * 2);
+          const glowSize = this.size * (2 + this.brightness * 2.5);
 
           // Outer glow
           const gradient = ctx.createRadialGradient(
             this.x, this.y, 0,
             this.x, this.y, glowSize
           );
-          gradient.addColorStop(0, `hsla(${this.hue}, 80%, 85%, ${alpha})`);
-          gradient.addColorStop(0.3, `hsla(${this.hue}, 70%, 70%, ${alpha * 0.5})`);
-          gradient.addColorStop(1, `hsla(${this.hue}, 60%, 50%, 0)`);
+          gradient.addColorStop(0, `hsla(${this.hue}, 85%, 80%, ${alpha})`);
+          gradient.addColorStop(0.3, `hsla(${this.hue}, 75%, 65%, ${alpha * 0.5})`);
+          gradient.addColorStop(1, `hsla(${this.hue}, 65%, 45%, 0)`);
 
           ctx.beginPath();
           ctx.arc(this.x, this.y, glowSize, 0, Math.PI * 2);
@@ -498,9 +508,71 @@
 
           // Bright core
           ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size * 0.5, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${this.hue}, 90%, 95%, ${alpha})`;
+          ctx.arc(this.x, this.y, this.size * 0.4, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${this.hue}, 90%, 92%, ${alpha})`;
           ctx.fill();
+        }
+      }
+
+      // Wisteria Petal class - falling purple petals
+      class Petal {
+        constructor() {
+          this.reset(true);
+        }
+
+        reset(initial = false) {
+          this.x = Math.random() * window.innerWidth;
+          this.y = initial ? Math.random() * window.innerHeight : -20;
+          this.size = 4 + Math.random() * 6;
+          this.speedY = 0.4 + Math.random() * 0.8;
+          this.speedX = (Math.random() - 0.5) * 0.3;
+          this.rotation = Math.random() * 360;
+          this.rotationSpeed = (Math.random() - 0.5) * 2;
+          this.wobbleOffset = Math.random() * Math.PI * 2;
+          this.wobbleSpeed = 0.02 + Math.random() * 0.02;
+          this.opacity = 0.5 + Math.random() * 0.4;
+          const colorIdx = Math.floor(Math.random() * wisteriaColors.length);
+          this.color = wisteriaColors[colorIdx];
+        }
+
+        update() {
+          // Gentle falling with horizontal wobble
+          this.y += this.speedY;
+          this.x += this.speedX + Math.sin(Date.now() * this.wobbleSpeed + this.wobbleOffset) * 0.5;
+          this.rotation += this.rotationSpeed;
+
+          // Reset when fallen off screen
+          if (this.y > window.innerHeight + 20) {
+            this.reset();
+          }
+          // Wrap horizontally
+          if (this.x < -20) this.x = window.innerWidth + 20;
+          if (this.x > window.innerWidth + 20) this.x = -20;
+        }
+
+        draw(ctx) {
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.rotate((this.rotation * Math.PI) / 180);
+
+          // Petal shape - elongated teardrop
+          const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size);
+          gradient.addColorStop(0, `hsla(${this.color.h}, ${this.color.s}%, ${this.color.l + 10}%, ${this.opacity})`);
+          gradient.addColorStop(0.6, `hsla(${this.color.h}, ${this.color.s}%, ${this.color.l}%, ${this.opacity * 0.8})`);
+          gradient.addColorStop(1, `hsla(${this.color.h}, ${this.color.s + 10}%, ${this.color.l - 10}%, 0)`);
+
+          ctx.beginPath();
+          ctx.ellipse(0, 0, this.size * 0.4, this.size, 0, 0, Math.PI * 2);
+          ctx.fillStyle = gradient;
+          ctx.fill();
+
+          // Subtle highlight
+          ctx.beginPath();
+          ctx.ellipse(-this.size * 0.1, -this.size * 0.3, this.size * 0.15, this.size * 0.3, -0.3, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${this.color.h}, ${this.color.s - 10}%, 95%, ${this.opacity * 0.4})`;
+          ctx.fill();
+
+          ctx.restore();
         }
       }
 
@@ -521,10 +593,18 @@
         ctx = null;
       }
 
-      function initFireflies() {
-        const count = Math.min(25, Math.floor(window.innerWidth * window.innerHeight / 40000));
+      function initParticles() {
+        // Petals - more numerous
+        const petalCount = Math.min(35, Math.floor(window.innerWidth * window.innerHeight / 30000));
+        petals = [];
+        for (let i = 0; i < petalCount; i++) {
+          petals.push(new Petal());
+        }
+
+        // Fireflies - fewer, magical accents
+        const fireflyCount = Math.min(18, Math.floor(window.innerWidth * window.innerHeight / 60000));
         fireflies = [];
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < fireflyCount; i++) {
           fireflies.push(new Firefly());
         }
       }
@@ -534,6 +614,13 @@
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        // Draw petals first (behind fireflies)
+        petals.forEach(petal => {
+          petal.update();
+          petal.draw(ctx);
+        });
+
+        // Draw fireflies on top (they glow)
         fireflies.forEach(firefly => {
           firefly.update();
           firefly.draw(ctx);
@@ -589,7 +676,7 @@
         if (isActive) return;
         isActive = true;
         createCanvas();
-        initFireflies();
+        initParticles();
         animate();
         window.addEventListener('resize', handleResize);
         document.addEventListener('click', handleClick);
@@ -603,6 +690,7 @@
           animationId = null;
         }
         removeCanvas();
+        petals = [];
         fireflies = [];
         window.removeEventListener('resize', handleResize);
         document.removeEventListener('click', handleClick);

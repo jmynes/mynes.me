@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   jobi — Retro Theme
+   jobi — Retro Game Theme
    8-bit NES/Game Boy vibes, pixel art aesthetic
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -424,7 +424,7 @@ body {
    Entry Animations - 8-bit game start / sprite drop
    ═══════════════════════════════════════════════════════════════════════════ */
 
-@keyframes retroDrop {
+@keyframes retrogameDrop {
   0% {
     opacity: 0;
     transform: translateY(-100px);
@@ -454,7 +454,7 @@ body {
   }
 }
 
-@keyframes retroSlideIn {
+@keyframes retrogameSlideIn {
   0% {
     opacity: 0;
     transform: translateX(-100%);
@@ -465,7 +465,7 @@ body {
   }
 }
 
-@keyframes retroBlink {
+@keyframes retrogameBlink {
   0% { opacity: 0; }
   25% { opacity: 1; }
   50% { opacity: 0; }
@@ -473,38 +473,38 @@ body {
   100% { opacity: 1; }
 }
 
-@keyframes retroFadeIn {
+@keyframes retrogameFadeIn {
   0% { opacity: 0; }
   50% { opacity: 0; }
   100% { opacity: 1; }
 }
 
 .site-header {
-  animation: retroDrop 0.6s steps(8) forwards;
+  animation: retrogameDrop 0.6s steps(8) forwards;
 }
 
 .intro {
-  animation: retroDrop 0.6s steps(8) 0.15s forwards;
+  animation: retrogameDrop 0.6s steps(8) 0.15s forwards;
 }
 
 .project:nth-child(1) {
-  animation: retroSlideIn 0.4s steps(6) 0.3s forwards;
+  animation: retrogameSlideIn 0.4s steps(6) 0.3s forwards;
 }
 
 .project:nth-child(2) {
-  animation: retroSlideIn 0.4s steps(6) 0.45s forwards;
+  animation: retrogameSlideIn 0.4s steps(6) 0.45s forwards;
 }
 
 .theme-bg {
-  animation: retroFadeIn 0.5s steps(3) forwards;
+  animation: retrogameFadeIn 0.5s steps(3) forwards;
 }
 
 .theme-effects {
-  animation: retroBlink 0.6s steps(1) 0.2s forwards;
+  animation: retrogameBlink 0.6s steps(1) 0.2s forwards;
 }
 
 .theme-overlay {
-  animation: retroFadeIn 0.3s steps(2) 0.5s forwards;
+  animation: retrogameFadeIn 0.3s steps(2) 0.5s forwards;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

@@ -221,22 +221,22 @@ body {
   position: relative;
 }
 
-/* Candy cane accent stripe */
+/* Candy cane accent stripe - follows the curved top border */
 .site-header::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
+  inset: -2px -2px auto -2px;
+  height: calc(var(--radius-lg) + 4px);
   background: repeating-linear-gradient(
     90deg,
     var(--christmas-red) 0px,
-    var(--christmas-red) 20px,
-    var(--christmas-snow) 20px,
-    var(--christmas-snow) 40px
+    var(--christmas-red) 14px,
+    var(--christmas-snow) 14px,
+    var(--christmas-snow) 28px
   );
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  mask-image: linear-gradient(to bottom, black 0px, black 5px, transparent 5px);
+  -webkit-mask-image: linear-gradient(to bottom, black 0px, black 5px, transparent 5px);
 }
 
 .logo-mark {
@@ -354,7 +354,7 @@ body {
     0 0 20px rgba(34, 139, 34, 0.15),
     inset 0 1px 0 var(--glass-shine);
   position: relative;
-  margin-top: 12px; /* Make room for the string lights */
+  margin-top: 14px; /* Make room for the string lights */
   overflow: visible;
 }
 
@@ -367,59 +367,14 @@ body {
     0 0 60px rgba(212, 43, 43, 0.15);
 }
 
-/* String lights wire along top of cards */
-.project::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: 20px;
-  right: 20px;
-  height: 2px;
-  background: #222;
-  border-radius: 2px;
-  z-index: 10;
-}
+/* ─────────────────────────────────────────────────────────────────────────────
+   Christmas String Lights (rendered via JavaScript)
+   ───────────────────────────────────────────────────────────────────────────── */
 
-/* Christmas light bulbs */
+/* Hide CSS pseudo-elements - lights are created via JS */
+.project::before,
 .project::after {
-  content: '';
-  position: absolute;
-  top: -6px;
-  left: 20px;
-  right: 20px;
-  height: 14px;
-  background:
-    /* Red bulbs */
-    radial-gradient(ellipse 5px 7px at 25px 7px, var(--christmas-red) 60%, rgba(212, 43, 43, 0.3) 100%),
-    radial-gradient(ellipse 5px 7px at 145px 7px, var(--christmas-red) 60%, rgba(212, 43, 43, 0.3) 100%),
-    radial-gradient(ellipse 5px 7px at 265px 7px, var(--christmas-red) 60%, rgba(212, 43, 43, 0.3) 100%),
-    /* Green bulbs */
-    radial-gradient(ellipse 5px 7px at 55px 7px, var(--christmas-green) 60%, rgba(34, 139, 34, 0.3) 100%),
-    radial-gradient(ellipse 5px 7px at 175px 7px, var(--christmas-green) 60%, rgba(34, 139, 34, 0.3) 100%),
-    radial-gradient(ellipse 5px 7px at 295px 7px, var(--christmas-green) 60%, rgba(34, 139, 34, 0.3) 100%),
-    /* Gold bulbs */
-    radial-gradient(ellipse 5px 7px at 85px 7px, var(--christmas-gold) 60%, rgba(255, 215, 0, 0.3) 100%),
-    radial-gradient(ellipse 5px 7px at 205px 7px, var(--christmas-gold) 60%, rgba(255, 215, 0, 0.3) 100%),
-    radial-gradient(ellipse 5px 7px at 325px 7px, var(--christmas-gold) 60%, rgba(255, 215, 0, 0.3) 100%),
-    /* Blue bulbs */
-    radial-gradient(ellipse 5px 7px at 115px 7px, #3498db 60%, rgba(52, 152, 219, 0.3) 100%),
-    radial-gradient(ellipse 5px 7px at 235px 7px, #3498db 60%, rgba(52, 152, 219, 0.3) 100%),
-    radial-gradient(ellipse 5px 7px at 355px 7px, #3498db 60%, rgba(52, 152, 219, 0.3) 100%);
-  background-repeat: repeat-x;
-  background-size: 360px 14px;
-  z-index: 10;
-  animation: cardLightsGlow 2s ease-in-out infinite;
-}
-
-@keyframes cardLightsGlow {
-  0%, 100% {
-    filter: drop-shadow(0 0 4px var(--christmas-red)) drop-shadow(0 0 4px var(--christmas-green));
-    opacity: 1;
-  }
-  50% {
-    filter: drop-shadow(0 0 8px var(--christmas-gold)) drop-shadow(0 0 6px var(--christmas-red));
-    opacity: 0.9;
-  }
+  display: none;
 }
 
 .project-screenshot-wrapper {
@@ -618,6 +573,12 @@ body {
 @media (max-width: 768px) {
   .site-header {
     border-radius: var(--radius-md);
+  }
+
+  /* Candy cane stripe follows smaller radius on mobile */
+  .site-header::before {
+    height: calc(var(--radius-md) + 4px);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
   }
 
   .project {

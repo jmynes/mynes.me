@@ -4,7 +4,7 @@ A portfolio landing page showcasing projects built with vibes.
 
 ## Features
 
-- **5 Themes**: Aero (Vista Aurora), Bubbly (Frutiger), Hacker, Groovy, and Retro — each with unique visual effects
+- **13 Themes**: Aero, Bubbly, Christmas, Fireflies, Groovy, Hacker, Halloween, Lilypond, PowerPC, Retrogame, Starwars, Synthwave, and Underworld — each with unique visual effects
 - **Shuffle Mode**: Randomly picks a different theme on each visit (default on)
 - **Lightbox**: Click screenshots to view full-size
 - **Responsive**: Works on desktop and mobile
@@ -26,12 +26,20 @@ Open `index.html` in a browser. No build step required.
 ```
 index.html          # Main page
 styles/
-  base.css          # Shared styles
-  aero.css          # Vista Aurora theme
-  bubbly.css        # Frutiger Aero theme
-  hacker.css        # Matrix/terminal theme
-  groovy.css        # 70s psychedelic theme
-  retro.css         # BBS/DOS theme
+  base.css          # Shared layout and components
+  aero.css          # Vista Aurora glass effects
+  bubbly.css        # Frutiger Aero bubbles
+  christmas.css     # Holiday snow and lights
+  fireflies.css     # Glowing firefly particles
+  groovy.css        # 70s psychedelic waves
+  hacker.css        # Matrix rain terminal
+  halloween.css     # Spooky pumpkins and bats
+  lilypond.css      # Monet's Giverny garden
+  powerpc.css       # Classic Mac OS platinum
+  retrogame.css     # Arcade pixel aesthetic
+  starwars.css      # Hyperspace star field
+  synthwave.css     # 80s neon grid
+  underworld.css    # Volcanic ember particles
 ```
 
 ## License

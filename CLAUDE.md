@@ -4,14 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-mynes.me is a static portfolio landing page with 5 switchable visual themes. No build step — just open `index.html` in a browser.
+mynes.me is a static portfolio landing page with 13 switchable visual themes. No build step — just open `index.html` in a browser.
 
 ## Architecture
 
 **Theme System**: Themes are implemented as separate CSS files that override base styles. Each theme defines colors, fonts, animations, and decorative effects (bubbles, particles, scanlines, etc.) using the `.theme-bg`, `.theme-effects`, and `.theme-overlay` layers.
 
 - `base.css` — Layout structure, component scaffolding, responsive breakpoints
-- Theme files (`aero.css`, `bubbly.css`, `hacker.css`, `groovy.css`, `retro.css`) — Visual styling only
+- Theme files — Visual styling only: `aero.css`, `bubbly.css`, `christmas.css`, `fireflies.css`, `groovy.css`, `hacker.css`, `halloween.css`, `lilypond.css`, `powerpc.css`, `retrogame.css`, `starwars.css`, `synthwave.css`, `underworld.css`
 
 **Theme Switching**: JavaScript in `index.html` handles theme selection via localStorage (`mynes-shuffle`, `mynes-last-theme`). Shuffle mode (default on) prevents the same theme from loading twice in a row.
 

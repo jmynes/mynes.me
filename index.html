@@ -23,7 +23,7 @@
     window.scrollTo(0, 0);
 
     // Theme selection: shuffle ON = random (never same twice), shuffle OFF = keep same theme
-    const themes = ['aero', 'bubbly', 'christmas', 'fireflies', 'groovy', 'hacker', 'halloween', 'hypnotic', 'kaleidoscope', 'lilypond', 'powerpc', 'retro', 'space', 'starwars', 'synthwave', 'terminal', 'volcano'];
+    const themes = ['aero', 'bubbly', 'christmas', 'fireflies', 'groovy', 'hacker', 'halloween', 'lilypond', 'powerpc', 'retro', 'starwars', 'synthwave', 'volcano'];
     const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false'; // default true
     const lastTheme = localStorage.getItem('mynes-last-theme');
     let selectedTheme;
@@ -213,15 +213,11 @@
       <button class="theme-btn" data-theme="groovy">Groovy</button>
       <button class="theme-btn" data-theme="hacker">Hacker</button>
       <button class="theme-btn" data-theme="halloween">Halloween</button>
-      <button class="theme-btn" data-theme="hypnotic">Hypnotic</button>
-      <button class="theme-btn" data-theme="kaleidoscope">Kaleidoscope</button>
       <button class="theme-btn" data-theme="lilypond">Lily Pond</button>
       <button class="theme-btn" data-theme="powerpc">PowerPC</button>
       <button class="theme-btn" data-theme="retro">Retro</button>
-      <button class="theme-btn" data-theme="space">Space</button>
       <button class="theme-btn" data-theme="starwars">Star Wars</button>
       <button class="theme-btn" data-theme="synthwave">Synthwave</button>
-      <button class="theme-btn" data-theme="terminal">Terminal</button>
       <button class="theme-btn" data-theme="volcano">Volcano</button>
     </div>
   </header>
@@ -432,6 +428,215 @@
         closeLightbox();
       }
     });
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // Lily Pond Theme — Interactive Effects
+    // Fireflies + Water Ripples (only active when lilypond theme is selected)
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    (function initLilyPondEffects() {
+      let canvas = null;
+      let ctx = null;
+      let fireflies = [];
+      let animationId = null;
+      let isActive = false;
+
+      // Firefly class
+      class Firefly {
+        constructor() {
+          this.reset();
+        }
+
+        reset() {
+          this.x = Math.random() * window.innerWidth;
+          this.y = Math.random() * window.innerHeight;
+          this.size = 2 + Math.random() * 3;
+          this.speedX = (Math.random() - 0.5) * 0.5;
+          this.speedY = (Math.random() - 0.5) * 0.4;
+          this.brightness = Math.random();
+          this.brightnessSpeed = 0.01 + Math.random() * 0.02;
+          this.brightnessDir = Math.random() > 0.5 ? 1 : -1;
+          this.hue = 45 + Math.random() * 20; // Warm gold to amber
+          this.maxBrightness = 0.6 + Math.random() * 0.4;
+        }
+
+        update() {
+          // Gentle floating movement
+          this.x += this.speedX + Math.sin(Date.now() * 0.001 + this.y * 0.01) * 0.3;
+          this.y += this.speedY + Math.cos(Date.now() * 0.001 + this.x * 0.01) * 0.2;
+
+          // Pulsing glow
+          this.brightness += this.brightnessSpeed * this.brightnessDir;
+          if (this.brightness >= this.maxBrightness || this.brightness <= 0.1) {
+            this.brightnessDir *= -1;
+          }
+
+          // Wrap around screen
+          if (this.x < -20) this.x = window.innerWidth + 20;
+          if (this.x > window.innerWidth + 20) this.x = -20;
+          if (this.y < -20) this.y = window.innerHeight + 20;
+          if (this.y > window.innerHeight + 20) this.y = -20;
+        }
+
+        draw(ctx) {
+          const alpha = this.brightness;
+          const glowSize = this.size * (2 + this.brightness * 2);
+
+          // Outer glow
+          const gradient = ctx.createRadialGradient(
+            this.x, this.y, 0,
+            this.x, this.y, glowSize
+          );
+          gradient.addColorStop(0, `hsla(${this.hue}, 80%, 85%, ${alpha})`);
+          gradient.addColorStop(0.3, `hsla(${this.hue}, 70%, 70%, ${alpha * 0.5})`);
+          gradient.addColorStop(1, `hsla(${this.hue}, 60%, 50%, 0)`);
+
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, glowSize, 0, Math.PI * 2);
+          ctx.fillStyle = gradient;
+          ctx.fill();
+
+          // Bright core
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size * 0.5, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${this.hue}, 90%, 95%, ${alpha})`;
+          ctx.fill();
+        }
+      }
+
+      function createCanvas() {
+        canvas = document.createElement('canvas');
+        canvas.id = 'firefly-canvas';
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        document.body.appendChild(canvas);
+        ctx = canvas.getContext('2d');
+      }
+
+      function removeCanvas() {
+        if (canvas && canvas.parentNode) {
+          canvas.parentNode.removeChild(canvas);
+        }
+        canvas = null;
+        ctx = null;
+      }
+
+      function initFireflies() {
+        const count = Math.min(25, Math.floor(window.innerWidth * window.innerHeight / 40000));
+        fireflies = [];
+        for (let i = 0; i < count; i++) {
+          fireflies.push(new Firefly());
+        }
+      }
+
+      function animate() {
+        if (!isActive || !ctx) return;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        fireflies.forEach(firefly => {
+          firefly.update();
+          firefly.draw(ctx);
+        });
+
+        animationId = requestAnimationFrame(animate);
+      }
+
+      function handleResize() {
+        if (canvas) {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+      }
+
+      // Water ripple effect on click/touch
+      function createRipple(x, y) {
+        const ripple = document.createElement('div');
+        ripple.className = 'pond-ripple';
+        const size = 150 + Math.random() * 100;
+        ripple.style.width = size + 'px';
+        ripple.style.height = size + 'px';
+        ripple.style.left = (x - size / 2) + 'px';
+        ripple.style.top = (y - size / 2) + 'px';
+        document.body.appendChild(ripple);
+
+        // Create secondary smaller ripple
+        setTimeout(() => {
+          const ripple2 = document.createElement('div');
+          ripple2.className = 'pond-ripple';
+          const size2 = size * 0.6;
+          ripple2.style.width = size2 + 'px';
+          ripple2.style.height = size2 + 'px';
+          ripple2.style.left = (x - size2 / 2) + 'px';
+          ripple2.style.top = (y - size2 / 2) + 'px';
+          ripple2.style.animationDuration = '1s';
+          document.body.appendChild(ripple2);
+          setTimeout(() => ripple2.remove(), 1000);
+        }, 150);
+
+        // Remove after animation
+        setTimeout(() => ripple.remove(), 1200);
+      }
+
+      function handleClick(e) {
+        if (!isActive) return;
+        // Don't create ripples on interactive elements
+        if (e.target.closest('a, button, .project-screenshot-wrapper, .lightbox')) return;
+        createRipple(e.clientX, e.clientY);
+      }
+
+      function start() {
+        if (isActive) return;
+        isActive = true;
+        createCanvas();
+        initFireflies();
+        animate();
+        window.addEventListener('resize', handleResize);
+        document.addEventListener('click', handleClick);
+      }
+
+      function stop() {
+        if (!isActive) return;
+        isActive = false;
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+        }
+        removeCanvas();
+        fireflies = [];
+        window.removeEventListener('resize', handleResize);
+        document.removeEventListener('click', handleClick);
+        // Clean up any remaining ripples
+        document.querySelectorAll('.pond-ripple').forEach(r => r.remove());
+      }
+
+      function checkTheme() {
+        const currentTheme = document.documentElement.dataset.theme;
+        if (currentTheme === 'lilypond') {
+          start();
+        } else {
+          stop();
+        }
+      }
+
+      // Watch for theme changes
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === 'data-theme') {
+            checkTheme();
+          }
+        });
+      });
+
+      observer.observe(document.documentElement, { attributes: true });
+
+      // Initial check
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkTheme);
+      } else {
+        checkTheme();
+      }
+    })();
   </script>
 </body>
 </html>

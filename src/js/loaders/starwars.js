@@ -27,6 +27,30 @@ export async function animate(overlay, isCancelled) {
   }
   overlay.className = 'theme-loader theme-loader--starwars';
 
+  // Hide header and footer from the start
+  const header = document.querySelector('.site-header');
+  const footer = document.querySelector('.site-footer');
+  if (header) {
+    header.style.opacity = '0';
+    header.style.visibility = 'hidden';
+  }
+  if (footer) {
+    footer.style.opacity = '0';
+    footer.style.visibility = 'hidden';
+  }
+
+  // Helper to restore header/footer on cancel
+  const restoreHeaderFooter = () => {
+    if (header) {
+      header.style.opacity = '';
+      header.style.visibility = '';
+    }
+    if (footer) {
+      footer.style.opacity = '';
+      footer.style.visibility = '';
+    }
+  };
+
   // Create starfield
   const starfield = document.createElement('div');
   starfield.className = 'starwars-starfield';
@@ -48,35 +72,32 @@ export async function animate(overlay, isCancelled) {
 
   // Wait for intro to fade in and out
   await sleep(500);
-  if (isCancelled()) return;
+  if (isCancelled()) {
+    restoreHeaderFooter();
+    return;
+  }
   intro.classList.add('visible');
   await sleep(2500);
-  if (isCancelled()) return;
+  if (isCancelled()) {
+    restoreHeaderFooter();
+    return;
+  }
   intro.classList.add('fade-out');
   await sleep(500);
-  if (isCancelled()) return;
+  if (isCancelled()) {
+    restoreHeaderFooter();
+    return;
+  }
 
   // Remove intro text
   intro.remove();
 
   // Now apply crawl effect to actual page content
   const main = document.querySelector('main');
-  const header = document.querySelector('.site-header');
-  const footer = document.querySelector('.site-footer');
 
   if (main) {
     // Add crawl class to main content
     main.classList.add('starwars-page-crawl');
-
-    // Hide header and footer during crawl
-    if (header) {
-      header.style.opacity = '0';
-      header.style.visibility = 'hidden';
-    }
-    if (footer) {
-      footer.style.opacity = '0';
-      footer.style.visibility = 'hidden';
-    }
 
     // Make overlay semi-transparent to show content behind
     overlay.classList.add('starwars-crawl-active');
@@ -87,14 +108,7 @@ export async function animate(overlay, isCancelled) {
       // Cleanup on cancel
       main.classList.remove('starwars-page-crawl');
       document.body.classList.remove('starwars-intro-complete');
-      if (header) {
-        header.style.opacity = '';
-        header.style.visibility = '';
-      }
-      if (footer) {
-        footer.style.opacity = '';
-        footer.style.visibility = '';
-      }
+      restoreHeaderFooter();
       return;
     }
 

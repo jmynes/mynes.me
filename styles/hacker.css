@@ -1,0 +1,427 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   jobi — Hacker Theme
+   Terminal green on black, CRT scanlines, Matrix vibes
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --black: #0a0a0a;
+  --black-light: #111111;
+  --black-lighter: #1a1a1a;
+
+  --green: #00ff00;
+  --green-dim: #00cc00;
+  --green-dark: #009900;
+  --green-glow: rgba(0, 255, 0, 0.4);
+  --green-subtle: rgba(0, 255, 0, 0.1);
+
+  --text-primary: #00ff00;
+  --text-secondary: #00cc00;
+  --text-dim: #009900;
+
+  --font-display: 'VT323', monospace;
+  --font-body: 'Share Tech Mono', monospace;
+
+  --radius-sm: 0;
+  --radius-md: 2px;
+  --radius-lg: 4px;
+  --radius-pill: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Body & Background
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background: var(--black);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Matrix Rain / Grid Background
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-bg {
+  background:
+    /* Subtle grid */
+    linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+    /* Radial vignette */
+    radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
+  background-size: 50px 50px, 50px 50px, 100% 100%;
+}
+
+/* Animated vertical lines (matrix rain suggestion) */
+.theme-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 48px,
+    rgba(0, 255, 0, 0.02) 48px,
+    rgba(0, 255, 0, 0.02) 50px
+  );
+  animation: matrixPulse 4s ease-in-out infinite;
+}
+
+@keyframes matrixPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CRT Scanlines Overlay
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-overlay {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15) 0px,
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+  animation: scanlines 0.1s linear infinite;
+}
+
+@keyframes scanlines {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 2px; }
+}
+
+/* CRT flicker effect */
+.theme-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 255, 0, 0.02);
+  animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.98; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Floating Elements - Code fragments / glitches
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-effects .bubble {
+  position: absolute;
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(180deg, var(--green) 0%, transparent 100%);
+  border-radius: 0;
+  box-shadow: 0 0 10px var(--green-glow);
+  animation: codeRain 8s linear infinite;
+  opacity: 0.6;
+}
+
+.theme-effects .bubble:nth-child(1) { left: 5%; animation-delay: 0s; height: 30px; }
+.theme-effects .bubble:nth-child(2) { left: 15%; animation-delay: -1s; height: 20px; }
+.theme-effects .bubble:nth-child(3) { left: 25%; animation-delay: -2s; height: 40px; }
+.theme-effects .bubble:nth-child(4) { left: 45%; animation-delay: -3s; height: 25px; }
+.theme-effects .bubble:nth-child(5) { left: 65%; animation-delay: -4s; height: 35px; }
+.theme-effects .bubble:nth-child(6) { left: 75%; animation-delay: -5s; height: 15px; }
+.theme-effects .bubble:nth-child(7) { left: 85%; animation-delay: -6s; height: 28px; }
+.theme-effects .bubble:nth-child(8) { left: 95%; animation-delay: -7s; height: 22px; }
+
+.theme-effects .bubble::before,
+.theme-effects .bubble::after {
+  display: none;
+}
+
+@keyframes codeRain {
+  0% { transform: translateY(-100vh); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Header - Terminal Window
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.site-header {
+  background: var(--black-light);
+  border: 1px solid var(--green-dark);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 0 20px var(--green-subtle),
+    inset 0 0 30px rgba(0, 255, 0, 0.03);
+}
+
+.site-header::before {
+  content: '> ';
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--green);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.logo {
+  margin-left: 1.5rem;
+}
+
+.logo-mark {
+  background: transparent;
+  border: 2px solid var(--green);
+  border-radius: var(--radius-md);
+  color: var(--green);
+  box-shadow: 0 0 10px var(--green-glow);
+}
+
+.logo-mark::before {
+  display: none;
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  color: var(--green);
+  text-shadow: 0 0 10px var(--green-glow);
+}
+
+/* Theme Toggle Buttons */
+.theme-btn {
+  font-family: var(--font-body);
+  background: transparent;
+  border: 1px solid var(--green-dark);
+  border-radius: var(--radius-md);
+  color: var(--green-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.theme-btn:hover:not(:disabled) {
+  border-color: var(--green);
+  color: var(--green);
+  box-shadow: 0 0 10px var(--green-subtle);
+}
+
+.theme-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.theme-btn.active {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--black);
+  box-shadow: 0 0 15px var(--green-glow);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Intro
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.intro h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 10vw, 6rem);
+  color: var(--green);
+  text-shadow: 0 0 30px var(--green-glow), 0 0 60px var(--green-subtle);
+}
+
+.intro h1 em {
+  color: var(--green-dim);
+  text-shadow: 0 0 20px var(--green-glow);
+}
+
+.intro-sub {
+  color: var(--green-dark);
+  font-family: var(--font-body);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Project Cards - Terminal Windows
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.project {
+  background: var(--black-light);
+  border: 1px solid var(--green-dark);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 30px var(--green-subtle);
+}
+
+.project:hover {
+  border-color: var(--green);
+  box-shadow: 0 0 40px var(--green-glow);
+}
+
+.project::before {
+  content: '// PROJECT';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: var(--black-light);
+  padding: 0 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--green-dark);
+  letter-spacing: 0.1em;
+}
+
+.project-screenshot-wrapper {
+  border: 1px solid var(--green-dark);
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.05);
+}
+
+.project-screenshot {
+  border-radius: var(--radius-md);
+  filter: saturate(0.8) brightness(0.9);
+  transition: filter 0.3s ease;
+}
+
+.project-screenshot-wrapper:hover .project-screenshot {
+  filter: saturate(1) brightness(1);
+}
+
+.screenshot-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 60%);
+  border-radius: var(--radius-md);
+}
+
+.zoom-hint {
+  font-family: var(--font-body);
+  color: var(--green);
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--green-dark);
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 10px var(--green-subtle);
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--green);
+  text-shadow: 0 0 10px var(--green-glow);
+}
+
+.project-link {
+  font-family: var(--font-body);
+  color: var(--black);
+  background: var(--green);
+  border: none;
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 15px var(--green-glow);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.project-link::before {
+  display: none;
+}
+
+.project-link:hover {
+  background: var(--green-dim);
+  box-shadow: 0 0 25px var(--green-glow);
+}
+
+.project-link.coming-soon {
+  background: var(--green-dark);
+  box-shadow: 0 0 10px rgba(0, 153, 0, 0.3);
+}
+
+.project-desc {
+  color: var(--green-dim);
+  font-size: 0.95rem;
+}
+
+.tech-tag {
+  font-family: var(--font-body);
+  color: var(--green);
+  background: transparent;
+  border: 1px solid var(--green-dark);
+  border-radius: var(--radius-md);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Footer
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.site-footer {
+  color: var(--green-dark);
+  font-family: var(--font-body);
+}
+
+.site-footer strong {
+  color: var(--green);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Lightbox
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.lightbox {
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.lightbox-close {
+  background: var(--black-light);
+  border: 1px solid var(--green-dark);
+  border-radius: var(--radius-md);
+  color: var(--green);
+  box-shadow: 0 0 15px var(--green-subtle);
+}
+
+.lightbox-close::before {
+  display: none;
+}
+
+.lightbox-close:hover {
+  border-color: var(--green);
+  box-shadow: 0 0 20px var(--green-glow);
+}
+
+.lightbox-content {
+  border: 1px solid var(--green-dark);
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 40px var(--green-glow);
+}
+
+.lightbox-image {
+  border-radius: var(--radius-md);
+}
+
+.lightbox-caption {
+  font-family: var(--font-display);
+  color: var(--green);
+  text-shadow: 0 0 10px var(--green-glow);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .site-header::before {
+    display: none;
+  }
+
+  .logo {
+    margin-left: 0;
+  }
+
+  .theme-effects .bubble:nth-child(n+5) {
+    display: none;
+  }
+}

@@ -11,18 +11,43 @@
   <meta property="og:title" content="jobi — Vibed Demos">
   <meta property="og:description" content="A collection of projects built with vibes">
 
-  <link rel="stylesheet" href="styles.css">
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/aero.css" id="theme-css">
+
   <script>
     // Prevent scroll restoration on refresh
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
     window.scrollTo(0, 0);
+
+    // Random theme on page load
+    const themes = ['aero', 'hacker', 'groovy', 'retro'];
+    const availableThemes = ['aero', 'hacker', 'groovy', 'retro']; // All themes!
+    const randomTheme = availableThemes[Math.floor(Math.random() * availableThemes.length)];
+
+    // Set theme immediately to prevent flash
+    document.documentElement.dataset.theme = randomTheme;
+
+    // Update CSS link immediately
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeCss = document.getElementById('theme-css');
+      if (themeCss) themeCss.href = `styles/${randomTheme}.css`;
+
+      // Set initial active button
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.theme === randomTheme);
+      });
+    });
   </script>
 </head>
 <body>
-  <!-- Floating bubbles background -->
-  <div class="bubbles" aria-hidden="true">
+  <!-- Theme Background Layer -->
+  <div class="theme-bg" aria-hidden="true"></div>
+
+  <!-- Theme Effects Layer (bubbles, particles, etc) -->
+  <div class="theme-effects" aria-hidden="true">
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
@@ -33,11 +58,8 @@
     <div class="bubble"></div>
   </div>
 
-  <!-- Aurora light effect -->
-  <div class="aurora" aria-hidden="true"></div>
-
-  <!-- Lens flare -->
-  <div class="lens-flare" aria-hidden="true"></div>
+  <!-- Theme Overlay Layer (lens flare, scanlines, etc) -->
+  <div class="theme-overlay" aria-hidden="true"></div>
 
   <header class="site-header">
     <div class="logo">
@@ -48,7 +70,13 @@
       </div>
       <span class="logo-text">jobi</span>
     </div>
-    <span class="header-tag">vibed demos</span>
+
+    <div class="theme-toggles">
+      <button class="theme-btn active" data-theme="aero">Aero</button>
+      <button class="theme-btn" data-theme="hacker">Hacker</button>
+      <button class="theme-btn" data-theme="groovy">Groovy</button>
+      <button class="theme-btn" data-theme="retro">Retro</button>
+    </div>
   </header>
 
   <main>
@@ -157,6 +185,29 @@
   </div>
 
   <script>
+    // Theme switching
+    const themeButtons = document.querySelectorAll('.theme-btn');
+    const themeCssLink = document.getElementById('theme-css');
+
+    function setTheme(themeName) {
+      // Update CSS link
+      themeCssLink.href = `styles/${themeName}.css`;
+      document.documentElement.dataset.theme = themeName;
+
+      // Update active button
+      themeButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.theme === themeName);
+      });
+    }
+
+    themeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!btn.disabled) {
+          setTheme(btn.dataset.theme);
+        }
+      });
+    });
+
     // Lightbox functionality
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightbox-image');

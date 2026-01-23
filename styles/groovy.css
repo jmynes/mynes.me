@@ -1,0 +1,423 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   jobi — Groovy Theme
+   70s psychedelic lavalamp vibes
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Comfortaa:wght@400;500;600;700&display=swap');
+
+:root {
+  --purple-deep: #2d1b4e;
+  --purple: #6b3fa0;
+  --magenta: #c13584;
+  --pink: #fd5da8;
+  --orange: #ff8c42;
+  --yellow: #fcf75e;
+  --cream: #fff5e6;
+
+  --text-primary: #fff5e6;
+  --text-secondary: #ffd6e0;
+  --text-dark: #2d1b4e;
+
+  --font-display: 'Pacifico', cursive;
+  --font-body: 'Comfortaa', sans-serif;
+
+  --radius-sm: 30px;
+  --radius-md: 40px;
+  --radius-lg: 50px;
+  --radius-pill: 100px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Body & Background - Psychedelic gradient
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background: linear-gradient(
+    135deg,
+    var(--purple-deep) 0%,
+    var(--purple) 25%,
+    var(--magenta) 50%,
+    var(--orange) 75%,
+    var(--yellow) 100%
+  );
+  background-attachment: fixed;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Animated gradient background
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-bg {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(253, 93, 168, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(255, 140, 66, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 40% at 40% 40%, rgba(193, 53, 132, 0.3) 0%, transparent 50%);
+  animation: bgShift 20s ease-in-out infinite;
+}
+
+@keyframes bgShift {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.1) rotate(5deg); opacity: 0.8; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Lava Blobs - Morphing shapes
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-effects .bubble {
+  position: absolute;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 50%, var(--yellow) 100%);
+  opacity: 0.6;
+  filter: blur(1px);
+  animation: blobMorph 15s ease-in-out infinite, blobFloat 20s ease-in-out infinite;
+}
+
+.theme-effects .bubble::before,
+.theme-effects .bubble::after {
+  display: none;
+}
+
+.theme-effects .bubble:nth-child(1) {
+  width: 200px; height: 180px; left: 5%; top: 10%;
+  background: linear-gradient(135deg, var(--magenta) 0%, var(--pink) 100%);
+  animation-delay: 0s;
+}
+.theme-effects .bubble:nth-child(2) {
+  width: 150px; height: 160px; left: 80%; top: 15%;
+  background: linear-gradient(135deg, var(--orange) 0%, var(--yellow) 100%);
+  animation-delay: -3s;
+}
+.theme-effects .bubble:nth-child(3) {
+  width: 120px; height: 130px; left: 15%; top: 50%;
+  background: linear-gradient(135deg, var(--purple) 0%, var(--magenta) 100%);
+  animation-delay: -6s;
+}
+.theme-effects .bubble:nth-child(4) {
+  width: 180px; height: 170px; left: 70%; top: 55%;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 100%);
+  animation-delay: -9s;
+}
+.theme-effects .bubble:nth-child(5) {
+  width: 100px; height: 110px; left: 40%; top: 75%;
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 100%);
+  animation-delay: -12s;
+}
+.theme-effects .bubble:nth-child(6) {
+  width: 140px; height: 150px; left: 25%; top: 25%;
+  background: linear-gradient(135deg, var(--magenta) 0%, var(--purple) 100%);
+  animation-delay: -4s;
+}
+.theme-effects .bubble:nth-child(7) {
+  width: 90px; height: 100px; left: 60%; top: 35%;
+  background: linear-gradient(135deg, var(--orange) 0%, var(--pink) 100%);
+  animation-delay: -7s;
+}
+.theme-effects .bubble:nth-child(8) {
+  width: 160px; height: 140px; left: 50%; top: 65%;
+  background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+  animation-delay: -10s;
+}
+
+@keyframes blobMorph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
+  75% { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; }
+}
+
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -40px) scale(1.1); }
+  50% { transform: translate(-20px, 20px) scale(0.9); }
+  75% { transform: translate(40px, 30px) scale(1.05); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Overlay - Soft glow
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 245, 230, 0.1) 0%, transparent 60%);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Header - Groovy bubble
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.site-header {
+  background: rgba(255, 245, 230, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 245, 230, 0.3);
+  border-radius: var(--radius-pill);
+  box-shadow:
+    0 8px 32px rgba(45, 27, 78, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.site-header::before {
+  display: none;
+}
+
+.logo-mark {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 100%);
+  border-radius: 50%;
+  color: white;
+  box-shadow: 0 4px 20px rgba(253, 93, 168, 0.5);
+}
+
+.logo-mark::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 8px;
+  width: 14px;
+  height: 10px;
+  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  color: var(--cream);
+  text-shadow: 2px 2px 4px rgba(45, 27, 78, 0.3);
+}
+
+/* Theme Toggle Buttons */
+.theme-btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  background: rgba(255, 245, 230, 0.2);
+  border: 1px solid rgba(255, 245, 230, 0.3);
+  border-radius: var(--radius-pill);
+  color: var(--cream);
+}
+
+.theme-btn:hover:not(:disabled) {
+  background: rgba(255, 245, 230, 0.3);
+  border-color: rgba(255, 245, 230, 0.5);
+}
+
+.theme-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.theme-btn.active {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 100%);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 4px 15px rgba(253, 93, 168, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Intro
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.intro h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 10vw, 5.5rem);
+  color: var(--cream);
+  text-shadow:
+    3px 3px 0 var(--pink),
+    6px 6px 0 var(--orange);
+}
+
+.intro h1 em {
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 50%, var(--pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(2px 2px 0 var(--purple));
+}
+
+.intro-sub {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Project Cards - Soft glass
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.project {
+  background: rgba(255, 245, 230, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 245, 230, 0.2);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 48px rgba(45, 27, 78, 0.3);
+}
+
+.project:hover {
+  transform: translateY(-8px) scale(1.01);
+  border-color: rgba(255, 245, 230, 0.4);
+  box-shadow: 0 24px 64px rgba(45, 27, 78, 0.4);
+}
+
+.project::before {
+  display: none;
+}
+
+.project-screenshot-wrapper {
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 24px rgba(45, 27, 78, 0.2);
+  overflow: hidden;
+}
+
+.project-screenshot {
+  border-radius: var(--radius-md);
+}
+
+.screenshot-overlay {
+  background: linear-gradient(to top, rgba(45, 27, 78, 0.8) 0%, transparent 60%);
+  border-radius: var(--radius-md);
+}
+
+.zoom-hint {
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: white;
+  background: rgba(255, 245, 230, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 245, 230, 0.3);
+  border-radius: var(--radius-pill);
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--cream);
+  text-shadow: 2px 2px 0 var(--pink);
+}
+
+.project-link {
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 100%);
+  border: none;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 20px rgba(253, 93, 168, 0.4);
+}
+
+.project-link::before {
+  display: none;
+}
+
+.project-link:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 30px rgba(253, 93, 168, 0.5);
+}
+
+.project-link.coming-soon {
+  background: linear-gradient(135deg, var(--purple) 0%, var(--magenta) 100%);
+  box-shadow: 0 4px 20px rgba(107, 63, 160, 0.4);
+}
+
+.project-desc {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.tech-tag {
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--cream);
+  background: rgba(255, 245, 230, 0.15);
+  border: 1px solid rgba(255, 245, 230, 0.25);
+  border-radius: var(--radius-pill);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Footer
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.site-footer {
+  color: var(--text-secondary);
+}
+
+.site-footer strong {
+  color: var(--cream);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Lightbox
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.lightbox {
+  background: rgba(45, 27, 78, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.lightbox-close {
+  background: rgba(255, 245, 230, 0.2);
+  border: 2px solid rgba(255, 245, 230, 0.3);
+  border-radius: 50%;
+  color: var(--cream);
+  box-shadow: 0 8px 24px rgba(45, 27, 78, 0.3);
+}
+
+.lightbox-close::before {
+  display: none;
+}
+
+.lightbox-close:hover {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 100%);
+  border-color: transparent;
+}
+
+.lightbox-content {
+  border-radius: var(--radius-lg);
+  box-shadow: 0 32px 80px rgba(45, 27, 78, 0.5);
+}
+
+.lightbox-image {
+  border-radius: var(--radius-lg);
+}
+
+.lightbox-caption {
+  font-family: var(--font-display);
+  color: var(--cream);
+  text-shadow: 2px 2px 4px rgba(45, 27, 78, 0.5);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .site-header {
+    border-radius: var(--radius-lg);
+  }
+
+  .project {
+    border-radius: var(--radius-md);
+  }
+
+  .project-screenshot-wrapper,
+  .project-screenshot,
+  .screenshot-overlay {
+    border-radius: var(--radius-sm);
+  }
+
+  .theme-effects .bubble:nth-child(1) { width: 120px; height: 110px; }
+  .theme-effects .bubble:nth-child(2) { width: 90px; height: 100px; }
+  .theme-effects .bubble:nth-child(4) { width: 110px; height: 100px; }
+  .theme-effects .bubble:nth-child(6),
+  .theme-effects .bubble:nth-child(7),
+  .theme-effects .bubble:nth-child(8) { display: none; }
+
+  .lightbox-content,
+  .lightbox-image {
+    border-radius: var(--radius-md);
+  }
+}

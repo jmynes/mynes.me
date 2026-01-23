@@ -78,6 +78,7 @@ body {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .theme-overlay {
+  /* Static scanlines - much more performant than animated */
   background:
     repeating-linear-gradient(
       0deg,
@@ -86,12 +87,14 @@ body {
       transparent 1px,
       transparent 2px
     );
-  animation: scanlines 0.1s linear infinite;
+  /* Use GPU-accelerated transform for subtle movement */
+  will-change: transform;
+  animation: scanlines 8s linear infinite;
 }
 
 @keyframes scanlines {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 2px; }
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
 }
 
 /* CRT flicker effect */
@@ -440,34 +443,32 @@ body {
    Entry Animations - Glitchy terminal boot sequence
    ═══════════════════════════════════════════════════════════════════════════ */
 
+/* GPU-accelerated glitch - uses only transform and opacity (no clip-path) */
 @keyframes hackerGlitch {
   0% {
     opacity: 0;
-    transform: translateX(-20px);
-    clip-path: inset(0 100% 0 0);
+    transform: translateX(-20px) scaleX(0);
+    transform-origin: left center;
   }
   20% {
     opacity: 1;
-    clip-path: inset(0 80% 0 0);
+    transform: translateX(0) scaleX(0.3);
   }
   25% {
-    transform: translateX(5px);
-    clip-path: inset(0 60% 0 0);
+    transform: translateX(5px) scaleX(0.5);
   }
   30% {
-    transform: translateX(-3px);
+    transform: translateX(-3px) scaleX(0.6);
   }
   50% {
-    clip-path: inset(0 30% 0 0);
+    transform: translateX(0) scaleX(0.8);
   }
   70% {
-    transform: translateX(2px);
-    clip-path: inset(0 10% 0 0);
+    transform: translateX(2px) scaleX(0.95);
   }
   100% {
     opacity: 1;
-    transform: translateX(0);
-    clip-path: inset(0 0 0 0);
+    transform: translateX(0) scaleX(1);
   }
 }
 
@@ -497,10 +498,14 @@ body {
 
 .site-header {
   animation: hackerGlitch 0.6s steps(10) forwards;
+  will-change: transform, opacity;
+  overflow: hidden;
 }
 
 .intro {
   animation: hackerGlitch 0.6s steps(10) 0.2s forwards;
+  will-change: transform, opacity;
+  overflow: hidden;
 }
 
 .project:nth-child(1) {

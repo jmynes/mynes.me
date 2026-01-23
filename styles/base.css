@@ -419,7 +419,34 @@ main {
   .theme-toggles {
     order: 3;
     width: 100%;
-    justify-content: center;
+    display: flex;
+    gap: 0.5rem;
+    position: relative;
+    padding-top: 2.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    padding-bottom: 0.25rem;
+  }
+
+  .theme-toggles::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  /* Shuffle button positioned top-right on mobile */
+  .shuffle-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-left: 0;
+  }
+
+  .theme-btn {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+    min-height: 36px;
+    flex-shrink: 0;
   }
 
   .logo-mark {
@@ -491,4 +518,35 @@ main {
 .theme-overlay {
   opacity: 0;
   animation-fill-mode: forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Reduced Motion Support
+   Disables animations for users who prefer reduced motion
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Ensure elements are visible without animations */
+  .site-header,
+  .intro,
+  .project:nth-child(1),
+  .project:nth-child(2),
+  .theme-bg,
+  .theme-effects,
+  .theme-overlay {
+    opacity: 1 !important;
+  }
+
+  /* Disable scroll smoothing */
+  html {
+    scroll-behavior: auto;
+  }
 }

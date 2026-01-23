@@ -1,0 +1,55 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// Effects Registry
+// Manages theme-specific visual effects and observes theme changes
+// ═══════════════════════════════════════════════════════════════════════════
+
+import * as lilypond from './lilypond.js';
+import * as underworld from './underworld.js';
+import * as christmas from './christmas.js';
+
+// Registry of effects by theme name
+const effects = {
+  lilypond,
+  underworld,
+  christmas
+};
+
+let currentEffect = null;
+
+/**
+ * Update active effect based on current theme
+ */
+function updateActiveEffect() {
+  const currentTheme = document.documentElement.dataset.theme;
+
+  // Stop current effect if different theme
+  if (currentEffect && currentEffect.themeName !== currentTheme) {
+    currentEffect.stop();
+    currentEffect = null;
+  }
+
+  // Start matching effect if available
+  if (effects[currentTheme] && !currentEffect) {
+    currentEffect = effects[currentTheme];
+    currentEffect.start();
+  }
+}
+
+/**
+ * Initialize effect system and watch for theme changes
+ */
+export function initEffects() {
+  // Initial check
+  updateActiveEffect();
+
+  // Watch for theme changes via data-theme attribute
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'data-theme') {
+        updateActiveEffect();
+      }
+    });
+  });
+
+  observer.observe(document.documentElement, { attributes: true });
+}

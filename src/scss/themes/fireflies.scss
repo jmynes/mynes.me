@@ -1,0 +1,628 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// jobi — Fireflies Theme
+// Magical summer night - glowing fireflies, deep twilight, organic movement
+// ═══════════════════════════════════════════════════════════════════════════
+
+@use '../mixins' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lato:wght@400;500;700&display=swap');
+
+:root {
+  --firefly-night: #0a1628;
+  --firefly-dark: #0d1e36;
+  --firefly-glow: #e8ff6b;
+  --firefly-warm: #ffd369;
+  --firefly-forest: #1a3a2a;
+  --firefly-green: #7eb86b;
+  --firefly-sky: #1a2744;
+  --firefly-mist: rgba(126, 184, 107, 0.1);
+
+  --glass-bg: rgba(232, 255, 107, 0.03);
+  --glass-bg-strong: rgba(10, 22, 40, 0.9);
+  --glass-border: rgba(232, 255, 107, 0.15);
+  --glass-shine: rgba(232, 255, 107, 0.08);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
+
+  --text-primary: #e8f0e8;
+  --text-secondary: rgba(232, 255, 107, 0.7);
+
+  --font-display: 'Cormorant Garamond', 'Georgia', serif;
+  --font-body: 'Lato', 'Segoe UI', sans-serif;
+
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-pill: 100px;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Body & Background
+// ═══════════════════════════════════════════════════════════════════════════
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background: var(--firefly-night);
+  background-attachment: fixed;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Twilight Sky with Stars
+// ═══════════════════════════════════════════════════════════════════════════
+
+.theme-bg {
+  overflow: hidden;
+  background:
+    radial-gradient(1px 1px at 5% 10%, rgba(255, 255, 255, 0.8) 100%, transparent),
+    radial-gradient(1px 1px at 15% 25%, rgba(255, 255, 255, 0.6) 100%, transparent),
+    radial-gradient(1px 1px at 25% 8%, rgba(255, 255, 255, 0.7) 100%, transparent),
+    radial-gradient(1px 1px at 40% 18%, rgba(255, 255, 255, 0.5) 100%, transparent),
+    radial-gradient(1px 1px at 55% 12%, rgba(255, 255, 255, 0.8) 100%, transparent),
+    radial-gradient(1px 1px at 70% 22%, rgba(255, 255, 255, 0.6) 100%, transparent),
+    radial-gradient(1px 1px at 85% 15%, rgba(255, 255, 255, 0.7) 100%, transparent),
+    radial-gradient(1px 1px at 95% 5%, rgba(255, 255, 255, 0.5) 100%, transparent),
+    radial-gradient(2px 2px at 35% 5%, rgba(255, 211, 105, 0.6) 100%, transparent),
+    radial-gradient(2px 2px at 75% 8%, rgba(255, 211, 105, 0.5) 100%, transparent),
+    linear-gradient(to bottom,
+      var(--firefly-night) 0%,
+      var(--firefly-sky) 40%,
+      var(--firefly-dark) 70%,
+      var(--firefly-forest) 100%
+    );
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 100% 30% at 50% 100%, rgba(126, 184, 107, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 20% at 30% 95%, rgba(232, 255, 107, 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 15% at 70% 98%, rgba(255, 211, 105, 0.05) 0%, transparent 50%);
+    will-change: opacity;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to top, var(--firefly-forest) 0%, transparent 100%);
+    opacity: 0.8;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Fireflies!
+// ═══════════════════════════════════════════════════════════════════════════
+
+.theme-effects {
+  &::before,
+  &::after {
+    display: none;
+  }
+
+  .bubble {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--firefly-glow);
+    box-shadow:
+      0 0 6px var(--firefly-glow),
+      0 0 12px var(--firefly-glow),
+      0 0 24px rgba(232, 255, 107, 0.6),
+      0 0 48px rgba(232, 255, 107, 0.3);
+    will-change: transform, opacity;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    &:nth-child(1) {
+      left: 12%; top: 35%;
+      animation: fireflyFloat1 6s ease-in-out infinite, fireflyBlink 3s ease-in-out infinite;
+      animation-delay: 0s, 0s;
+    }
+    &:nth-child(2) {
+      left: 28%; top: 55%;
+      width: 3px; height: 3px;
+      animation: fireflyFloat2 7s ease-in-out infinite, fireflyBlink 2.5s ease-in-out infinite;
+      animation-delay: -1s, -0.5s;
+    }
+    &:nth-child(3) {
+      left: 45%; top: 40%;
+      width: 5px; height: 5px;
+      animation: fireflyFloat3 5s ease-in-out infinite, fireflyBlink 4s ease-in-out infinite;
+      animation-delay: -2s, -1s;
+    }
+    &:nth-child(4) {
+      left: 62%; top: 60%;
+      animation: fireflyFloat4 8s ease-in-out infinite, fireflyBlink 2.8s ease-in-out infinite;
+      animation-delay: -0.5s, -2s;
+    }
+    &:nth-child(5) {
+      left: 78%; top: 45%;
+      width: 3px; height: 3px;
+      animation: fireflyFloat5 6.5s ease-in-out infinite, fireflyBlink 3.5s ease-in-out infinite;
+      animation-delay: -3s, -0.3s;
+    }
+    &:nth-child(6) {
+      left: 20%; top: 70%;
+      width: 4px; height: 4px;
+      animation: fireflyFloat6 7.5s ease-in-out infinite, fireflyBlink 2.2s ease-in-out infinite;
+      animation-delay: -1.5s, -1.5s;
+    }
+    &:nth-child(7) {
+      left: 55%; top: 75%;
+      width: 5px; height: 5px;
+      animation: fireflyFloat7 5.5s ease-in-out infinite, fireflyBlink 3.8s ease-in-out infinite;
+      animation-delay: -4s, -0.8s;
+    }
+    &:nth-child(8) {
+      left: 85%; top: 65%;
+      width: 3px; height: 3px;
+      animation: fireflyFloat8 6.8s ease-in-out infinite, fireflyBlink 2.6s ease-in-out infinite;
+      animation-delay: -2.5s, -1.2s;
+    }
+  }
+}
+
+// Unique float paths for each firefly
+@keyframes fireflyFloat1 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(15px, -20px); }
+  50% { transform: translate(-10px, -35px); }
+  75% { transform: translate(20px, -15px); }
+}
+
+@keyframes fireflyFloat2 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-20px, -15px); }
+  50% { transform: translate(-35px, 10px); }
+  75% { transform: translate(-15px, -25px); }
+}
+
+@keyframes fireflyFloat3 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(25px, 15px); }
+  50% { transform: translate(10px, -20px); }
+  75% { transform: translate(-15px, -10px); }
+}
+
+@keyframes fireflyFloat4 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-30px, -10px); }
+  50% { transform: translate(-15px, -40px); }
+  75% { transform: translate(10px, -20px); }
+}
+
+@keyframes fireflyFloat5 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(10px, -30px); }
+  50% { transform: translate(25px, -15px); }
+  75% { transform: translate(-5px, -25px); }
+}
+
+@keyframes fireflyFloat6 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-15px, 10px); }
+  50% { transform: translate(20px, -15px); }
+  75% { transform: translate(5px, 20px); }
+}
+
+@keyframes fireflyFloat7 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(30px, -5px); }
+  50% { transform: translate(15px, -30px); }
+  75% { transform: translate(-10px, -15px); }
+}
+
+@keyframes fireflyFloat8 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-25px, -20px); }
+  50% { transform: translate(-40px, 5px); }
+  75% { transform: translate(-20px, -30px); }
+}
+
+@keyframes fireflyBlink {
+  0%, 40%, 100% { opacity: 0; }
+  50%, 90% { opacity: 1; }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Overlay - Ground Mist
+// ═══════════════════════════════════════════════════════════════════════════
+
+.theme-overlay {
+  pointer-events: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 250px;
+    background: linear-gradient(to top,
+      rgba(126, 184, 107, 0.15) 0%,
+      rgba(126, 184, 107, 0.08) 30%,
+      transparent 100%
+    );
+    animation: mistDrift 12s ease-in-out infinite alternate;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center,
+      rgba(255, 211, 105, 0.03) 0%,
+      transparent 40%,
+      rgba(0, 0, 0, 0.4) 100%
+    );
+  }
+}
+
+@keyframes mistDrift {
+  0% { transform: translateX(-15px); opacity: 0.7; }
+  100% { transform: translateX(15px); opacity: 1; }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Header
+// ═══════════════════════════════════════════════════════════════════════════
+
+.site-header {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 8px 32px var(--glass-shadow),
+    0 0 40px rgba(232, 255, 107, 0.05),
+    inset 0 1px 0 var(--glass-shine);
+}
+
+.logo-mark {
+  background: var(--firefly-forest);
+  border: 2px solid var(--firefly-glow);
+  border-radius: 50%;
+  color: var(--firefly-glow);
+  box-shadow:
+    0 0 15px rgba(232, 255, 107, 0.4),
+    inset 0 0 10px rgba(232, 255, 107, 0.1);
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3em;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+// Theme Toggle Buttons
+.theme-btn {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+
+  &:hover {
+    border-color: var(--firefly-glow);
+    box-shadow: 0 0 15px rgba(232, 255, 107, 0.2);
+  }
+
+  &.active {
+    background: rgba(232, 255, 107, 0.1);
+    border-color: var(--firefly-glow);
+    color: var(--firefly-glow);
+    box-shadow: 0 0 20px rgba(232, 255, 107, 0.3);
+  }
+}
+
+// Shuffle Button
+.shuffle-btn {
+  background: var(--glass-bg);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  border: 1px solid var(--glass-border);
+
+  &.active {
+    border-color: var(--firefly-warm);
+    color: var(--firefly-warm);
+    box-shadow: 0 0 15px rgba(255, 211, 105, 0.3);
+  }
+}
+
+.shuffle-tooltip {
+  background: var(--firefly-dark);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--firefly-glow);
+  box-shadow: 0 0 20px rgba(232, 255, 107, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  &::before {
+    background: var(--firefly-dark);
+    border-top: 1px solid var(--firefly-glow);
+    border-left: 1px solid var(--firefly-glow);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Intro
+// ═══════════════════════════════════════════════════════════════════════════
+
+.intro h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--text-primary);
+  text-shadow: 0 0 30px rgba(232, 255, 107, 0.3);
+
+  em {
+    color: var(--firefly-glow);
+    text-shadow:
+      0 0 10px var(--firefly-glow),
+      0 0 20px rgba(232, 255, 107, 0.5);
+  }
+}
+
+.intro-sub {
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Project Cards
+// ═══════════════════════════════════════════════════════════════════════════
+
+.project {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 16px 48px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-shine);
+
+  &:hover {
+    transform: translateY(-8px) scale(1.01);
+    border-color: var(--firefly-glow);
+    box-shadow:
+      0 24px 64px var(--glass-shadow),
+      0 0 40px rgba(232, 255, 107, 0.1);
+  }
+
+  &::before {
+    display: none;
+  }
+}
+
+.project-screenshot-wrapper {
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 20px rgba(126, 184, 107, 0.1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(232, 255, 107, 0.03) 0%, transparent 50%, rgba(126, 184, 107, 0.03) 100%);
+    pointer-events: none;
+    z-index: 2;
+    border-radius: var(--radius-md);
+  }
+}
+
+.project-screenshot {
+  border-radius: var(--radius-md);
+}
+
+.screenshot-overlay {
+  background: linear-gradient(to top, rgba(10, 22, 40, 0.95) 0%, transparent 60%);
+  border-radius: var(--radius-md);
+}
+
+.zoom-hint {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--firefly-glow);
+  background: var(--firefly-dark);
+  backdrop-filter: blur(15px);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--firefly-glow);
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.4em;
+  color: var(--text-primary);
+}
+
+.project-link {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--firefly-night);
+  background: var(--firefly-glow);
+  border: 2px solid var(--firefly-glow);
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 15px rgba(232, 255, 107, 0.4);
+
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    background: var(--firefly-warm);
+    border-color: var(--firefly-warm);
+    box-shadow: 0 0 25px rgba(255, 211, 105, 0.5);
+  }
+
+  &.coming-soon {
+    background: transparent;
+    border-color: var(--glass-border);
+    box-shadow: none;
+    color: var(--text-secondary);
+    opacity: 0.6;
+
+    &:hover {
+      background: transparent;
+      transform: none;
+      color: var(--text-secondary);
+    }
+  }
+}
+
+.project-desc {
+  color: var(--text-secondary);
+}
+
+.tech-tag {
+  font-family: var(--font-body);
+  color: var(--firefly-green);
+  background: rgba(126, 184, 107, 0.15);
+  border: 1px solid rgba(126, 184, 107, 0.3);
+  border-radius: var(--radius-sm);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Footer
+// ═══════════════════════════════════════════════════════════════════════════
+
+.site-footer {
+  color: var(--text-secondary);
+
+  strong {
+    color: var(--firefly-glow);
+    text-shadow: 0 0 10px rgba(232, 255, 107, 0.4);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Lightbox
+// ═══════════════════════════════════════════════════════════════════════════
+
+.lightbox {
+  background: rgba(10, 22, 40, 0.98);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+.lightbox-close {
+  background: var(--firefly-dark);
+  border: 2px solid var(--firefly-glow);
+  border-radius: 50%;
+  color: var(--firefly-glow);
+  box-shadow: 0 0 20px rgba(232, 255, 107, 0.3);
+
+  &:hover {
+    background: var(--firefly-glow);
+    color: var(--firefly-night);
+  }
+}
+
+.lightbox-content {
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.7),
+    0 0 60px rgba(232, 255, 107, 0.1);
+}
+
+.lightbox-image {
+  border-radius: var(--radius-lg);
+}
+
+.lightbox-caption {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3em;
+  color: var(--firefly-glow);
+  text-shadow: 0 0 15px rgba(232, 255, 107, 0.5);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Entry Animations
+// ═══════════════════════════════════════════════════════════════════════════
+
+@keyframes fireflyFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes fireflyGlow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.site-header {
+  animation: fireflyFadeIn 0.8s ease-out forwards;
+}
+
+.intro {
+  animation: fireflyFadeIn 0.8s ease-out 0.15s forwards;
+}
+
+.project:nth-child(1) {
+  animation: fireflyFadeIn 0.8s ease-out 0.3s forwards;
+}
+
+.project:nth-child(2) {
+  animation: fireflyFadeIn 0.8s ease-out 0.45s forwards;
+}
+
+.theme-bg,
+.theme-effects {
+  animation: fireflyGlow 1.5s ease forwards;
+}
+
+.theme-overlay {
+  animation: fireflyGlow 1.2s ease 0.5s forwards;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Responsive Adjustments
+// ═══════════════════════════════════════════════════════════════════════════
+
+@media (max-width: 768px) {
+  .site-header {
+    border-radius: var(--radius-md);
+  }
+
+  .project {
+    border-radius: var(--radius-md);
+  }
+
+  .project-screenshot-wrapper,
+  .project-screenshot,
+  .screenshot-overlay {
+    border-radius: var(--radius-sm);
+  }
+
+  .theme-effects .bubble {
+    &:nth-child(7),
+    &:nth-child(8) { display: none; }
+  }
+
+  .lightbox-content,
+  .lightbox-image {
+    border-radius: var(--radius-md);
+  }
+}
+
+// Firefox fallback
+@include firefox-fallback(rgba(10, 22, 40, 0.98));

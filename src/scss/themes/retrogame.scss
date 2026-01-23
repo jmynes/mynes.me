@@ -1,0 +1,538 @@
+// Using SCSS partials
+@use '../mixins' as *;
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   jobi — Retro Game Theme
+   8-bit NES/Game Boy vibes, pixel art aesthetic
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+:root {
+  /* NES-inspired palette */
+  --nes-black: #0f0f0f;
+  --nes-dark: #1a1a2e;
+  --nes-blue: #0077c0;
+  --nes-light-blue: #29adff;
+  --nes-red: #ff004d;
+  --nes-orange: #ffa300;
+  --nes-yellow: #ffec27;
+  --nes-green: #00e436;
+  --nes-white: #fff1e8;
+  --nes-gray: #5f574f;
+  --nes-light-gray: #c2c3c7;
+
+  --text-primary: var(--nes-white);
+  --text-secondary: var(--nes-light-gray);
+  --text-dark: var(--nes-dark);
+
+  --font-display: 'Press Start 2P', monospace;
+  --font-body: 'VT323', monospace;
+
+  /* NO rounded corners - everything is blocky */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-pill: 0;
+
+  --pixel: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Body & Background
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--text-primary);
+  background: var(--nes-dark);
+  image-rendering: pixelated;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Pixel Grid Background
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-bg {
+  background:
+    /* Pixel grid */
+    linear-gradient(var(--nes-black) 1px, transparent 1px),
+    linear-gradient(90deg, var(--nes-black) 1px, transparent 1px);
+  background-size: var(--pixel) var(--pixel);
+  opacity: 0.3;
+}
+
+/* Stars / pixel particles */
+.theme-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, var(--nes-white) 100%, transparent),
+    radial-gradient(1px 1px at 30% 40%, var(--nes-yellow) 100%, transparent),
+    radial-gradient(1px 1px at 50% 10%, var(--nes-white) 100%, transparent),
+    radial-gradient(1px 1px at 70% 60%, var(--nes-light-blue) 100%, transparent),
+    radial-gradient(1px 1px at 90% 30%, var(--nes-white) 100%, transparent),
+    radial-gradient(1px 1px at 20% 70%, var(--nes-green) 100%, transparent),
+    radial-gradient(1px 1px at 60% 80%, var(--nes-white) 100%, transparent),
+    radial-gradient(1px 1px at 80% 90%, var(--nes-yellow) 100%, transparent),
+    radial-gradient(1px 1px at 15% 50%, var(--nes-white) 100%, transparent),
+    radial-gradient(1px 1px at 45% 35%, var(--nes-orange) 100%, transparent);
+  background-size: 100% 100%;
+  animation: twinkle 2s step-start infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Floating Elements - Pixel sprites
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-effects .bubble {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: var(--nes-yellow);
+  border-radius: 0;
+  box-shadow:
+    4px 0 0 var(--nes-orange),
+    0 4px 0 var(--nes-orange),
+    4px 4px 0 var(--nes-red);
+  animation: pixelBounce 1s step-start infinite;
+}
+
+.theme-effects .bubble::before,
+.theme-effects .bubble::after {
+  display: none;
+}
+
+.theme-effects .bubble:nth-child(1) { left: 8%; top: 15%; animation-delay: 0s; background: var(--nes-red); box-shadow: 4px 0 0 var(--nes-orange), 0 4px 0 var(--nes-orange); }
+.theme-effects .bubble:nth-child(2) { left: 85%; top: 20%; animation-delay: -0.2s; background: var(--nes-green); box-shadow: 4px 0 0 var(--nes-blue), 0 4px 0 var(--nes-blue); }
+.theme-effects .bubble:nth-child(3) { left: 20%; top: 60%; animation-delay: -0.4s; background: var(--nes-light-blue); box-shadow: 4px 0 0 var(--nes-blue), 0 4px 0 var(--nes-blue); }
+.theme-effects .bubble:nth-child(4) { left: 75%; top: 50%; animation-delay: -0.6s; background: var(--nes-yellow); box-shadow: 4px 0 0 var(--nes-orange), 0 4px 0 var(--nes-orange); }
+.theme-effects .bubble:nth-child(5) { left: 50%; top: 80%; animation-delay: -0.8s; background: var(--nes-orange); box-shadow: 4px 0 0 var(--nes-red), 0 4px 0 var(--nes-red); }
+.theme-effects .bubble:nth-child(6) { left: 35%; top: 30%; animation-delay: -0.3s; background: var(--nes-white); box-shadow: 4px 0 0 var(--nes-light-gray), 0 4px 0 var(--nes-light-gray); }
+.theme-effects .bubble:nth-child(7) { left: 65%; top: 70%; animation-delay: -0.5s; background: var(--nes-green); box-shadow: 4px 0 0 var(--nes-blue), 0 4px 0 var(--nes-blue); }
+.theme-effects .bubble:nth-child(8) { left: 92%; top: 45%; animation-delay: -0.7s; background: var(--nes-red); box-shadow: 4px 0 0 var(--nes-orange), 0 4px 0 var(--nes-orange); }
+
+@keyframes pixelBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Scanline Overlay
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-overlay {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Header - Pixel box
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.site-header {
+  background: var(--nes-black);
+  border: 4px solid var(--nes-white);
+  box-shadow:
+    8px 8px 0 var(--nes-gray),
+    inset 0 0 0 4px var(--nes-dark);
+}
+
+.site-header::before {
+  display: none;
+}
+
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  background: var(--nes-blue);
+  border: 4px solid var(--nes-white);
+  color: var(--nes-yellow);
+  box-shadow: 4px 4px 0 var(--nes-gray);
+}
+
+.logo-mark::before {
+  display: none;
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--nes-white);
+  text-shadow: 4px 4px 0 var(--nes-gray);
+  letter-spacing: -1px;
+}
+
+/* Theme Toggle Buttons */
+.theme-btn {
+  font-family: var(--font-display);
+  font-size: 0.5rem;
+  background: var(--nes-dark);
+  border: 3px solid var(--nes-white);
+  color: var(--nes-white);
+  padding: 0.5rem 0.75rem;
+  box-shadow: 3px 3px 0 var(--nes-gray);
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.theme-btn:hover:not(:disabled) {
+  background: var(--nes-gray);
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--nes-gray);
+}
+
+.theme-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.theme-btn.active {
+  background: var(--nes-blue);
+  border-color: var(--nes-light-blue);
+  color: var(--nes-white);
+  box-shadow: 3px 3px 0 var(--nes-dark);
+}
+
+/* Shuffle Button */
+.shuffle-btn {
+  background: var(--nes-dark);
+  border-radius: 0;
+  color: var(--nes-gray);
+  border: 3px solid var(--nes-gray);
+  box-shadow: 3px 3px 0 var(--nes-black);
+}
+
+.shuffle-btn.active {
+  color: var(--nes-yellow);
+  border-color: var(--nes-yellow);
+}
+
+.shuffle-btn:hover:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--nes-black);
+}
+
+.shuffle-tooltip {
+  background: var(--nes-black);
+  color: var(--nes-white);
+  border-radius: 0;
+  border: 3px solid var(--nes-white);
+  box-shadow: 6px 6px 0 var(--nes-gray);
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  width: 320px;
+}
+
+.shuffle-tooltip::before {
+  background: var(--nes-black);
+  border-top: 3px solid var(--nes-white);
+  border-left: 3px solid var(--nes-white);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Intro
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.intro h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  color: var(--nes-white);
+  text-shadow:
+    4px 4px 0 var(--nes-blue),
+    8px 8px 0 var(--nes-dark);
+  line-height: 1.4;
+}
+
+.intro h1 em {
+  color: var(--nes-yellow);
+  text-shadow:
+    4px 4px 0 var(--nes-orange),
+    8px 8px 0 var(--nes-red);
+}
+
+.intro-sub {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  color: var(--nes-light-gray);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Project Cards - Game windows
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.project {
+  background: var(--nes-black);
+  border: 4px solid var(--nes-white);
+  box-shadow: 8px 8px 0 var(--nes-gray);
+}
+
+.project:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 12px 0 var(--nes-gray);
+}
+
+.project::before {
+  content: '★ PROJECT ★';
+  position: absolute;
+  top: -14px;
+  left: 16px;
+  background: var(--nes-blue);
+  padding: 2px 8px;
+  font-family: var(--font-display);
+  font-size: 0.5rem;
+  color: var(--nes-white);
+  border: 2px solid var(--nes-white);
+}
+
+.project-screenshot-wrapper {
+  border: 4px solid var(--nes-gray);
+  box-shadow: inset 4px 4px 0 var(--nes-dark);
+}
+
+.project-screenshot {
+  image-rendering: pixelated;
+}
+
+.screenshot-overlay {
+  background: linear-gradient(to top, rgba(15, 15, 15, 0.9) 0%, transparent 60%);
+}
+
+.zoom-hint {
+  font-family: var(--font-display);
+  font-size: 0.5rem;
+  color: var(--nes-white);
+  background: var(--nes-dark);
+  border: 3px solid var(--nes-white);
+  padding: 0.5rem 1rem;
+  box-shadow: 3px 3px 0 var(--nes-gray);
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--nes-yellow);
+  text-shadow: 3px 3px 0 var(--nes-orange);
+}
+
+.project-link {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  color: var(--nes-white);
+  background: var(--nes-green);
+  border: 3px solid var(--nes-white);
+  padding: 0.6rem 1rem;
+  box-shadow: 4px 4px 0 var(--nes-dark);
+  text-transform: uppercase;
+}
+
+.project-link::before {
+  display: none;
+}
+
+.project-link:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--nes-dark);
+}
+
+.project-link.coming-soon {
+  background: var(--nes-gray);
+}
+
+.project-desc {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  color: var(--nes-light-gray);
+  line-height: 1.5;
+}
+
+.tech-tag {
+  font-family: var(--font-display);
+  font-size: 0.45rem;
+  color: var(--nes-white);
+  background: var(--nes-dark);
+  border: 2px solid var(--nes-gray);
+  padding: 0.3rem 0.6rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Footer
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.site-footer {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--nes-gray);
+}
+
+.site-footer strong {
+  color: var(--nes-white);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Lightbox
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.lightbox {
+  background: rgba(15, 15, 15, 0.95);
+}
+
+.lightbox-close {
+  width: 48px;
+  height: 48px;
+  background: var(--nes-red);
+  border: 4px solid var(--nes-white);
+  color: var(--nes-white);
+  box-shadow: 4px 4px 0 var(--nes-dark);
+}
+
+.lightbox-close::before {
+  display: none;
+}
+
+.lightbox-close:hover {
+  transform: translate(2px, 2px) rotate(0deg);
+  box-shadow: 2px 2px 0 var(--nes-dark);
+}
+
+.lightbox-content {
+  border: 4px solid var(--nes-white);
+  box-shadow: 8px 8px 0 var(--nes-gray);
+}
+
+.lightbox-image {
+  image-rendering: pixelated;
+}
+
+.lightbox-caption {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  color: var(--nes-yellow);
+  text-shadow: 2px 2px 0 var(--nes-orange);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Entry Animations - 8-bit game start / sprite drop
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes retrogameDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-8px);
+  }
+  90% {
+    transform: translateY(0);
+  }
+  95% {
+    transform: translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes retrogameSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes retrogameBlink {
+  0% { opacity: 0; }
+  25% { opacity: 1; }
+  50% { opacity: 0; }
+  75% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes retrogameFadeIn {
+  0% { opacity: 0; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.site-header {
+  animation: retrogameDrop 0.6s steps(8) forwards;
+}
+
+.intro {
+  animation: retrogameDrop 0.6s steps(8) 0.15s forwards;
+}
+
+.project:nth-child(1) {
+  animation: retrogameSlideIn 0.4s steps(6) 0.3s forwards;
+}
+
+.project:nth-child(2) {
+  animation: retrogameSlideIn 0.4s steps(6) 0.45s forwards;
+}
+
+.theme-bg {
+  animation: retrogameFadeIn 0.5s steps(3) forwards;
+}
+
+.theme-effects {
+  animation: retrogameBlink 0.6s steps(1) 0.2s forwards;
+}
+
+.theme-overlay {
+  animation: retrogameFadeIn 0.3s steps(2) 0.5s forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .logo-text {
+    font-size: 1rem;
+  }
+
+  .intro h1 {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .project-title {
+    font-size: 1rem;
+  }
+
+  .theme-effects .bubble:nth-child(n+5) {
+    display: none;
+  }
+
+  .theme-btn {
+    font-size: 0.6rem;
+    padding: 0.5rem 0.6rem;
+  }
+}

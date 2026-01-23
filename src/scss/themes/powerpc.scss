@@ -1,0 +1,604 @@
+// Using SCSS partials
+@use '../mixins' as *;
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   jobi — PowerPC Mac Theme
+   Classic Mac OS 8/9 aesthetic - platinum grey, pinstripes, beveled borders
+   Light theme - unique among the dark-themed alternatives
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --mac-platinum: #e8e8e8;
+  --mac-light-grey: #d4d4d4;
+  --mac-mid-grey: #a0a0a0;
+  --mac-dark-grey: #666666;
+  --mac-border-light: #ffffff;
+  --mac-border-dark: #888888;
+  --mac-blue: #0066cc;
+  --mac-purple: #663399;
+  --mac-black: #000000;
+  --mac-window-title: linear-gradient(to bottom, #e0e0e0 0%, #c8c8c8 50%, #b8b8b8 100%);
+
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-bg-strong: rgba(232, 232, 232, 0.95);
+  --glass-border: var(--mac-border-dark);
+  --glass-shine: var(--mac-border-light);
+  --glass-shadow: rgba(0, 0, 0, 0.25);
+
+  --text-primary: var(--mac-black);
+  --text-secondary: var(--mac-dark-grey);
+
+  --font-display: 'VT323', monospace;
+  --font-body: 'IBM Plex Sans', 'Geneva', 'Verdana', sans-serif;
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-pill: 100px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Body & Background
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background: var(--mac-platinum);
+  background-attachment: fixed;
+  padding-top: 0; /* Override fixed header padding - PowerPC scrolls normally */
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Platinum Pinstripe Background
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-bg {
+  overflow: hidden;
+  background:
+    /* Classic Mac OS pinstripes */
+    repeating-linear-gradient(
+      0deg,
+      var(--mac-platinum) 0px,
+      var(--mac-platinum) 1px,
+      var(--mac-light-grey) 1px,
+      var(--mac-light-grey) 2px
+    );
+}
+
+.theme-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Subtle gradient overlay */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  will-change: opacity;
+}
+
+.theme-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Desktop pattern texture */
+  background:
+    radial-gradient(circle 2px at 20px 20px, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Floating System Icons
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-effects::before,
+.theme-effects::after {
+  display: none;
+}
+
+.theme-effects .bubble {
+  position: absolute;
+  background: var(--mac-platinum);
+  border: 1px solid var(--mac-border-dark);
+  box-shadow:
+    inset 1px 1px 0 var(--mac-border-light),
+    inset -1px -1px 0 var(--mac-mid-grey),
+    2px 2px 4px rgba(0, 0, 0, 0.15);
+  will-change: transform;
+  animation: iconFloat 15s ease-in-out infinite;
+}
+
+.theme-effects .bubble::before,
+.theme-effects .bubble::after {
+  display: none;
+}
+
+/* Different icon shapes */
+.theme-effects .bubble:nth-child(1) {
+  width: 32px; height: 32px; left: 5%; top: 15%;
+  border-radius: var(--radius-sm);
+  animation-delay: 0s;
+}
+.theme-effects .bubble:nth-child(2) {
+  width: 28px; height: 28px; left: 88%; top: 20%;
+  border-radius: var(--radius-sm);
+  animation-delay: -3s;
+}
+.theme-effects .bubble:nth-child(3) {
+  width: 24px; height: 24px; left: 15%; top: 65%;
+  border-radius: var(--radius-sm);
+  animation-delay: -6s;
+}
+.theme-effects .bubble:nth-child(4) {
+  width: 30px; height: 30px; left: 75%; top: 55%;
+  border-radius: var(--radius-sm);
+  animation-delay: -9s;
+}
+.theme-effects .bubble:nth-child(5) {
+  width: 26px; height: 26px; left: 45%; top: 75%;
+  border-radius: var(--radius-sm);
+  animation-delay: -2s;
+}
+.theme-effects .bubble:nth-child(6) {
+  width: 22px; height: 22px; left: 60%; top: 25%;
+  border-radius: var(--radius-sm);
+  animation-delay: -5s;
+}
+.theme-effects .bubble:nth-child(7) {
+  width: 28px; height: 28px; left: 30%; top: 40%;
+  border-radius: var(--radius-sm);
+  animation-delay: -8s;
+}
+.theme-effects .bubble:nth-child(8) {
+  width: 20px; height: 20px; left: 92%; top: 70%;
+  border-radius: var(--radius-sm);
+  animation-delay: -11s;
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  75% {
+    transform: translateY(5px) rotate(-1deg);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Overlay - Subtle CRT effect
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-overlay {
+  pointer-events: none;
+}
+
+.theme-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Very subtle pixel grid */
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 1px,
+      rgba(0, 0, 0, 0.01) 1px,
+      rgba(0, 0, 0, 0.01) 2px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 1px,
+      rgba(0, 0, 0, 0.01) 1px,
+      rgba(0, 0, 0, 0.01) 2px
+    );
+}
+
+.theme-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Slight vignette */
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.08) 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Header - Classic Mac Window Style
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.site-header {
+  background: var(--mac-platinum);
+  border: 1px solid var(--mac-border-dark);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    inset 1px 1px 0 var(--mac-border-light),
+    inset -1px -1px 0 var(--mac-mid-grey),
+    3px 3px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* Title bar stripe */
+.site-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: var(--mac-window-title);
+  border-bottom: 1px solid var(--mac-border-dark);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* Window control dots */
+.site-header::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  width: 12px;
+  height: 12px;
+  background: var(--mac-light-grey);
+  border: 1px solid var(--mac-border-dark);
+  border-radius: 50%;
+  box-shadow:
+    16px 0 0 var(--mac-light-grey),
+    16px 0 0 0 1px var(--mac-border-dark),
+    32px 0 0 var(--mac-light-grey),
+    32px 0 0 0 1px var(--mac-border-dark),
+    inset 1px 1px 0 var(--mac-border-light);
+  z-index: 10;
+}
+
+.logo-mark {
+  background: var(--mac-blue);
+  border: 2px solid var(--mac-border-dark);
+  border-radius: var(--radius-md);
+  color: white;
+  font-family: var(--font-display);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.3),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 1.4em;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+/* Theme Toggle Buttons - Classic Mac Button Style */
+.theme-btn {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  background: var(--mac-platinum);
+  border: 1px solid var(--mac-border-dark);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  box-shadow:
+    inset 1px 1px 0 var(--mac-border-light),
+    inset -1px -1px 0 var(--mac-mid-grey);
+}
+
+.theme-btn:hover {
+  background: var(--mac-light-grey);
+}
+
+.theme-btn:active {
+  box-shadow:
+    inset -1px -1px 0 var(--mac-border-light),
+    inset 1px 1px 0 var(--mac-mid-grey);
+}
+
+.theme-btn.active {
+  background: var(--mac-blue);
+  color: white;
+  border-color: var(--mac-blue);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.3),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Shuffle Button */
+.shuffle-btn {
+  background: var(--mac-platinum);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  border: 1px solid var(--mac-border-dark);
+  box-shadow:
+    inset 1px 1px 0 var(--mac-border-light),
+    inset -1px -1px 0 var(--mac-mid-grey);
+}
+
+.shuffle-btn.active {
+  background: var(--mac-purple);
+  border-color: var(--mac-purple);
+  color: white;
+}
+
+.shuffle-tooltip {
+  background: var(--mac-platinum);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--mac-border-dark);
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.shuffle-tooltip::before {
+  background: var(--mac-platinum);
+  border-top: 1px solid var(--mac-border-dark);
+  border-left: 1px solid var(--mac-border-dark);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Intro
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.intro h1 {
+  font-family: var(--font-display);
+  font-size: 2.5em;
+  color: var(--text-primary);
+  text-shadow: 1px 1px 0 var(--mac-border-light);
+}
+
+.intro h1 em {
+  color: var(--mac-blue);
+  font-style: normal;
+}
+
+.intro-sub {
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Project Cards - Classic Window Style
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.project {
+  background: var(--mac-platinum);
+  border: 1px solid var(--mac-border-dark);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    inset 1px 1px 0 var(--mac-border-light),
+    inset -1px -1px 0 var(--mac-mid-grey),
+    4px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.project:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    inset 1px 1px 0 var(--mac-border-light),
+    inset -1px -1px 0 var(--mac-mid-grey),
+    6px 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.project::before {
+  display: none;
+}
+
+.project-screenshot-wrapper {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--mac-border-dark);
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.project-screenshot {
+  border-radius: var(--radius-sm);
+}
+
+.screenshot-overlay {
+  background: linear-gradient(to top, rgba(232, 232, 232, 0.95) 0%, transparent 60%);
+  border-radius: var(--radius-sm);
+}
+
+.zoom-hint {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--text-primary);
+  background: var(--mac-platinum);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--mac-border-dark);
+  box-shadow:
+    inset 1px 1px 0 var(--mac-border-light),
+    inset -1px -1px 0 var(--mac-mid-grey);
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-size: 1.4em;
+  color: var(--text-primary);
+}
+
+.project-link {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  background: var(--mac-blue);
+  border: 1px solid var(--mac-border-dark);
+  border-radius: var(--radius-sm);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.3),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.project-link:hover {
+  transform: translateY(-2px);
+  background: #0055aa;
+}
+
+.project-link:active {
+  box-shadow:
+    inset -1px -1px 0 rgba(255, 255, 255, 0.3),
+    inset 1px 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.project-link.coming-soon {
+  background: var(--mac-mid-grey);
+  color: var(--mac-dark-grey);
+  box-shadow: none;
+}
+
+.project-link.coming-soon:hover {
+  background: var(--mac-mid-grey);
+  transform: none;
+}
+
+.project-desc {
+  color: var(--text-secondary);
+}
+
+.tech-tag {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--mac-purple);
+  background: rgba(102, 51, 153, 0.1);
+  border: 1px solid var(--mac-purple);
+  border-radius: var(--radius-sm);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Footer
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.site-footer {
+  color: var(--text-secondary);
+}
+
+.site-footer strong {
+  color: var(--mac-blue);
+  font-family: var(--font-display);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Lightbox
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.lightbox {
+  background: rgba(232, 232, 232, 0.98);
+}
+
+.lightbox-close {
+  background: var(--mac-platinum);
+  border: 1px solid var(--mac-border-dark);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  box-shadow:
+    inset 1px 1px 0 var(--mac-border-light),
+    inset -1px -1px 0 var(--mac-mid-grey);
+}
+
+.lightbox-close:hover {
+  background: var(--mac-light-grey);
+}
+
+.lightbox-content {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--mac-border-dark);
+  box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.lightbox-image {
+  border-radius: var(--radius-lg);
+}
+
+.lightbox-caption {
+  font-family: var(--font-display);
+  font-size: 1.2em;
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Entry Animations
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes macFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes macSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.site-header {
+  animation: macSlideIn 0.4s ease-out forwards;
+}
+
+.intro {
+  animation: macFadeIn 0.4s ease-out 0.1s forwards;
+}
+
+.project:nth-child(1) {
+  animation: macFadeIn 0.4s ease-out 0.2s forwards;
+}
+
+.project:nth-child(2) {
+  animation: macFadeIn 0.4s ease-out 0.3s forwards;
+}
+
+.theme-bg,
+.theme-effects {
+  animation: macFadeIn 0.6s ease forwards;
+}
+
+.theme-overlay {
+  animation: macFadeIn 0.5s ease 0.2s forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Responsive Adjustments
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .site-header {
+    border-radius: var(--radius-md);
+  }
+
+  .site-header::before {
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+  }
+
+  .project {
+    border-radius: var(--radius-md);
+  }
+
+  .project-screenshot-wrapper,
+  .project-screenshot,
+  .screenshot-overlay {
+    border-radius: var(--radius-sm);
+  }
+
+  .theme-effects .bubble:nth-child(7),
+  .theme-effects .bubble:nth-child(8) { display: none; }
+
+  .lightbox-content,
+  .lightbox-image {
+    border-radius: var(--radius-md);
+  }
+}
+
+/* No Firefox fallback needed - not using backdrop-filter */

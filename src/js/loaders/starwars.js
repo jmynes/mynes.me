@@ -27,7 +27,7 @@ export async function animate(overlay, isCancelled) {
   }
   overlay.className = 'theme-loader theme-loader--starwars';
 
-  // Hide header and footer from the start
+  // Hide header, footer, and scrollbar from the start
   const header = document.querySelector('.site-header');
   const footer = document.querySelector('.site-footer');
   if (header) {
@@ -38,8 +38,9 @@ export async function animate(overlay, isCancelled) {
     footer.style.opacity = '0';
     footer.style.visibility = 'hidden';
   }
+  document.documentElement.style.overflow = 'hidden';
 
-  // Helper to restore header/footer on cancel
+  // Helper to restore header/footer/scrollbar on cancel
   const restoreHeaderFooter = () => {
     if (header) {
       header.style.opacity = '';
@@ -49,6 +50,7 @@ export async function animate(overlay, isCancelled) {
       footer.style.opacity = '';
       footer.style.visibility = '';
     }
+    document.documentElement.style.overflow = '';
   };
 
   // Create starfield
@@ -128,7 +130,7 @@ export async function animate(overlay, isCancelled) {
     // Fade out overlay to reveal content smoothly
     overlay.classList.add('starwars-fade-out');
 
-    // Show header and footer with fade
+    // Show header, footer, and scrollbar with fade
     if (header) {
       header.style.transition = 'opacity 0.8s ease-out';
       header.style.opacity = '';
@@ -139,6 +141,7 @@ export async function animate(overlay, isCancelled) {
       footer.style.opacity = '';
       footer.style.visibility = '';
     }
+    document.documentElement.style.overflow = '';
 
     await sleep(800);
     if (isCancelled()) return;

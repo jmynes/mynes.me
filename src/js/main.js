@@ -3,9 +3,9 @@
 // Initializes all modules after DOM is ready
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { applyInitialTheme, initTheme } from './theme.js';
-import { initLightbox } from './lightbox.js';
 import { initEffects } from './effects/index.js';
+import { initLightbox } from './lightbox.js';
+import { applyInitialTheme, initTheme } from './theme.js';
 
 // Apply theme immediately to prevent flash (runs before DOMContentLoaded)
 applyInitialTheme();

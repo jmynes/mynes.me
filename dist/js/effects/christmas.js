@@ -7,10 +7,10 @@ let isActive = false;
 let resizeTimeout;
 
 const lightColors = [
-  { bg: '#ff4444', glow: 'rgba(255, 68, 68, 0.8)' },   // Red
-  { bg: '#44dd44', glow: 'rgba(68, 221, 68, 0.8)' },   // Green
-  { bg: '#ffdd00', glow: 'rgba(255, 221, 0, 0.9)' },   // Gold
-  { bg: '#44aaff', glow: 'rgba(68, 170, 255, 0.8)' }   // Blue
+  { bg: '#ff4444', glow: 'rgba(255, 68, 68, 0.8)' }, // Red
+  { bg: '#44dd44', glow: 'rgba(68, 221, 68, 0.8)' }, // Green
+  { bg: '#ffdd00', glow: 'rgba(255, 221, 0, 0.9)' }, // Gold
+  { bg: '#44aaff', glow: 'rgba(68, 170, 255, 0.8)' }, // Blue
 ];
 
 function createLightsForCard(card) {
@@ -112,13 +112,15 @@ function addLights() {
   }
 
   // Add lights to all project cards
-  document.querySelectorAll('.project').forEach(card => {
+  document.querySelectorAll('.project').forEach((card) => {
     createLightsForCard(card);
   });
 }
 
 function removeLights() {
-  document.querySelectorAll('.christmas-lights').forEach(el => el.remove());
+  document.querySelectorAll('.christmas-lights').forEach((el) => {
+    el.remove();
+  });
 }
 
 function handleResize() {

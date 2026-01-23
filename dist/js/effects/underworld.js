@@ -33,13 +33,15 @@ class Ember {
   update() {
     // Rise upward with slight wave motion
     this.y += this.speedY;
-    this.x += this.speedX + Math.sin(Date.now() * 0.002 + this.flickerOffset) * 0.5;
+    this.x +=
+      this.speedX + Math.sin(Date.now() * 0.002 + this.flickerOffset) * 0.5;
 
     // Decrease life
     this.life -= this.decay;
 
     // Flicker brightness
-    const flicker = Math.sin(Date.now() * this.flickerSpeed + this.flickerOffset) * 0.2;
+    const flicker =
+      Math.sin(Date.now() * this.flickerSpeed + this.flickerOffset) * 0.2;
     this.currentBrightness = Math.max(0.3, this.brightness + flicker);
 
     // Respawn when dead or off screen
@@ -54,12 +56,22 @@ class Ember {
 
     // Outer glow
     const gradient = ctx.createRadialGradient(
-      this.x, this.y, 0,
-      this.x, this.y, glowSize
+      this.x,
+      this.y,
+      0,
+      this.x,
+      this.y,
+      glowSize,
     );
     gradient.addColorStop(0, `hsla(${this.hue}, 100%, 70%, ${alpha})`);
-    gradient.addColorStop(0.3, `hsla(${this.hue - 10}, 90%, 50%, ${alpha * 0.6})`);
-    gradient.addColorStop(0.6, `hsla(${this.hue - 20}, 80%, 30%, ${alpha * 0.3})`);
+    gradient.addColorStop(
+      0.3,
+      `hsla(${this.hue - 10}, 90%, 50%, ${alpha * 0.6})`,
+    );
+    gradient.addColorStop(
+      0.6,
+      `hsla(${this.hue - 20}, 80%, 30%, ${alpha * 0.3})`,
+    );
     gradient.addColorStop(1, `hsla(0, 100%, 20%, 0)`);
 
     ctx.beginPath();
@@ -85,7 +97,7 @@ function createCanvas() {
 }
 
 function removeCanvas() {
-  if (canvas && canvas.parentNode) {
+  if (canvas?.parentNode) {
     canvas.parentNode.removeChild(canvas);
   }
   canvas = null;
@@ -94,7 +106,10 @@ function removeCanvas() {
 
 function initEmbers() {
   // More embers for intense smouldering effect
-  const count = Math.min(40, Math.floor(window.innerWidth * window.innerHeight / 25000));
+  const count = Math.min(
+    40,
+    Math.floor((window.innerWidth * window.innerHeight) / 25000),
+  );
   embers = [];
   for (let i = 0; i < count; i++) {
     const ember = new Ember();
@@ -110,7 +125,7 @@ function animate() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  embers.forEach(ember => {
+  embers.forEach((ember) => {
     ember.update();
     ember.draw(ctx);
   });

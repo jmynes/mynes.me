@@ -9,9 +9,13 @@
     "watch:css": "sass src/scss:dist/css --watch",
     "watch": "npm-run-all --parallel watch:css",
     "serve": "browser-sync start --server --files 'dist/**/*' 'index.html'",
-    "dev": "npm-run-all --parallel watch serve"
+    "dev": "npm-run-all --parallel watch serve",
+    "lint": "biome check src/",
+    "lint:fix": "biome check --write src/",
+    "format": "biome format --write src/"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.12",
     "browser-sync": "^3.0.0",
     "npm-run-all": "^4.1.5",
     "sass": "^1.69.0"

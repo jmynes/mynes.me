@@ -4,9 +4,19 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 const themes = [
-  'aero', 'bubbly', 'christmas', 'fireflies', 'groovy',
-  'hacker', 'halloween', 'lilypond', 'powerpc', 'retrogame',
-  'starwars', 'synthwave', 'underworld'
+  'aero',
+  'bubbly',
+  'christmas',
+  'fireflies',
+  'groovy',
+  'hacker',
+  'halloween',
+  'lilypond',
+  'powerpc',
+  'retrogame',
+  'starwars',
+  'synthwave',
+  'underworld',
 ];
 
 /**
@@ -27,13 +37,17 @@ export function applyInitialTheme() {
 
   if (shuffleEnabled) {
     // Random theme, excluding the last one
-    const availableThemes = lastTheme ? themes.filter(t => t !== lastTheme) : themes;
-    selectedTheme = availableThemes[Math.floor(Math.random() * availableThemes.length)];
+    const availableThemes = lastTheme
+      ? themes.filter((t) => t !== lastTheme)
+      : themes;
+    selectedTheme =
+      availableThemes[Math.floor(Math.random() * availableThemes.length)];
   } else {
     // Keep same theme, or pick random if none saved
-    selectedTheme = lastTheme && themes.includes(lastTheme)
-      ? lastTheme
-      : themes[Math.floor(Math.random() * themes.length)];
+    selectedTheme =
+      lastTheme && themes.includes(lastTheme)
+        ? lastTheme
+        : themes[Math.floor(Math.random() * themes.length)];
   }
 
   localStorage.setItem('mynes-last-theme', selectedTheme);
@@ -57,7 +71,7 @@ export function initTheme() {
 
   // Set initial active button
   const themeButtons = document.querySelectorAll('.theme-btn');
-  themeButtons.forEach(btn => {
+  themeButtons.forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.theme === currentTheme);
     btn.addEventListener('click', () => {
       if (!btn.disabled) {
@@ -93,7 +107,7 @@ function setTheme(themeName) {
   localStorage.setItem('mynes-last-theme', themeName);
 
   // Update active button
-  themeButtons.forEach(btn => {
+  themeButtons.forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.theme === themeName);
   });
 }

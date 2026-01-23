@@ -12,11 +12,11 @@ let isActive = false;
 
 // Wisteria color palette
 const wisteriaColors = [
-  { h: 270, s: 50, l: 85 },  // Pale lavender
-  { h: 275, s: 45, l: 78 },  // Light purple
-  { h: 268, s: 40, l: 70 },  // Medium lavender
-  { h: 280, s: 55, l: 65 },  // Deeper purple
-  { h: 285, s: 35, l: 90 },  // Almost white purple
+  { h: 270, s: 50, l: 85 }, // Pale lavender
+  { h: 275, s: 45, l: 78 }, // Light purple
+  { h: 268, s: 40, l: 70 }, // Medium lavender
+  { h: 280, s: 55, l: 65 }, // Deeper purple
+  { h: 285, s: 35, l: 90 }, // Almost white purple
 ];
 
 // Firefly class - warm golden glowing particles
@@ -40,7 +40,8 @@ class Firefly {
 
   update() {
     // Gentle floating movement
-    this.x += this.speedX + Math.sin(Date.now() * 0.0008 + this.y * 0.01) * 0.25;
+    this.x +=
+      this.speedX + Math.sin(Date.now() * 0.0008 + this.y * 0.01) * 0.25;
     this.y += this.speedY + Math.cos(Date.now() * 0.0008 + this.x * 0.01) * 0.2;
 
     // Pulsing glow
@@ -62,8 +63,12 @@ class Firefly {
 
     // Outer glow
     const gradient = ctx.createRadialGradient(
-      this.x, this.y, 0,
-      this.x, this.y, glowSize
+      this.x,
+      this.y,
+      0,
+      this.x,
+      this.y,
+      glowSize,
     );
     gradient.addColorStop(0, `hsla(${this.hue}, 85%, 80%, ${alpha})`);
     gradient.addColorStop(0.3, `hsla(${this.hue}, 75%, 65%, ${alpha * 0.5})`);
@@ -106,7 +111,9 @@ class Petal {
   update() {
     // Gentle falling with horizontal wobble
     this.y += this.speedY;
-    this.x += this.speedX + Math.sin(Date.now() * this.wobbleSpeed + this.wobbleOffset) * 0.5;
+    this.x +=
+      this.speedX +
+      Math.sin(Date.now() * this.wobbleSpeed + this.wobbleOffset) * 0.5;
     this.rotation += this.rotationSpeed;
 
     // Reset when fallen off screen
@@ -125,9 +132,18 @@ class Petal {
 
     // Petal shape - elongated teardrop
     const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size);
-    gradient.addColorStop(0, `hsla(${this.color.h}, ${this.color.s}%, ${this.color.l + 10}%, ${this.opacity})`);
-    gradient.addColorStop(0.6, `hsla(${this.color.h}, ${this.color.s}%, ${this.color.l}%, ${this.opacity * 0.8})`);
-    gradient.addColorStop(1, `hsla(${this.color.h}, ${this.color.s + 10}%, ${this.color.l - 10}%, 0)`);
+    gradient.addColorStop(
+      0,
+      `hsla(${this.color.h}, ${this.color.s}%, ${this.color.l + 10}%, ${this.opacity})`,
+    );
+    gradient.addColorStop(
+      0.6,
+      `hsla(${this.color.h}, ${this.color.s}%, ${this.color.l}%, ${this.opacity * 0.8})`,
+    );
+    gradient.addColorStop(
+      1,
+      `hsla(${this.color.h}, ${this.color.s + 10}%, ${this.color.l - 10}%, 0)`,
+    );
 
     ctx.beginPath();
     ctx.ellipse(0, 0, this.size * 0.4, this.size, 0, 0, Math.PI * 2);
@@ -136,7 +152,15 @@ class Petal {
 
     // Subtle highlight
     ctx.beginPath();
-    ctx.ellipse(-this.size * 0.1, -this.size * 0.3, this.size * 0.15, this.size * 0.3, -0.3, 0, Math.PI * 2);
+    ctx.ellipse(
+      -this.size * 0.1,
+      -this.size * 0.3,
+      this.size * 0.15,
+      this.size * 0.3,
+      -0.3,
+      0,
+      Math.PI * 2,
+    );
     ctx.fillStyle = `hsla(${this.color.h}, ${this.color.s - 10}%, 95%, ${this.opacity * 0.4})`;
     ctx.fill();
 
@@ -154,7 +178,7 @@ function createCanvas() {
 }
 
 function removeCanvas() {
-  if (canvas && canvas.parentNode) {
+  if (canvas?.parentNode) {
     canvas.parentNode.removeChild(canvas);
   }
   canvas = null;
@@ -163,14 +187,20 @@ function removeCanvas() {
 
 function initParticles() {
   // Petals - more numerous
-  const petalCount = Math.min(35, Math.floor(window.innerWidth * window.innerHeight / 30000));
+  const petalCount = Math.min(
+    35,
+    Math.floor((window.innerWidth * window.innerHeight) / 30000),
+  );
   petals = [];
   for (let i = 0; i < petalCount; i++) {
     petals.push(new Petal());
   }
 
   // Fireflies - fewer, magical accents
-  const fireflyCount = Math.min(18, Math.floor(window.innerWidth * window.innerHeight / 60000));
+  const fireflyCount = Math.min(
+    18,
+    Math.floor((window.innerWidth * window.innerHeight) / 60000),
+  );
   fireflies = [];
   for (let i = 0; i < fireflyCount; i++) {
     fireflies.push(new Firefly());
@@ -183,13 +213,13 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw petals first (behind fireflies)
-  petals.forEach(petal => {
+  petals.forEach((petal) => {
     petal.update();
     petal.draw(ctx);
   });
 
   // Draw fireflies on top (they glow)
-  fireflies.forEach(firefly => {
+  fireflies.forEach((firefly) => {
     firefly.update();
     firefly.draw(ctx);
   });
@@ -209,10 +239,10 @@ function createRipple(x, y) {
   const ripple = document.createElement('div');
   ripple.className = 'pond-ripple';
   const size = 150 + Math.random() * 100;
-  ripple.style.width = size + 'px';
-  ripple.style.height = size + 'px';
-  ripple.style.left = (x - size / 2) + 'px';
-  ripple.style.top = (y - size / 2) + 'px';
+  ripple.style.width = `${size}px`;
+  ripple.style.height = `${size}px`;
+  ripple.style.left = `${x - size / 2}px`;
+  ripple.style.top = `${y - size / 2}px`;
   document.body.appendChild(ripple);
 
   // Create secondary smaller ripple
@@ -220,10 +250,10 @@ function createRipple(x, y) {
     const ripple2 = document.createElement('div');
     ripple2.className = 'pond-ripple';
     const size2 = size * 0.6;
-    ripple2.style.width = size2 + 'px';
-    ripple2.style.height = size2 + 'px';
-    ripple2.style.left = (x - size2 / 2) + 'px';
-    ripple2.style.top = (y - size2 / 2) + 'px';
+    ripple2.style.width = `${size2}px`;
+    ripple2.style.height = `${size2}px`;
+    ripple2.style.left = `${x - size2 / 2}px`;
+    ripple2.style.top = `${y - size2 / 2}px`;
     ripple2.style.animationDuration = '1s';
     document.body.appendChild(ripple2);
     setTimeout(() => ripple2.remove(), 1000);
@@ -236,7 +266,8 @@ function createRipple(x, y) {
 function handleClick(e) {
   if (!isActive) return;
   // Don't create ripples on interactive elements
-  if (e.target.closest('a, button, .project-screenshot-wrapper, .lightbox')) return;
+  if (e.target.closest('a, button, .project-screenshot-wrapper, .lightbox'))
+    return;
   createRipple(e.clientX, e.clientY);
 }
 
@@ -263,7 +294,9 @@ export function stop() {
   window.removeEventListener('resize', handleResize);
   document.removeEventListener('click', handleClick);
   // Clean up any remaining ripples
-  document.querySelectorAll('.pond-ripple').forEach(r => r.remove());
+  document.querySelectorAll('.pond-ripple').forEach((r) => {
+    r.remove();
+  });
 }
 
 export const themeName = 'lilypond';

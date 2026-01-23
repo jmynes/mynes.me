@@ -3,15 +3,15 @@
 // Manages theme-specific visual effects and observes theme changes
 // ═══════════════════════════════════════════════════════════════════════════
 
+import * as christmas from './christmas.js';
 import * as lilypond from './lilypond.js';
 import * as underworld from './underworld.js';
-import * as christmas from './christmas.js';
 
 // Registry of effects by theme name
 const effects = {
   lilypond,
   underworld,
-  christmas
+  christmas,
 };
 
 let currentEffect = null;

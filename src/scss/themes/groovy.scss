@@ -592,10 +592,12 @@ body {
 
 .theme-loader--groovy {
   background: linear-gradient(
-    180deg,
+    135deg,
     var(--purple-deep) 0%,
-    var(--purple) 50%,
-    var(--magenta) 100%
+    var(--purple) 25%,
+    var(--magenta) 50%,
+    var(--orange) 75%,
+    var(--yellow) 100%
   );
   display: flex;
   flex-direction: column;

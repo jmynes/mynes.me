@@ -154,14 +154,18 @@ export async function showLoader(themeName) {
 
     if (!isCancelled) {
       // Re-trigger entry animations so they play after the loader
-      // Skip for Star Wars - it handles its own post-intro state via starwars-intro-complete class
-      if (themeName !== 'starwars') {
+      // Skip for Star Wars (handles own post-intro state) and Inferno (burn already revealed content)
+      if (themeName !== 'starwars' && themeName !== 'inferno') {
         replayEntryAnimations();
       }
 
-      // Fade out
-      await fadeOut(overlay, 300);
-      removeOverlay();
+      // Fade out overlay (skip for inferno - burn already made it transparent)
+      if (themeName === 'inferno') {
+        removeOverlay();
+      } else {
+        await fadeOut(overlay, 300);
+        removeOverlay();
+      }
     }
   } catch {
     if (!isCancelled) {

@@ -31,15 +31,25 @@ function createBurnEffect(canvas, onComplete, isCancelled) {
     { x: 0.8, y: 0.8 },
     { x: 0.4, y: 0.3 },
     { x: 0.7, y: 0.6 },
-  ].map((h) => ({
-    x: (h.x + (Math.random() - 0.5) * 0.1) * width,
-    y: (h.y + (Math.random() - 0.5) * 0.1) * height,
-    radius: 0,
-    speed: baseSpeed * (0.9 + Math.random() * 0.2), // Vary speed slightly
-    wobble: Math.random() * Math.PI * 2, // phase offset for organic edges
-  }));
-
-  const maxRadius = Math.max(width, height) * 0.8;
+  ].map((h) => {
+    const x = (h.x + (Math.random() - 0.5) * 0.1) * width;
+    const y = (h.y + (Math.random() - 0.5) * 0.1) * height;
+    // Calculate radius needed to reach farthest corner from this position
+    const maxRadius = Math.max(
+      Math.hypot(x, y), // distance to top-left
+      Math.hypot(width - x, y), // distance to top-right
+      Math.hypot(x, height - y), // distance to bottom-left
+      Math.hypot(width - x, height - y), // distance to bottom-right
+    );
+    return {
+      x,
+      y,
+      radius: 0,
+      speed: baseSpeed * (0.9 + Math.random() * 0.2),
+      wobble: Math.random() * Math.PI * 2,
+      maxRadius, // Each hole has its own max based on position
+    };
+  });
   const edgeWidth = Math.max(3, width * 0.004); // Scale edge width to screen
 
   // Helper to draw a wobbly circle path
@@ -75,16 +85,27 @@ function createBurnEffect(canvas, onComplete, isCancelled) {
     ctx.fillStyle = '#0d0503';
     ctx.fillRect(0, 0, width, height);
 
-    let allDone = true;
-
     // Update hole sizes
     for (const hole of holes) {
-      if (hole.radius < maxRadius) {
+      if (hole.radius < hole.maxRadius) {
         hole.radius += hole.speed;
-        allDone = false;
       }
       hole.wobble += 0.03; // Slower wobble for smoother animation
     }
+
+    // Check if all four corners are covered by at least one hole
+    const corners = [
+      [0, 0],
+      [width, 0],
+      [0, height],
+      [width, height],
+    ];
+    const allDone = corners.every(([cx, cy]) =>
+      holes.some((hole) => {
+        const dist = Math.hypot(hole.x - cx, hole.y - cy);
+        return hole.radius > dist;
+      }),
+    );
 
     // Cut out ALL holes first (so edges don't overlap with any hole)
     ctx.globalCompositeOperation = 'destination-out';
@@ -98,7 +119,7 @@ function createBurnEffect(canvas, onComplete, isCancelled) {
     // Now draw edges using source-atop - this only draws where there's still opaque paper
     ctx.globalCompositeOperation = 'source-atop';
     for (const hole of holes) {
-      if (hole.radius > 0 && hole.radius < maxRadius) {
+      if (hole.radius > 0 && hole.radius < hole.maxRadius) {
         // Draw glowing edge just outside the hole (on the remaining paper)
         ctx.strokeStyle = 'rgba(255, 120, 40, 0.95)';
         ctx.lineWidth = edgeWidth;

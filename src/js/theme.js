@@ -212,12 +212,8 @@ function scrollActiveButtonIntoView() {
   const lastBtn = buttons[buttons.length - 1];
 
   if (activeBtn === firstBtn) {
-    // First button - ensure fully visible on left
-    activeBtn.scrollIntoView({
-      behavior: 'smooth',
-      inline: 'start',
-      block: 'nearest',
-    });
+    // First button - scroll container all the way left
+    container.scrollTo({ left: 0, behavior: 'smooth' });
   } else if (activeBtn === lastBtn) {
     // Last button - ensure fully visible on right
     activeBtn.scrollIntoView({

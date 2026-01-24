@@ -47,7 +47,7 @@ body {
   font-family: var(--font-body);
   color: var(--text-primary);
   background: var(--mac-platinum);
-  padding-top: 0; /* Override fixed header padding - PowerPC scrolls normally */
+  padding-top: 0 !important; /* Override fixed header padding - PowerPC scrolls normally */
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -222,6 +222,9 @@ body {
     inset -1px -1px 0 var(--mac-mid-grey),
     3px 3px 8px rgba(0, 0, 0, 0.2);
   position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
 }
 
 /* Title bar stripe */

@@ -11,6 +11,13 @@
   <meta property="og:title" content="mynes.me — Vibed Demos">
   <meta property="og:description" content="A collection of projects built with vibes">
 
+  <!-- Critical CSS to prevent flash -->
+  <style>
+    html, body { background: #000; }
+    body { opacity: 0; }
+    body.theme-ready { opacity: 1; transition: opacity 0.15s ease-out; }
+  </style>
+
   <!-- Styles -->
   <link rel="stylesheet" href="dist/css/base.css">
   <link rel="stylesheet" href="dist/css/themes/aero.css" id="theme-css">
@@ -48,10 +55,21 @@
     // Set theme immediately to prevent flash
     document.documentElement.dataset.theme = randomTheme;
 
-    // Update CSS link immediately
+    // Update CSS link immediately (before DOMContentLoaded)
+    const themeCss = document.getElementById('theme-css');
+    if (themeCss && randomTheme !== 'aero') {
+      themeCss.href = `dist/css/themes/${randomTheme}.css`;
+    }
+
+    // Show body once theme CSS loads
+    const showBody = () => document.body && document.body.classList.add('theme-ready');
+    if (themeCss) {
+      themeCss.addEventListener('load', showBody);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-      const themeCss = document.getElementById('theme-css');
-      if (themeCss) themeCss.href = `dist/css/themes/${randomTheme}.css`;
+      // Ensure body is visible
+      document.body.classList.add('theme-ready');
 
       // Set initial active button
       document.querySelectorAll('.theme-btn').forEach(btn => {

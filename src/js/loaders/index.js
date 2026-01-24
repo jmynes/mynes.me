@@ -3,6 +3,7 @@
 // Manages themed loading overlays during theme transitions
 // ═══════════════════════════════════════════════════════════════════════════
 
+import * as groovyLoader from './groovy.js';
 import * as hackerLoader from './hacker.js';
 import * as starwarsLoader from './starwars.js';
 
@@ -10,6 +11,7 @@ import * as starwarsLoader from './starwars.js';
 const loaders = {
   hacker: hackerLoader,
   starwars: starwarsLoader,
+  groovy: groovyLoader,
 };
 
 // State management

@@ -3,6 +3,7 @@
 // Manages theme-specific visual effects and observes theme changes
 // ═══════════════════════════════════════════════════════════════════════════
 
+import * as bubbly from './bubbly.js';
 import * as christmas from './christmas.js';
 import * as halloween from './halloween.js';
 import * as inferno from './inferno.js';
@@ -10,6 +11,7 @@ import * as lilypond from './lilypond.js';
 
 // Registry of effects by theme name
 const effects = {
+  bubbly,
   halloween,
   lilypond,
   inferno,

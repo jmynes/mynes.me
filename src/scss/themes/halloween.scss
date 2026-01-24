@@ -559,3 +559,205 @@ body {
     background: rgba(26, 10, 31, 0.98);
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Halloween Theme Loader — Jack-o-Lantern Reveal
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-loader--halloween {
+  background: var(--halloween-black);
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.halloween-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Flickering darkness overlay
+.halloween-darkness {
+  position: absolute;
+  inset: 0;
+  background: var(--halloween-black);
+  z-index: 10;
+  transition: opacity 0.1s ease;
+}
+
+.halloween-darkness.flicker-1 {
+  opacity: 0.7;
+}
+
+.halloween-darkness.flicker-2 {
+  opacity: 0.5;
+}
+
+.halloween-darkness.fade-out {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+// Pumpkin container
+.halloween-pumpkin {
+  position: relative;
+  z-index: 5;
+  width: 180px;
+  height: 160px;
+  background: radial-gradient(ellipse 100% 90% at 50% 60%, #ff8c00 0%, #cc5500 60%, #994400 100%);
+  border-radius: 45% 45% 50% 50%;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.4s ease;
+  box-shadow:
+    inset -20px -10px 30px rgba(0, 0, 0, 0.3),
+    0 10px 40px rgba(0, 0, 0, 0.5);
+
+  // Pumpkin ridges
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      linear-gradient(90deg,
+        transparent 0%,
+        rgba(0, 0, 0, 0.15) 20%,
+        transparent 25%,
+        transparent 35%,
+        rgba(0, 0, 0, 0.1) 50%,
+        transparent 55%,
+        transparent 75%,
+        rgba(0, 0, 0, 0.15) 80%,
+        transparent 100%
+      );
+  }
+
+  // Stem
+  &::after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(180deg, #2d5a1e 0%, #1a3d10 100%);
+    border-radius: 30% 30% 40% 40%;
+  }
+}
+
+.halloween-pumpkin.lit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.halloween-pumpkin.fade-out {
+  opacity: 0;
+  transform: scale(1.1);
+}
+
+// Face container
+.halloween-face {
+  position: absolute;
+  inset: 20px;
+}
+
+.halloween-face.glowing {
+  .halloween-eye,
+  .halloween-nose,
+  .halloween-mouth {
+    box-shadow:
+      0 0 20px var(--halloween-orange),
+      0 0 40px rgba(255, 107, 26, 0.8),
+      inset 0 0 15px rgba(255, 200, 0, 0.5);
+  }
+}
+
+// Eyes
+.halloween-eye {
+  position: absolute;
+  top: 25%;
+  width: 30px;
+  height: 35px;
+  background: linear-gradient(180deg, #ffcc00 0%, #ff8800 100%);
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  transition: box-shadow 0.3s ease;
+}
+
+.halloween-eye--left {
+  left: 20%;
+  transform: rotate(-5deg);
+}
+
+.halloween-eye--right {
+  right: 20%;
+  transform: rotate(5deg);
+}
+
+// Nose
+.halloween-nose {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 25px;
+  background: linear-gradient(180deg, #ffcc00 0%, #ff8800 100%);
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  transition: box-shadow 0.3s ease;
+}
+
+// Mouth
+.halloween-mouth {
+  position: absolute;
+  bottom: 15%;
+  left: 15%;
+  right: 15%;
+  height: 30px;
+  background: linear-gradient(180deg, #ffcc00 0%, #ff8800 100%);
+  clip-path: polygon(
+    0% 0%,
+    15% 100%,
+    30% 0%,
+    45% 100%,
+    60% 0%,
+    75% 100%,
+    90% 0%,
+    100% 50%,
+    90% 100%,
+    10% 100%,
+    0% 50%
+  );
+  transition: box-shadow 0.3s ease;
+}
+
+// BOO! text
+.halloween-boo {
+  position: absolute;
+  z-index: 15;
+  bottom: 25%;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8vw, 4rem);
+  color: var(--halloween-orange);
+  text-shadow:
+    3px 3px 0 var(--halloween-blood),
+    0 0 30px rgba(255, 107, 26, 0.8);
+  letter-spacing: 0.1em;
+  opacity: 0;
+  transform: scale(0.5) rotate(-10deg);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.halloween-boo.visible {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.halloween-boo.fade-out {
+  opacity: 0;
+  transform: scale(1.2) rotate(5deg);
+}

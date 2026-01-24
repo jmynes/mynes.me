@@ -7,6 +7,7 @@ import * as aeroLoader from './aero.js';
 import * as christmasLoader from './christmas.js';
 import * as groovyLoader from './groovy.js';
 import * as hackerLoader from './hacker.js';
+import * as halloweenLoader from './halloween.js';
 import * as retrogameLoader from './retrogame.js';
 import * as starwarsLoader from './starwars.js';
 import * as synthwaveLoader from './synthwave.js';
@@ -16,6 +17,7 @@ const loaders = {
   aero: aeroLoader,
   christmas: christmasLoader,
   hacker: hackerLoader,
+  halloween: halloweenLoader,
   starwars: starwarsLoader,
   groovy: groovyLoader,
   retrogame: retrogameLoader,

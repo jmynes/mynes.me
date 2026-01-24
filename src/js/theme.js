@@ -23,7 +23,8 @@ const themes = [
 
 /**
  * Apply initial theme immediately (before DOMContentLoaded)
- * This prevents flash of wrong theme on page load
+ * Note: The inline script in index.html handles theme selection to prevent flash.
+ * This function just cleans up the URL param if present.
  */
 export function applyInitialTheme() {
   // Prevent scroll restoration on refresh
@@ -32,48 +33,18 @@ export function applyInitialTheme() {
   }
   window.scrollTo(0, 0);
 
-  // Check for theme in URL parameter (for direct linking)
+  // Clear theme param from URL if present (inline script already used it)
   const urlParams = new URLSearchParams(window.location.search);
-  const urlTheme = urlParams.get('theme');
-
-  // If valid theme in URL, use it and clear the param
-  if (urlTheme && themes.includes(urlTheme)) {
-    // Remove the theme param from URL without reload
+  if (urlParams.has('theme')) {
     urlParams.delete('theme');
     const newUrl = urlParams.toString()
       ? `${window.location.pathname}?${urlParams.toString()}`
       : window.location.pathname;
     history.replaceState(null, '', newUrl);
-
-    localStorage.setItem('mynes-last-theme', urlTheme);
-    document.documentElement.dataset.theme = urlTheme;
-    return urlTheme;
   }
 
-  // Normal theme selection logic
-  const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false'; // default true
-  const lastTheme = localStorage.getItem('mynes-last-theme');
-  let selectedTheme;
-
-  if (shuffleEnabled) {
-    // Random theme, excluding the last one
-    const availableThemes = lastTheme
-      ? themes.filter((t) => t !== lastTheme)
-      : themes;
-    selectedTheme =
-      availableThemes[Math.floor(Math.random() * availableThemes.length)];
-  } else {
-    // Keep same theme, or pick random if none saved
-    selectedTheme =
-      lastTheme && themes.includes(lastTheme)
-        ? lastTheme
-        : themes[Math.floor(Math.random() * themes.length)];
-  }
-
-  localStorage.setItem('mynes-last-theme', selectedTheme);
-  document.documentElement.dataset.theme = selectedTheme;
-
-  return selectedTheme;
+  // Return the theme that was already set by inline script
+  return document.documentElement.dataset.theme;
 }
 
 /**

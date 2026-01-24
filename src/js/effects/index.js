@@ -5,6 +5,7 @@
 
 import * as bubbly from './bubbly.js';
 import * as christmas from './christmas.js';
+import * as fireflies from './fireflies.js';
 import * as halloween from './halloween.js';
 import * as inferno from './inferno.js';
 import * as lilypond from './lilypond.js';
@@ -12,10 +13,11 @@ import * as lilypond from './lilypond.js';
 // Registry of effects by theme name
 const effects = {
   bubbly,
-  halloween,
-  lilypond,
-  inferno,
   christmas,
+  fireflies,
+  halloween,
+  inferno,
+  lilypond,
 };
 
 let currentEffect = null;

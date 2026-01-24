@@ -207,11 +207,24 @@ function scrollActiveButtonIntoView() {
 
   if (!container || !activeBtn) return;
 
-  // Calculate scroll position to center the button
-  const buttonRect = activeBtn.getBoundingClientRect();
+  const buttons = container.querySelectorAll('.theme-btn');
+  const firstBtn = buttons[0];
+  const lastBtn = buttons[buttons.length - 1];
 
-  const scrollLeft =
-    activeBtn.offsetLeft - container.offsetWidth / 2 + buttonRect.width / 2;
+  let scrollLeft;
+
+  if (activeBtn === firstBtn) {
+    // First button - scroll all the way left
+    scrollLeft = 0;
+  } else if (activeBtn === lastBtn) {
+    // Last button - scroll all the way right
+    scrollLeft = container.scrollWidth - container.offsetWidth;
+  } else {
+    // Middle buttons - center the button
+    const buttonRect = activeBtn.getBoundingClientRect();
+    scrollLeft =
+      activeBtn.offsetLeft - container.offsetWidth / 2 + buttonRect.width / 2;
+  }
 
   container.scrollTo({
     left: Math.max(0, scrollLeft),

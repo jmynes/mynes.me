@@ -6,10 +6,12 @@
 import * as aeroLoader from './aero.js';
 import * as bubblyLoader from './bubbly.js';
 import * as christmasLoader from './christmas.js';
+import * as firefliesLoader from './fireflies.js';
 import * as groovyLoader from './groovy.js';
 import * as hackerLoader from './hacker.js';
 import * as halloweenLoader from './halloween.js';
 import * as infernoLoader from './inferno.js';
+import * as lilypondLoader from './lilypond.js';
 import * as powerpcLoader from './powerpc.js';
 import * as retrogameLoader from './retrogame.js';
 import * as starwarsLoader from './starwars.js';
@@ -20,14 +22,16 @@ const loaders = {
   aero: aeroLoader,
   bubbly: bubblyLoader,
   christmas: christmasLoader,
+  fireflies: firefliesLoader,
   groovy: groovyLoader,
   hacker: hackerLoader,
   halloween: halloweenLoader,
+  inferno: infernoLoader,
+  lilypond: lilypondLoader,
   powerpc: powerpcLoader,
   retrogame: retrogameLoader,
   starwars: starwarsLoader,
   synthwave: synthwaveLoader,
-  inferno: infernoLoader,
 };
 
 // State management

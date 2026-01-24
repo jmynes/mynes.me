@@ -140,7 +140,10 @@ export async function showLoader(themeName) {
 
     if (!isCancelled) {
       // Re-trigger entry animations so they play after the loader
-      replayEntryAnimations();
+      // Skip for Star Wars - it handles its own post-intro state via starwars-intro-complete class
+      if (themeName !== 'starwars') {
+        replayEntryAnimations();
+      }
 
       // Fade out
       await fadeOut(overlay, 300);

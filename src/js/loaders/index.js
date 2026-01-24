@@ -3,6 +3,7 @@
 // Manages themed loading overlays during theme transitions
 // ═══════════════════════════════════════════════════════════════════════════
 
+import * as aeroLoader from './aero.js';
 import * as groovyLoader from './groovy.js';
 import * as hackerLoader from './hacker.js';
 import * as retrogameLoader from './retrogame.js';
@@ -10,6 +11,7 @@ import * as starwarsLoader from './starwars.js';
 
 // Registry of loaders by theme name
 const loaders = {
+  aero: aeroLoader,
   hacker: hackerLoader,
   starwars: starwarsLoader,
   groovy: groovyLoader,

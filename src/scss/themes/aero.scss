@@ -551,3 +551,144 @@ body {
 // ═══════════════════════════════════════════════════════════════════════════
 
 @include responsive-radius;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Aero Theme Loader — Windows Vista Boot Screen Effect
+// ═══════════════════════════════════════════════════════════════════════════
+
+.theme-loader--aero {
+  background: linear-gradient(180deg, #000000 0%, #0a1a24 100%);
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.aero-boot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+// Orbiting pearls container
+.aero-pearls {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  animation: aeroPearlsRotate 2.5s linear infinite;
+}
+
+// Individual pearl
+.aero-pearl {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--aurora-cyan) 0%, var(--aurora-green) 100%);
+  box-shadow:
+    0 0 10px var(--glow-cyan),
+    0 0 20px var(--glow-cyan),
+    0 0 30px rgba(0, 255, 255, 0.3);
+  opacity: 0;
+  animation: aeroPearlFadeIn 0.4s ease-out forwards,
+             aeroPearlOrbit 2.5s ease-in-out infinite;
+  animation-delay: var(--pearl-delay), var(--pearl-delay);
+
+  // Position pearls in a circle
+  &:nth-child(1) { --pearl-angle: 0deg; }
+  &:nth-child(2) { --pearl-angle: 72deg; }
+  &:nth-child(3) { --pearl-angle: 144deg; }
+  &:nth-child(4) { --pearl-angle: 216deg; }
+  &:nth-child(5) { --pearl-angle: 288deg; }
+
+  // Calculate position based on angle
+  left: calc(50% + 30px * cos(var(--pearl-angle)) - 6px);
+  top: calc(50% + 30px * sin(var(--pearl-angle)) - 6px);
+}
+
+@keyframes aeroPearlFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes aeroPearlsRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes aeroPearlOrbit {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.3);
+  }
+}
+
+// Scatter effect when loader finishes
+.aero-pearls.scatter .aero-pearl {
+  animation: aeroPearlScatter 0.4s ease-out forwards;
+}
+
+@keyframes aeroPearlScatter {
+  to {
+    opacity: 0;
+    transform: scale(2) translateY(-20px);
+  }
+}
+
+// "Starting..." text
+.aero-text {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.aero-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.aero-text.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+// Subtle aurora glow behind pearls
+.aero-glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 255, 255, 0.1) 0%,
+    rgba(127, 255, 127, 0.05) 40%,
+    transparent 70%
+  );
+  animation: aeroGlowPulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes aeroGlowPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}

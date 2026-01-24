@@ -563,3 +563,174 @@ body {
 
 // Firefox fallback
 @include firefox-fallback(rgba(13, 27, 42, 0.98));
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Christmas Theme Loader — Snowfall with Ornament
+// ═══════════════════════════════════════════════════════════════════════════
+
+.theme-loader--christmas {
+  background: linear-gradient(180deg, #0a1218 0%, var(--christmas-night) 50%, var(--christmas-dark) 100%);
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.christmas-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Snowflakes container
+.christmas-snow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.christmas-snowflake {
+  position: absolute;
+  top: -20px;
+  left: var(--x);
+  width: var(--size);
+  height: var(--size);
+  background: radial-gradient(circle, white 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
+  border-radius: 50%;
+  animation: snowfall var(--duration) linear var(--delay) infinite;
+  opacity: 0;
+}
+
+@keyframes snowfall {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) translateX(var(--drift)) rotate(360deg);
+  }
+}
+
+// Christmas ornament
+.christmas-ornament {
+  position: relative;
+  width: 100px;
+  height: 120px;
+  opacity: 0;
+  transform: scale(0.5) rotate(-10deg);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  // Ornament cap
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 15px;
+    background: linear-gradient(180deg, #ffd700 0%, #b8860b 100%);
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 -2px 8px rgba(255, 215, 0, 0.5);
+  }
+
+  // Ornament hook
+  &::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 14px;
+    border: 3px solid #ffd700;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+  }
+}
+
+.christmas-ornament.visible {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.christmas-ornament.fade-out {
+  opacity: 0;
+  transform: scale(1.1) rotate(5deg);
+}
+
+// Ornament ball (using child element)
+.christmas-ornament-shine {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(
+    ellipse 60% 60% at 30% 30%,
+    rgba(255, 255, 255, 0.4) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    circle at 50% 50%,
+    var(--christmas-red) 0%,
+    #a02020 60%,
+    #701515 100%
+  );
+  border-radius: 50%;
+  box-shadow:
+    0 0 30px rgba(212, 43, 43, 0.5),
+    inset 0 -10px 20px rgba(0, 0, 0, 0.3),
+    inset 0 10px 20px rgba(255, 255, 255, 0.1);
+  animation: ornamentGlow 2s ease-in-out infinite;
+}
+
+@keyframes ornamentGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 30px rgba(212, 43, 43, 0.5),
+      inset 0 -10px 20px rgba(0, 0, 0, 0.3),
+      inset 0 10px 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 50px rgba(212, 43, 43, 0.7),
+      0 0 80px rgba(255, 215, 0, 0.3),
+      inset 0 -10px 20px rgba(0, 0, 0, 0.3),
+      inset 0 10px 20px rgba(255, 255, 255, 0.1);
+  }
+}
+
+// Greeting text
+.christmas-greeting {
+  position: absolute;
+  bottom: 30%;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 6vw, 3rem);
+  font-weight: 700;
+  color: var(--christmas-gold);
+  text-shadow:
+    2px 2px 0 var(--christmas-red),
+    0 0 30px rgba(255, 215, 0, 0.6);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+.christmas-greeting.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.christmas-greeting.fade-out {
+  opacity: 0;
+  transform: translateY(-20px);
+}

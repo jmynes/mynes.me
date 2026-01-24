@@ -4,18 +4,22 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import * as aeroLoader from './aero.js';
+import * as christmasLoader from './christmas.js';
 import * as groovyLoader from './groovy.js';
 import * as hackerLoader from './hacker.js';
 import * as retrogameLoader from './retrogame.js';
 import * as starwarsLoader from './starwars.js';
+import * as synthwaveLoader from './synthwave.js';
 
 // Registry of loaders by theme name
 const loaders = {
   aero: aeroLoader,
+  christmas: christmasLoader,
   hacker: hackerLoader,
   starwars: starwarsLoader,
   groovy: groovyLoader,
   retrogame: retrogameLoader,
+  synthwave: synthwaveLoader,
 };
 
 // State management

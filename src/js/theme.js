@@ -13,12 +13,12 @@ const themes = [
   'groovy',
   'hacker',
   'halloween',
+  'inferno',
   'lilypond',
   'powerpc',
   'retrogame',
   'starwars',
   'synthwave',
-  'inferno',
 ];
 
 /**
@@ -60,6 +60,16 @@ export async function initTheme() {
   // Show loader animation on initial page load (if enabled and one exists for this theme)
   if (introsEnabled()) {
     await showLoader(currentTheme);
+  }
+
+  // Sort theme buttons alphabetically by their text content
+  const themeToggles = document.querySelector('.theme-toggles');
+  if (themeToggles) {
+    const buttons = [...themeToggles.querySelectorAll('.theme-btn')];
+    buttons.sort((a, b) => a.textContent.localeCompare(b.textContent));
+    for (const btn of buttons) {
+      themeToggles.appendChild(btn);
+    }
   }
 
   // Set initial active button

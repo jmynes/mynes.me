@@ -18,7 +18,7 @@ const themes = [
   'retrogame',
   'starwars',
   'synthwave',
-  'underworld',
+  'inferno',
 ];
 
 /**

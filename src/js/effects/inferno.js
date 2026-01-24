@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Underworld Theme — Dynamic Ember Effects
+// Inferno Theme — Dynamic Ember Effects
 // Rising embers, smouldering particles, hellish glow
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -89,7 +89,7 @@ class Ember {
 
 function createCanvas() {
   canvas = document.createElement('canvas');
-  canvas.id = 'underworld-canvas';
+  canvas.id = 'inferno-canvas';
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   document.body.appendChild(canvas);
@@ -161,4 +161,4 @@ export function stop() {
   window.removeEventListener('resize', handleResize);
 }
 
-export const themeName = 'underworld';
+export const themeName = 'inferno';

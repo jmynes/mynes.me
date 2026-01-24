@@ -30,7 +30,7 @@
     window.scrollTo(0, 0);
 
     // Theme selection: shuffle ON = random (never same twice), shuffle OFF = keep same theme
-    const themes = ['aero', 'bubbly', 'christmas', 'fireflies', 'groovy', 'hacker', 'halloween', 'lilypond', 'powerpc', 'retrogame', 'starwars', 'synthwave', 'underworld'];
+    const themes = ['aero', 'bubbly', 'christmas', 'fireflies', 'groovy', 'hacker', 'halloween', 'lilypond', 'powerpc', 'retrogame', 'starwars', 'synthwave', 'inferno'];
     const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false'; // default true
     const lastTheme = localStorage.getItem('mynes-last-theme');
     let selectedTheme;
@@ -240,7 +240,7 @@
       <a class="theme-btn" href="?theme=retrogame" data-theme="retrogame">Retro Game</a>
       <a class="theme-btn" href="?theme=starwars" data-theme="starwars">Star Wars</a>
       <a class="theme-btn" href="?theme=synthwave" data-theme="synthwave">Synthwave</a>
-      <a class="theme-btn" href="?theme=underworld" data-theme="underworld">Underworld</a>
+      <a class="theme-btn" href="?theme=inferno" data-theme="inferno">Inferno</a>
     </div>
     <div class="header-toggles">
       <button class="toggle-btn active" id="intros-btn" aria-label="Toggle intro animations">

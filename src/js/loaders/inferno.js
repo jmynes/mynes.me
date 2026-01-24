@@ -1,9 +1,9 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Underworld Theme Loader — Hellish Ascent with Canvas Burn Effect
+// Inferno Theme Loader — Hellish Ascent with Canvas Burn Effect
 // Embers rise, title appears, then burns away like paper
 // ═══════════════════════════════════════════════════════════════════════════
 
-export const themeName = 'underworld';
+export const themeName = 'inferno';
 
 /**
  * Sleep utility
@@ -126,7 +126,7 @@ function createBurnEffect(canvas, onComplete, isCancelled) {
 }
 
 /**
- * Animate the underworld loader
+ * Animate the inferno loader
  * @param {HTMLElement} overlay - The loader overlay element
  * @param {Function} isCancelled - Function that returns true if cancelled
  * @returns {Promise} Resolves when animation completes
@@ -136,7 +136,7 @@ export async function animate(overlay, isCancelled) {
   while (overlay.firstChild) {
     overlay.removeChild(overlay.firstChild);
   }
-  overlay.className = 'theme-loader theme-loader--underworld';
+  overlay.className = 'theme-loader theme-loader--inferno';
 
   // Hide scrollbar during animation
   document.documentElement.style.overflow = 'hidden';
@@ -147,17 +147,17 @@ export async function animate(overlay, isCancelled) {
 
   // Create container for scene elements (embers, title)
   const container = document.createElement('div');
-  container.className = 'underworld-scene';
+  container.className = 'inferno-scene';
   overlay.appendChild(container);
 
   // Create embers
   const embers = document.createElement('div');
-  embers.className = 'underworld-embers';
+  embers.className = 'inferno-embers';
   container.appendChild(embers);
 
   for (let i = 0; i < 12; i++) {
     const ember = document.createElement('div');
-    ember.className = 'underworld-ember';
+    ember.className = 'inferno-ember';
     ember.style.left = `${10 + Math.random() * 80}%`;
     ember.style.animationDelay = `${Math.random() * 1.5}s`;
     ember.style.animationDuration = `${1 + Math.random() * 1}s`;
@@ -166,8 +166,8 @@ export async function animate(overlay, isCancelled) {
 
   // Create title text
   const title = document.createElement('div');
-  title.className = 'underworld-title';
-  title.textContent = 'DESCEND';
+  title.className = 'inferno-title';
+  title.textContent = 'BURN';
   container.appendChild(title);
 
   // Start dark
@@ -199,7 +199,7 @@ export async function animate(overlay, isCancelled) {
   // Create canvas for burn effect DIRECTLY on overlay (not inside container)
   // This way, when it burns transparent, the page content underneath shows through
   const canvas = document.createElement('canvas');
-  canvas.className = 'underworld-burn-canvas';
+  canvas.className = 'inferno-burn-canvas';
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   overlay.appendChild(canvas); // Append to overlay, not container

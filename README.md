@@ -4,7 +4,7 @@ A portfolio landing page showcasing projects built with vibes.
 
 ## Features
 
-- **13 Themes**: Aero, Bubbly, Christmas, Fireflies, Groovy, Hacker, Halloween, Lilypond, PowerPC, Retrogame, Starwars, Synthwave, and Underworld — each with unique visual effects
+- **13 Themes**: Aero, Bubbly, Christmas, Fireflies, Groovy, Hacker, Halloween, Inferno, Pond, PowerPC, Retrogame, Starwars, and Synthwave — each with unique visual effects
 - **Shuffle Mode**: Randomly picks a different theme on each visit (default on)
 - **Portfolio Modal**: Click screenshots to open a split-panel lightbox with large image preview, project links, description, and tech stack
 - **Responsive**: Works on desktop and mobile
@@ -39,7 +39,7 @@ src/
       retrogame.scss    # Arcade pixel aesthetic
       starwars.scss     # Hyperspace star field
       synthwave.scss    # 80s neon grid
-      underworld.scss   # Volcanic ember particles
+      inferno.scss      # Volcanic ember particles
   js/                   # JavaScript modules
 dist/                   # Compiled assets (gitignored)
 ```

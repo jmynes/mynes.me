@@ -210,9 +210,9 @@ body {
   font-size: 0.7rem;
   font-weight: 600;
   background: transparent;
-  border: 1px solid var(--sw-gray);
+  border: 1px solid var(--sw-blue);
   border-radius: var(--radius-sm);
-  color: var(--sw-gray);
+  color: var(--sw-blue);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -233,8 +233,8 @@ body {
 .toggle-btn {
   background: transparent;
   border-radius: var(--radius-sm);
-  color: var(--sw-gray);
-  border: 1px solid var(--sw-gray);
+  color: var(--sw-blue);
+  border: 1px solid var(--sw-blue);
 }
 
 .toggle-btn.active {
@@ -374,9 +374,15 @@ body {
 }
 
 .project-link.coming-soon {
-  background: var(--sw-gray);
-  color: var(--sw-black);
+  background: transparent;
+  color: var(--sw-blue);
+  border: 1px solid var(--sw-blue);
   box-shadow: none;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 0 10px rgba(74, 144, 217, 0.3);
+  }
 }
 
 .project-desc {
@@ -397,11 +403,25 @@ body {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .site-footer {
-  color: var(--sw-gray);
-}
+  color: var(--sw-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.85rem;
 
-.site-footer strong {
-  color: var(--sw-yellow);
+  a {
+    color: var(--sw-blue);
+  }
+
+  .github-icon {
+    fill: var(--sw-blue);
+  }
+
+  strong {
+    font-family: var(--font-display);
+    color: var(--sw-yellow);
+    text-shadow: 0 0 15px rgba(255, 232, 31, 0.5);
+    letter-spacing: 0.15em;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

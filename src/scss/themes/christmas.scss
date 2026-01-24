@@ -450,12 +450,26 @@ body {
 // ═══════════════════════════════════════════════════════════════════════════
 
 .site-footer {
-  color: var(--text-secondary);
+  color: var(--christmas-pine);
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 16px rgba(255, 255, 255, 0.6);
+
+  a {
+    color: var(--christmas-pine);
+  }
+
+  .github-icon {
+    fill: var(--christmas-pine);
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+  }
 
   strong {
     font-family: var(--font-display);
-    color: var(--christmas-gold);
-    text-shadow: 1px 1px 0 var(--christmas-red);
+    color: var(--christmas-red);
+    text-shadow:
+      0 0 8px rgba(255, 255, 255, 0.9),
+      1px 1px 0 rgba(255, 255, 255, 0.5);
   }
 }
 

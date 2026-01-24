@@ -64,7 +64,8 @@ body {
     radial-gradient(1.5px 1.5px at 65% 8%, white 100%, transparent),
     radial-gradient(1px 1px at 80% 18%, rgba(255,255,255,0.8) 100%, transparent),
     radial-gradient(1.5px 1.5px at 92% 12%, white 100%, transparent),
-    linear-gradient(to bottom, #0a1218 0%, var(--christmas-night) 30%, var(--christmas-dark) 100%);
+    linear-gradient(to bottom, #0a1218 0%, #0f1a24 30%, #162130 100%);
+
 
   &::before {
     content: '';
@@ -109,7 +110,16 @@ body {
 // ═══════════════════════════════════════════════════════════════════════════
 
 .theme-effects {
-  &::before,
+  // Noise overlay to prevent gradient banding
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+  }
+
   &::after {
     display: none;
   }
@@ -569,9 +579,21 @@ body {
 // ═══════════════════════════════════════════════════════════════════════════
 
 .theme-loader--christmas {
-  background: linear-gradient(180deg, #0a1218 0%, var(--christmas-night) 50%, var(--christmas-dark) 100%);
+  // Avoid 50% stop - Firefox renders a visible seam there
+  background: linear-gradient(180deg, #0a1218 0%, #0d161f 30%, #101b27 60%, #162130 100%);
   pointer-events: auto;
   overflow: hidden;
+
+  // Noise overlay to prevent gradient banding
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
 .christmas-scene {

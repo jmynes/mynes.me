@@ -424,11 +424,20 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Lightbox
+   Lightbox / Portfolio Modal
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .lightbox {
   background: rgba(0, 0, 0, 0.98);
+}
+
+.lightbox-panel {
+  background: rgba(10, 10, 15, 0.98);
+  border: 1px solid rgba(255, 232, 31, 0.3);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.9),
+    0 0 30px rgba(255, 232, 31, 0.1);
 }
 
 .lightbox-close {
@@ -437,31 +446,69 @@ body {
   border-radius: 50%;
   color: var(--sw-yellow);
   box-shadow: 0 0 15px rgba(255, 232, 31, 0.3);
+
+  &:hover {
+    background: var(--sw-yellow);
+    color: var(--sw-black);
+  }
 }
 
-.lightbox-close:hover {
-  background: var(--sw-yellow);
-  color: var(--sw-black);
-}
-
-.lightbox-content {
-  border-radius: var(--radius-lg);
-  box-shadow:
-    0 32px 80px rgba(0, 0, 0, 0.9),
-    0 0 30px rgba(255, 232, 31, 0.1);
+.lightbox-media {
+  border-right: 1px solid rgba(255, 232, 31, 0.2);
 }
 
 .lightbox-image {
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
 }
 
-.lightbox-caption {
+.lightbox-title {
   font-family: var(--font-display);
-  font-size: 1.5rem;
   color: var(--sw-yellow);
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
   text-shadow: 0 0 20px rgba(255, 232, 31, 0.5);
+}
+
+.lightbox-action {
+  background: transparent;
+  border: 2px solid var(--sw-yellow);
+  border-radius: var(--radius-md);
+  color: var(--sw-yellow);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &:hover {
+    background: var(--sw-yellow);
+    color: var(--sw-black);
+  }
+  &.coming-soon {
+    border-color: rgba(255, 232, 31, 0.3);
+    color: rgba(255, 232, 31, 0.5);
+  }
+}
+
+.lightbox-description {
+  color: var(--sw-gray);
+}
+
+.lightbox-footer {
+  border-color: rgba(255, 232, 31, 0.2);
+}
+
+.lightbox-tag {
+  background: transparent;
+  border: 1px solid var(--sw-yellow);
+  border-radius: var(--radius-sm);
+  color: var(--sw-yellow);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+  .lightbox-panel { border-radius: 0; }
+  .lightbox-media { border-right: none; border-bottom: 1px solid rgba(255, 232, 31, 0.2); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

@@ -395,7 +395,7 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Lightbox
+   Lightbox / Portfolio Modal
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .lightbox {
@@ -404,37 +404,75 @@ body {
   -webkit-backdrop-filter: blur(20px);
 }
 
+.lightbox-panel {
+  background: rgba(60, 40, 100, 0.95);
+  border: 2px solid rgba(255, 245, 230, 0.2);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 32px 80px rgba(45, 27, 78, 0.5);
+}
+
 .lightbox-close {
   background: rgba(255, 245, 230, 0.2);
   border: 2px solid rgba(255, 245, 230, 0.3);
   border-radius: 50%;
   color: var(--cream);
   box-shadow: 0 8px 24px rgba(45, 27, 78, 0.3);
+
+  &::before { display: none; }
+  &:hover {
+    background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 100%);
+    border-color: transparent;
+  }
 }
 
-.lightbox-close::before {
-  display: none;
-}
-
-.lightbox-close:hover {
-  background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 100%);
-  border-color: transparent;
-}
-
-.lightbox-content {
-  border-radius: var(--radius-lg);
-  box-shadow: 0 32px 80px rgba(45, 27, 78, 0.5);
+.lightbox-media {
+  border-right: 1px solid rgba(255, 245, 230, 0.15);
 }
 
 .lightbox-image {
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
 }
 
-.lightbox-caption {
+.lightbox-title {
   font-family: var(--font-display);
   color: var(--cream);
   text-shadow: 2px 2px 4px rgba(45, 27, 78, 0.5);
   letter-spacing: 0.02em;
+}
+
+.lightbox-action {
+  background: transparent;
+  border: 2px solid rgba(255, 245, 230, 0.3);
+  border-radius: var(--radius-pill);
+  color: var(--cream);
+
+  &:hover {
+    background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 100%);
+    border-color: transparent;
+  }
+  &.coming-soon {
+    opacity: 0.5;
+  }
+}
+
+.lightbox-description {
+  color: rgba(255, 245, 230, 0.8);
+}
+
+.lightbox-footer {
+  border-color: rgba(255, 245, 230, 0.15);
+}
+
+.lightbox-tag {
+  background: rgba(255, 245, 230, 0.1);
+  border: 1px solid rgba(255, 245, 230, 0.2);
+  border-radius: var(--radius-pill);
+  color: var(--cream);
+}
+
+@media (max-width: 768px) {
+  .lightbox-panel { border-radius: 0; }
+  .lightbox-media { border-right: none; border-bottom: 1px solid rgba(255, 245, 230, 0.15); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

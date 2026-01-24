@@ -473,13 +473,22 @@ body {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// Lightbox
+// Lightbox / Portfolio Modal
 // ═══════════════════════════════════════════════════════════════════════════
 
 .lightbox {
   background: rgba(13, 27, 42, 0.98);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
+}
+
+.lightbox-panel {
+  background: rgba(20, 35, 50, 0.98);
+  border: 2px solid var(--christmas-gold);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.8),
+    0 0 60px rgba(255, 215, 0, 0.15);
 }
 
 .lightbox-close {
@@ -494,22 +503,59 @@ body {
   }
 }
 
-.lightbox-content {
-  border-radius: var(--radius-lg);
-  box-shadow:
-    0 32px 80px rgba(0, 0, 0, 0.8),
-    0 0 60px rgba(255, 215, 0, 0.15);
+.lightbox-media {
+  border-right: 1px solid rgba(255, 215, 0, 0.3);
 }
 
 .lightbox-image {
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
 }
 
-.lightbox-caption {
+.lightbox-title {
   font-family: var(--font-display);
   font-weight: 700;
   color: var(--christmas-gold);
   text-shadow: 2px 2px 0 var(--christmas-red);
+}
+
+.lightbox-action {
+  background: var(--christmas-red);
+  border: 2px solid var(--christmas-gold);
+  border-radius: var(--radius-md);
+  color: var(--christmas-snow);
+  font-family: var(--font-display);
+
+  &:hover {
+    background: var(--christmas-green);
+  }
+  &.github {
+    background: var(--christmas-green);
+  }
+  &.coming-soon {
+    background: transparent;
+    border-color: rgba(255, 215, 0, 0.3);
+    color: rgba(255, 215, 0, 0.5);
+  }
+}
+
+.lightbox-description {
+  color: var(--christmas-snow);
+}
+
+.lightbox-footer {
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.lightbox-tag {
+  background: transparent;
+  border: 1px solid var(--christmas-green);
+  border-radius: var(--radius-sm);
+  color: var(--christmas-green);
+}
+
+@media (max-width: 768px) {
+  .lightbox-panel { border-radius: 0; }
+  .lightbox-media { border-right: none; border-bottom: 1px solid rgba(255, 215, 0, 0.3); }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

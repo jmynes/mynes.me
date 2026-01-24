@@ -453,13 +453,21 @@ body {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// Lightbox
+// Lightbox / Portfolio Modal
 // ═══════════════════════════════════════════════════════════════════════════
 
 .lightbox {
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+}
+
+.lightbox-panel {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(30px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
 }
 
 .lightbox-close {
@@ -469,29 +477,60 @@ body {
   color: var(--text-primary);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 
-  &::before {
-    display: none;
-  }
-
+  &::before { display: none; }
   &:hover {
     background: rgba(0, 255, 255, 0.2);
     border-color: rgba(0, 255, 255, 0.4);
   }
 }
 
-.lightbox-content {
-  border-radius: var(--radius-lg);
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+.lightbox-media {
+  border-right: 1px solid var(--glass-border);
 }
 
 .lightbox-image {
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
 }
 
-.lightbox-caption {
+.lightbox-title {
   font-family: var(--font-display);
   color: var(--text-primary);
   text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.lightbox-action {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+
+  &:hover {
+    background: rgba(0, 255, 255, 0.15);
+    border-color: rgba(0, 255, 255, 0.4);
+  }
+  &.coming-soon {
+    opacity: 0.5;
+  }
+}
+
+.lightbox-description {
+  color: var(--text-secondary);
+}
+
+.lightbox-footer {
+  border-color: var(--glass-border);
+}
+
+.lightbox-tag {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .lightbox-panel { border-radius: 0; }
+  .lightbox-media { border-right: none; border-bottom: 1px solid var(--glass-border); }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

@@ -578,7 +578,7 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Lightbox
+   Lightbox / Portfolio Modal
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .lightbox {
@@ -587,35 +587,78 @@ body {
   -webkit-backdrop-filter: blur(30px);
 }
 
-.lightbox-close {
-  background: var(--halloween-purple);
-  border: 2px solid var(--halloween-orange);
-  border-radius: 50%;
-  color: var(--halloween-orange);
-  box-shadow: 0 0 20px rgba(255, 107, 26, 0.4);
-}
-
-.lightbox-close:hover {
-  background: var(--halloween-orange);
-  color: var(--halloween-black);
-}
-
-.lightbox-content {
+.lightbox-panel {
+  background: rgba(20, 15, 25, 0.98);
+  border: 2px solid var(--halloween-purple);
   border-radius: var(--radius-lg);
   box-shadow:
     0 32px 80px rgba(0, 0, 0, 0.8),
     0 0 60px rgba(255, 107, 26, 0.2);
 }
 
-.lightbox-image {
-  border-radius: var(--radius-lg);
+.lightbox-close {
+  background: var(--halloween-purple);
+  border: 2px solid var(--halloween-orange);
+  border-radius: 50%;
+  color: var(--halloween-orange);
+  box-shadow: 0 0 20px rgba(255, 107, 26, 0.4);
+
+  &:hover {
+    background: var(--halloween-orange);
+    color: var(--halloween-black);
+  }
 }
 
-.lightbox-caption {
+.lightbox-media {
+  border-right: 1px solid var(--halloween-purple);
+}
+
+.lightbox-image {
+  border-radius: var(--radius-md);
+}
+
+.lightbox-title {
   font-family: var(--font-display);
   color: var(--halloween-orange);
   text-shadow: 2px 2px 0 var(--halloween-blood);
   letter-spacing: 0.05em;
+}
+
+.lightbox-action {
+  background: transparent;
+  border: 2px solid var(--halloween-orange);
+  border-radius: var(--radius-md);
+  color: var(--halloween-orange);
+  font-family: var(--font-display);
+
+  &:hover {
+    background: var(--halloween-orange);
+    color: var(--halloween-black);
+  }
+  &.coming-soon {
+    border-color: var(--halloween-purple);
+    color: var(--halloween-purple);
+  }
+}
+
+.lightbox-description {
+  color: var(--halloween-bone);
+}
+
+.lightbox-footer {
+  border-color: var(--halloween-purple);
+}
+
+.lightbox-tag {
+  background: transparent;
+  border: 1px solid var(--halloween-green);
+  border-radius: var(--radius-sm);
+  color: var(--halloween-green);
+}
+
+@media (max-width: 768px) {
+  .lightbox-panel { border-radius: 0; }
+  .lightbox-media { border-right: none; border-bottom: 1px solid var(--halloween-purple); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

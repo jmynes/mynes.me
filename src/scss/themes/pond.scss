@@ -646,7 +646,7 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Lightbox
+   Lightbox / Portfolio Modal
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .lightbox {
@@ -655,36 +655,75 @@ body {
   -webkit-backdrop-filter: blur(30px);
 }
 
-.lightbox-close {
+.lightbox-panel {
   background: var(--glass-bg-strong);
+  backdrop-filter: blur(40px);
   border: 1px solid var(--glass-border);
-  border-radius: 50%;
-  color: var(--text-primary);
-  box-shadow: 0 8px 28px var(--glass-shadow);
-}
-
-.lightbox-close:hover {
-  background: var(--bridge-dark);
-  color: var(--text-primary);
-  border-color: var(--bridge-main);
-}
-
-.lightbox-content {
   border-radius: var(--radius-lg);
   box-shadow:
     0 40px 100px rgba(10, 26, 18, 0.7),
     0 0 0 1px var(--glass-border);
 }
 
-.lightbox-image {
-  border-radius: var(--radius-lg);
+.lightbox-close {
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  color: var(--text-primary);
+  box-shadow: 0 8px 28px var(--glass-shadow);
+
+  &:hover {
+    background: var(--bridge-dark);
+    border-color: var(--bridge-main);
+  }
 }
 
-.lightbox-caption {
+.lightbox-media {
+  border-right: 1px solid var(--glass-border);
+}
+
+.lightbox-image {
+  border-radius: var(--radius-md);
+}
+
+.lightbox-title {
   font-family: var(--font-display);
   font-weight: 600;
   color: var(--text-primary);
   text-shadow: 0 2px 15px rgba(10, 26, 18, 0.6);
+}
+
+.lightbox-action {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+
+  &:hover {
+    background: var(--bridge-dark);
+    border-color: var(--bridge-main);
+  }
+  &.coming-soon { opacity: 0.5; }
+}
+
+.lightbox-description {
+  color: var(--text-secondary);
+}
+
+.lightbox-footer {
+  border-color: var(--glass-border);
+}
+
+.lightbox-tag {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .lightbox-panel { border-radius: 0; }
+  .lightbox-media { border-right: none; border-bottom: 1px solid var(--glass-border); }
 }
 
 .lightbox-description {

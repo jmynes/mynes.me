@@ -473,17 +473,27 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Lightbox
+   Lightbox / Portfolio Modal
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .lightbox {
-  background: rgba(0, 0, 0, 0.98);
+  background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
 }
 
+.lightbox-panel {
+  background: rgba(10, 5, 15, 0.98);
+  border: 1px solid var(--synthwave-magenta);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.8),
+    0 0 60px rgba(255, 0, 255, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
 .lightbox-close {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.5);
   border: 2px solid var(--synthwave-magenta);
   border-radius: 50%;
   color: var(--synthwave-magenta);
@@ -495,23 +505,96 @@ body {
   color: white;
 }
 
-.lightbox-content {
-  border-radius: var(--radius-lg);
-  box-shadow:
-    0 32px 80px rgba(0, 0, 0, 0.8),
-    0 0 40px rgba(255, 0, 255, 0.3);
+.lightbox-media {
+  background: linear-gradient(135deg, rgba(255, 0, 255, 0.05) 0%, transparent 50%, rgba(0, 255, 255, 0.05) 100%);
+  border-right: 1px solid rgba(255, 0, 255, 0.2);
 }
 
 .lightbox-image {
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
 
-.lightbox-caption {
+.lightbox-image-counter {
+  color: var(--synthwave-cyan);
+  font-family: var(--font-display);
+}
+
+.lightbox-info {
+  background: transparent;
+}
+
+.lightbox-title {
   font-family: var(--font-display);
   color: white;
-  text-shadow: 0 0 20px var(--synthwave-cyan);
+  text-shadow: 0 0 30px var(--synthwave-magenta);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
+}
+
+.lightbox-action {
+  background: transparent;
+  border: 1px solid var(--synthwave-magenta);
+  border-radius: var(--radius-md);
+  color: var(--synthwave-magenta);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
+
+  &:hover {
+    background: var(--synthwave-magenta);
+    color: white;
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0.5);
+  }
+
+  &.github {
+    border-color: var(--glass-border);
+    color: var(--text-secondary);
+    box-shadow: none;
+
+    &:hover {
+      border-color: var(--synthwave-cyan);
+      background: transparent;
+      color: var(--synthwave-cyan);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+  }
+
+  &.coming-soon {
+    border-color: var(--glass-border);
+    color: var(--text-secondary);
+    box-shadow: none;
+  }
+}
+
+.lightbox-description {
+  color: var(--text-secondary);
+}
+
+.lightbox-footer {
+  border-color: rgba(255, 0, 255, 0.15);
+}
+
+.lightbox-tag {
+  background: transparent;
+  border: 1px solid var(--synthwave-cyan);
+  border-radius: var(--radius-sm);
+  color: var(--synthwave-cyan);
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+  .lightbox-panel {
+    border-radius: 0;
+    border: none;
+    border-top: 2px solid var(--synthwave-magenta);
+  }
+
+  .lightbox-media {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 0, 255, 0.2);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

@@ -480,11 +480,20 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Lightbox
+   Lightbox / Portfolio Modal
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .lightbox {
-  background: rgba(232, 232, 232, 0.98);
+  background: rgba(200, 200, 200, 0.95);
+}
+
+.lightbox-panel {
+  background: var(--mac-platinum);
+  border: 1px solid var(--mac-border-dark);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    6px 6px 20px rgba(0, 0, 0, 0.3),
+    inset 1px 1px 0 var(--mac-border-light);
 }
 
 .lightbox-close {
@@ -495,26 +504,70 @@ body {
   box-shadow:
     inset 1px 1px 0 var(--mac-border-light),
     inset -1px -1px 0 var(--mac-mid-grey);
+
+  &:hover {
+    background: var(--mac-light-grey);
+  }
 }
 
-.lightbox-close:hover {
+.lightbox-media {
   background: var(--mac-light-grey);
-}
-
-.lightbox-content {
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--mac-border-dark);
-  box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
+  border-right: 1px solid var(--mac-border-dark);
 }
 
 .lightbox-image {
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--mac-border-dark);
 }
 
-.lightbox-caption {
+.lightbox-title {
   font-family: var(--font-display);
-  font-size: 1.2em;
   color: var(--text-primary);
+}
+
+.lightbox-action {
+  background: var(--mac-platinum);
+  border: 1px solid var(--mac-border-dark);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  box-shadow:
+    inset 1px 1px 0 var(--mac-border-light),
+    inset -1px -1px 0 var(--mac-mid-grey);
+
+  &:hover {
+    background: var(--mac-light-grey);
+  }
+  &:active {
+    box-shadow:
+      inset -1px -1px 0 var(--mac-border-light),
+      inset 1px 1px 0 var(--mac-mid-grey);
+  }
+  &.coming-soon {
+    opacity: 0.5;
+  }
+}
+
+.lightbox-description {
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+}
+
+.lightbox-footer {
+  border-color: var(--mac-border-dark);
+}
+
+.lightbox-tag {
+  background: var(--mac-light-grey);
+  border: 1px solid var(--mac-border-dark);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+}
+
+@media (max-width: 768px) {
+  .lightbox-panel { border-radius: 0; }
+  .lightbox-media { border-right: none; border-bottom: 1px solid var(--mac-border-dark); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

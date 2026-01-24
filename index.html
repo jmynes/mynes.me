@@ -382,18 +382,48 @@
     <p>Built with vibes by <a href="https://github.com/jmynes/mynes.me" target="_blank" rel="noopener"><svg class="github-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg><strong>Jordan Mynes</strong></a></p>
   </footer>
 
-  <!-- Lightbox -->
+  <!-- Lightbox / Portfolio Modal -->
   <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lightbox-close" aria-label="Close lightbox">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
-    </button>
-    <div class="lightbox-content">
-      <img src="" alt="" class="lightbox-image" id="lightbox-image">
+    <div class="lightbox-panel">
+      <button class="lightbox-close" aria-label="Close lightbox">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- Image Side -->
+      <div class="lightbox-media">
+        <div class="lightbox-image-container">
+          <img src="" alt="" class="lightbox-image" id="lightbox-image">
+        </div>
+        <!-- Image counter for future carousel -->
+        <div class="lightbox-image-counter" id="lightbox-counter" aria-hidden="true">
+          <span class="counter-current">1</span>
+          <span class="counter-sep">/</span>
+          <span class="counter-total">1</span>
+        </div>
+      </div>
+
+      <!-- Info Side -->
+      <div class="lightbox-info">
+        <div class="lightbox-header">
+          <h2 class="lightbox-title" id="lightbox-title"></h2>
+          <div class="lightbox-actions" id="lightbox-actions">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <div class="lightbox-body">
+          <p class="lightbox-description" id="lightbox-description"></p>
+        </div>
+
+        <div class="lightbox-footer">
+          <div class="lightbox-tech" id="lightbox-tech">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="lightbox-caption" id="lightbox-caption"></div>
-    <div class="lightbox-description" id="lightbox-description"></div>
   </div>
 
   <!-- Main application script -->

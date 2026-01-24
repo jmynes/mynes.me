@@ -395,11 +395,17 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Lightbox
+   Lightbox / Portfolio Modal
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .lightbox {
   background: rgba(15, 15, 15, 0.95);
+}
+
+.lightbox-panel {
+  background: var(--nes-dark);
+  border: 4px solid var(--nes-white);
+  box-shadow: 8px 8px 0 var(--nes-gray);
 }
 
 .lightbox-close {
@@ -409,31 +415,73 @@ body {
   border: 4px solid var(--nes-white);
   color: var(--nes-white);
   box-shadow: 4px 4px 0 var(--nes-dark);
+  border-radius: 0;
+
+  &::before { display: none; }
+  &:hover {
+    transform: translate(2px, 2px) rotate(0deg);
+    box-shadow: 2px 2px 0 var(--nes-dark);
+  }
 }
 
-.lightbox-close::before {
-  display: none;
-}
-
-.lightbox-close:hover {
-  transform: translate(2px, 2px) rotate(0deg);
-  box-shadow: 2px 2px 0 var(--nes-dark);
-}
-
-.lightbox-content {
-  border: 4px solid var(--nes-white);
-  box-shadow: 8px 8px 0 var(--nes-gray);
+.lightbox-media {
+  border-right: 4px solid var(--nes-gray);
 }
 
 .lightbox-image {
   image-rendering: pixelated;
 }
 
-.lightbox-caption {
+.lightbox-title {
   font-family: var(--font-display);
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: var(--nes-yellow);
   text-shadow: 2px 2px 0 var(--nes-orange);
+  text-transform: uppercase;
+}
+
+.lightbox-action {
+  background: var(--nes-blue);
+  border: 3px solid var(--nes-white);
+  color: var(--nes-white);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  box-shadow: 3px 3px 0 var(--nes-dark);
+  border-radius: 0;
+  text-transform: uppercase;
+
+  &:hover {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--nes-dark);
+  }
+  &.coming-soon {
+    background: var(--nes-gray);
+    opacity: 0.7;
+  }
+}
+
+.lightbox-description {
+  color: var(--nes-white);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+}
+
+.lightbox-footer {
+  border-color: var(--nes-gray);
+}
+
+.lightbox-tag {
+  background: var(--nes-dark);
+  border: 2px solid var(--nes-green);
+  color: var(--nes-green);
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  border-radius: 0;
+}
+
+@media (max-width: 768px) {
+  .lightbox-panel { border-width: 3px; box-shadow: 4px 4px 0 var(--nes-gray); }
+  .lightbox-media { border-right: none; border-bottom: 3px solid var(--nes-gray); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

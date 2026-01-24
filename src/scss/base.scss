@@ -114,6 +114,7 @@ body {
   flex: 1;
   flex-wrap: nowrap;
   overflow-x: auto;
+  padding: 2px 0; // Prevent border clipping on themed buttons
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   // Hide scrollbar on desktop when centered (shows when wrapped)

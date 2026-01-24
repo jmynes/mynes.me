@@ -551,8 +551,29 @@ body {
     border-radius: var(--radius-sm);
   }
 
-  .theme-effects .bubble:nth-child(7),
-  .theme-effects .bubble:nth-child(8) { display: none; }
+  // Hide stars on mobile (no sky area)
+  .theme-effects .bubble { display: none; }
+
+  // Hide horizon line on mobile
+  .theme-effects::before {
+    display: none;
+  }
+
+  // Remove sunset, just use black background
+  .theme-bg {
+    background: var(--synthwave-black);
+  }
+
+  // Hide neon glow accents on mobile
+  .theme-bg::before {
+    display: none;
+  }
+
+  // Grid extends full height on mobile
+  .theme-bg::after {
+    top: 0;
+    transform: perspective(300px) rotateX(65deg);
+  }
 
   .lightbox-content,
   .lightbox-image {

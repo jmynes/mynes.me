@@ -10,6 +10,11 @@ let animationId = null;
 let isActive = false;
 let spawnTimeout = null;
 
+// Mobile detection for performance tuning (using matchMedia for reliability)
+const isMobile = () =>
+  window.matchMedia('(max-width: 768px)').matches ||
+  ('ontouchstart' in window && window.innerWidth < 1024);
+
 class Ghost {
   constructor() {
     // Start position (spread across bottom)
@@ -37,8 +42,10 @@ class Ghost {
     this.amplitude = 20 + Math.random() * 40;
     this.guideOffset = Math.random() * 1000;
 
-    // Duration in frames (~2 seconds at 60fps)
-    this.duration = 120 + Math.random() * 60;
+    // Duration in frames (~2 seconds at 60fps, slower on mobile ~5-8 seconds)
+    const baseDuration = isMobile() ? 300 : 120;
+    const durationVariance = isMobile() ? 180 : 60;
+    this.duration = baseDuration + Math.random() * durationVariance;
     this.frame = 0;
 
     // Build the guide path

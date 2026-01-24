@@ -42,7 +42,7 @@ src/
       groovy.scss       # 70s psychedelic waves
       hacker.scss       # Matrix rain terminal
       halloween.scss    # Spooky pumpkins and bats
-      lilypond.scss     # Monet's Giverny garden
+      pond.scss         # Tranquil water ripples
       powerpc.scss      # Classic Mac OS platinum
       retrogame.scss    # Arcade pixel aesthetic
       starwars.scss     # Hyperspace star field

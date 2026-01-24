@@ -87,9 +87,6 @@ export async function animate(overlay, isCancelled) {
     return;
   }
 
-  // Fade out
-  overlay.classList.add('groovy-fade-out');
-  await sleep(600);
-
+  // Loader index.js handles the fade out
   restoreScrollbar();
 }

@@ -5,6 +5,7 @@
 
 import * as groovyLoader from './groovy.js';
 import * as hackerLoader from './hacker.js';
+import * as retrogameLoader from './retrogame.js';
 import * as starwarsLoader from './starwars.js';
 
 // Registry of loaders by theme name
@@ -12,6 +13,7 @@ const loaders = {
   hacker: hackerLoader,
   starwars: starwarsLoader,
   groovy: groovyLoader,
+  retrogame: retrogameLoader,
 };
 
 // State management

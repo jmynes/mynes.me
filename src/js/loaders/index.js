@@ -11,7 +11,7 @@ import * as groovyLoader from './groovy.js';
 import * as hackerLoader from './hacker.js';
 import * as halloweenLoader from './halloween.js';
 import * as infernoLoader from './inferno.js';
-import * as lilypondLoader from './lilypond.js';
+import * as pondLoader from './pond.js';
 import * as powerpcLoader from './powerpc.js';
 import * as retrogameLoader from './retrogame.js';
 import * as starwarsLoader from './starwars.js';
@@ -27,7 +27,7 @@ const loaders = {
   hacker: hackerLoader,
   halloween: halloweenLoader,
   inferno: infernoLoader,
-  lilypond: lilypondLoader,
+  pond: pondLoader,
   powerpc: powerpcLoader,
   retrogame: retrogameLoader,
   starwars: starwarsLoader,

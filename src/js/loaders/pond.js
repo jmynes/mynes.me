@@ -1,9 +1,9 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Lilypond Theme Loader — Monet's Garden at Giverny
-// Water ripples, lily pads, and wisteria petals
+// Pond Theme Loader — Tranquil Water Ripples
+// Serene ripples expand across still water
 // ═══════════════════════════════════════════════════════════════════════════
 
-export const themeName = 'lilypond';
+export const themeName = 'pond';
 
 /**
  * Sleep utility
@@ -13,11 +13,11 @@ function sleep(ms) {
 }
 
 /**
- * Create a wisteria petal
+ * Create a falling petal
  */
 function createPetal(container, index) {
   const petal = document.createElement('div');
-  petal.className = 'lilypond-petal';
+  petal.className = 'pond-petal';
 
   // Random horizontal position
   const x = Math.random() * 100;
@@ -32,7 +32,7 @@ function createPetal(container, index) {
 }
 
 /**
- * Animate the lilypond loader
+ * Animate the pond loader
  * @param {HTMLElement} overlay - The loader overlay element
  * @param {Function} isCancelled - Function that returns true if cancelled
  * @returns {Promise} Resolves when animation completes
@@ -42,7 +42,7 @@ export async function animate(overlay, isCancelled) {
   while (overlay.firstChild) {
     overlay.removeChild(overlay.firstChild);
   }
-  overlay.className = 'theme-loader theme-loader--lilypond';
+  overlay.className = 'theme-loader theme-loader--pond';
 
   // Hide scrollbar during animation
   document.documentElement.style.overflow = 'hidden';
@@ -53,30 +53,30 @@ export async function animate(overlay, isCancelled) {
 
   // Create container
   const container = document.createElement('div');
-  container.className = 'lilypond-scene';
+  container.className = 'pond-scene';
   overlay.appendChild(container);
 
   // Create water ripple effect
   const ripples = document.createElement('div');
-  ripples.className = 'lilypond-ripples';
+  ripples.className = 'pond-ripples';
   container.appendChild(ripples);
 
   // Create 3 expanding ripples
   for (let i = 0; i < 3; i++) {
     const ripple = document.createElement('div');
-    ripple.className = 'lilypond-ripple';
+    ripple.className = 'pond-ripple';
     ripple.style.setProperty('--delay', `${i * 0.4}s`);
     ripples.appendChild(ripple);
   }
 
   // Create lily pad
   const lilypad = document.createElement('div');
-  lilypad.className = 'lilypond-lilypad';
+  lilypad.className = 'pond-lilypad';
   container.appendChild(lilypad);
 
   // Create petal container
   const petals = document.createElement('div');
-  petals.className = 'lilypond-petals';
+  petals.className = 'pond-petals';
   container.appendChild(petals);
 
   // Start animation
@@ -98,14 +98,14 @@ export async function animate(overlay, isCancelled) {
   // Lily pad appears
   lilypad.classList.add('visible');
 
-  // Spawn wisteria petals
-  for (let i = 0; i < 8; i++) {
+  // Spawn falling petals
+  for (let i = 0; i < 6; i++) {
     if (isCancelled()) {
       restoreScrollbar();
       return;
     }
     createPetal(petals, i);
-    await sleep(100);
+    await sleep(120);
   }
 
   await sleep(300);
@@ -116,8 +116,8 @@ export async function animate(overlay, isCancelled) {
 
   // Add title
   const title = document.createElement('div');
-  title.className = 'lilypond-title';
-  title.textContent = 'Giverny';
+  title.className = 'pond-title';
+  title.textContent = 'stillness';
   container.appendChild(title);
 
   await sleep(200);

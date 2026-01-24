@@ -14,7 +14,7 @@ const themes = [
   'hacker',
   'halloween',
   'inferno',
-  'lilypond',
+  'pond',
   'powerpc',
   'retrogame',
   'starwars',

@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Lily Pond Theme — Interactive Effects
+// Pond Theme — Interactive Effects
 // Falling Wisteria Petals + Fireflies + Water Ripples
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -299,4 +299,4 @@ export function stop() {
   });
 }
 
-export const themeName = 'lilypond';
+export const themeName = 'pond';

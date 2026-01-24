@@ -30,7 +30,7 @@
     window.scrollTo(0, 0);
 
     // Theme selection: shuffle ON = random (never same twice), shuffle OFF = keep same theme
-    const themes = ['aero', 'bubbly', 'christmas', 'fireflies', 'groovy', 'hacker', 'halloween', 'lilypond', 'powerpc', 'retrogame', 'starwars', 'synthwave', 'inferno'];
+    const themes = ['aero', 'bubbly', 'christmas', 'fireflies', 'groovy', 'hacker', 'halloween', 'pond', 'powerpc', 'retrogame', 'starwars', 'synthwave', 'inferno'];
     const shuffleEnabled = localStorage.getItem('mynes-shuffle') !== 'false'; // default true
     const lastTheme = localStorage.getItem('mynes-last-theme');
     let selectedTheme;
@@ -244,7 +244,7 @@
       <a class="theme-btn" href="?theme=hacker" data-theme="hacker">Hacker</a>
       <a class="theme-btn" href="?theme=halloween" data-theme="halloween">Halloween</a>
       <a class="theme-btn" href="?theme=inferno" data-theme="inferno">Inferno</a>
-      <a class="theme-btn" href="?theme=lilypond" data-theme="lilypond">Lily Pond</a>
+      <a class="theme-btn" href="?theme=pond" data-theme="pond">Pond</a>
       <a class="theme-btn" href="?theme=powerpc" data-theme="powerpc">PowerPC</a>
       <a class="theme-btn" href="?theme=retrogame" data-theme="retrogame">Retro Game</a>
       <a class="theme-btn" href="?theme=starwars" data-theme="starwars">Star Wars</a>

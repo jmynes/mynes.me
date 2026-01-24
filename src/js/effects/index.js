@@ -8,7 +8,7 @@ import * as christmas from './christmas.js';
 import * as fireflies from './fireflies.js';
 import * as halloween from './halloween.js';
 import * as inferno from './inferno.js';
-import * as lilypond from './lilypond.js';
+import * as pond from './pond.js';
 
 // Registry of effects by theme name
 const effects = {
@@ -17,7 +17,7 @@ const effects = {
   fireflies,
   halloween,
   inferno,
-  lilypond,
+  pond,
 };
 
 let currentEffect = null;

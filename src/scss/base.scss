@@ -102,14 +102,71 @@ body {
   font-weight: 700;
 }
 
-// Theme Toggles (centered on desktop)
+// Theme Toggles (centered when space allows, scrollable when not)
 .theme-toggles {
   display: flex;
   gap: 0.5rem;
   position: relative;
   z-index: 1;
   flex: 1;
-  justify-content: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  // Hide scrollbar on desktop when centered (shows when wrapped)
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  // Pseudo-elements act as flexible spacers to center content
+  // They collapse when content overflows, allowing scroll
+  &::before,
+  &::after {
+    content: '';
+    flex: 1 0 0;
+    min-width: 0;
+  }
+}
+
+// When header is wrapped (overflow detected), theme toggles go to own row
+.site-header.wrapped {
+  flex-wrap: wrap;
+  gap: 0.75rem;
+
+  .header-toggles {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .theme-toggles {
+    order: 3;
+    flex: none;
+    width: 100%;
+    padding: 2px 2px 0.5rem 2px;
+    overflow-y: visible;
+    // Keeps ::before/::after for centering when content fits
+    scrollbar-width: thin;
+    scrollbar-color: var(--glass-border, rgba(255,255,255,0.2)) transparent;
+
+    &::-webkit-scrollbar {
+      display: block;
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--glass-border, rgba(255,255,255,0.3));
+      border-radius: 3px;
+
+      &:hover {
+        background: var(--glass-border, rgba(255,255,255,0.5));
+      }
+    }
+  }
 }
 
 .theme-btn {
@@ -122,6 +179,7 @@ body {
   cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: none;
+  flex-shrink: 0;
 
   &.active {
     transform: scale(1.05);
@@ -518,20 +576,20 @@ main {
     order: 3;
     flex: none;
     width: 100%;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 0.5rem;
     padding: 2px 2px 0.5rem 2px;
-    overflow-x: auto;
     overflow-y: visible;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    // Themed scrollbar
+    // Themed scrollbar (visible on mobile)
     scrollbar-width: thin;
     scrollbar-color: var(--glass-border, rgba(255,255,255,0.2)) transparent;
 
+    // Disable centering pseudo-elements on mobile
+    &::before,
+    &::after {
+      display: none;
+    }
+
     &::-webkit-scrollbar {
+      display: block;
       height: 6px;
     }
 

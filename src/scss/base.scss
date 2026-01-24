@@ -642,7 +642,7 @@ main {
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  pointer-events: none;
+  pointer-events: auto; // Block clicks during animation (visibility:hidden handles when inactive)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

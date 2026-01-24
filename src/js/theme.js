@@ -211,25 +211,28 @@ function scrollActiveButtonIntoView() {
   const firstBtn = buttons[0];
   const lastBtn = buttons[buttons.length - 1];
 
-  let scrollLeft;
-
   if (activeBtn === firstBtn) {
-    // First button - scroll all the way left
-    scrollLeft = 0;
+    // First button - ensure fully visible on left
+    activeBtn.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'start',
+      block: 'nearest',
+    });
   } else if (activeBtn === lastBtn) {
-    // Last button - scroll all the way right
-    scrollLeft = container.scrollWidth - container.offsetWidth;
+    // Last button - ensure fully visible on right
+    activeBtn.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'end',
+      block: 'nearest',
+    });
   } else {
     // Middle buttons - center the button
-    const buttonRect = activeBtn.getBoundingClientRect();
-    scrollLeft =
-      activeBtn.offsetLeft - container.offsetWidth / 2 + buttonRect.width / 2;
+    activeBtn.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'center',
+      block: 'nearest',
+    });
   }
-
-  container.scrollTo({
-    left: Math.max(0, scrollLeft),
-    behavior: 'smooth',
-  });
 }
 
 // Export for potential external use

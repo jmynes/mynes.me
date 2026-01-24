@@ -79,31 +79,24 @@ body {
     will-change: opacity;
   }
 
+  // Santa's Workshop Rolling Snow Hills - SVG curved silhouettes
   &::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 450px;
-    background:
-      // Front layer - bright white snow drifts
-      radial-gradient(ellipse 80% 180px at 10% 100%, rgba(255, 255, 255, 0.98) 0%, rgba(245, 250, 255, 0.9) 30%, transparent 65%),
-      radial-gradient(ellipse 70% 160px at 90% 100%, rgba(255, 255, 255, 0.96) 0%, rgba(240, 248, 255, 0.85) 35%, transparent 65%),
-      radial-gradient(ellipse 100% 200px at 50% 100%, rgba(250, 252, 255, 0.95) 0%, rgba(235, 245, 255, 0.85) 40%, transparent 70%),
-      // Mid layer - snow banks
-      radial-gradient(ellipse 60% 140px at 25% 100%, rgba(240, 248, 255, 0.9) 0%, rgba(220, 235, 250, 0.7) 45%, transparent 70%),
-      radial-gradient(ellipse 55% 130px at 75% 100%, rgba(240, 248, 255, 0.88) 0%, rgba(215, 230, 245, 0.65) 45%, transparent 70%),
-      radial-gradient(ellipse 45% 110px at 40% 100%, rgba(230, 242, 255, 0.8) 0%, rgba(200, 220, 240, 0.6) 50%, transparent 70%),
-      radial-gradient(ellipse 50% 100px at 65% 100%, rgba(235, 245, 255, 0.75) 0%, rgba(205, 225, 245, 0.55) 50%, transparent 70%),
-      // Back layer - subtle depth
-      radial-gradient(ellipse 90% 80px at 15% 100%, rgba(200, 220, 240, 0.5) 0%, transparent 60%),
-      radial-gradient(ellipse 80% 70px at 55% 100%, rgba(190, 210, 235, 0.45) 0%, transparent 55%),
-      radial-gradient(ellipse 70% 60px at 85% 100%, rgba(195, 215, 238, 0.4) 0%, transparent 55%),
-      // Sparkle highlights
-      radial-gradient(ellipse 30% 40px at 20% 100%, rgba(255, 255, 255, 0.6) 0%, transparent 50%),
-      radial-gradient(ellipse 25% 35px at 50% 100%, rgba(255, 255, 255, 0.5) 0%, transparent 45%),
-      radial-gradient(ellipse 28% 38px at 80% 100%, rgba(255, 255, 255, 0.55) 0%, transparent 48%);
+    height: 280px;
+    background-image:
+      // Front layer - bright white hills
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 280' preserveAspectRatio='none'%3E%3Cpath fill='%23ffffff' d='M0,280 L0,180 Q120,80 300,140 Q450,190 600,120 Q750,50 900,100 Q1050,150 1200,90 Q1350,30 1440,80 L1440,280 Z'/%3E%3C/svg%3E"),
+      // Middle layer - light blue hills
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 280' preserveAspectRatio='none'%3E%3Cpath fill='%23e8f2fa' d='M0,280 L0,140 Q180,40 400,100 Q550,140 750,60 Q950,0 1100,70 Q1280,150 1440,100 L1440,280 Z'/%3E%3C/svg%3E"),
+      // Back layer - cool blue distant hills
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 280' preserveAspectRatio='none'%3E%3Cpath fill='%23d5e3f0' d='M0,280 L0,100 Q200,20 450,80 Q650,130 850,40 Q1050,0 1250,60 Q1380,100 1440,70 L1440,280 Z'/%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
   }
 }
 

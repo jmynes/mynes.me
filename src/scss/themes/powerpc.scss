@@ -602,3 +602,187 @@ body {
 }
 
 /* No Firefox fallback needed - not using backdrop-filter */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PowerPC Theme Loader — Classic Mac Boot Sequence
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-loader--powerpc {
+  background: var(--mac-platinum);
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.powerpc-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.powerpc-scene.fade-out {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Happy Mac icon - simplified pixel art style */
+.powerpc-happy-mac {
+  width: 80px;
+  height: 100px;
+  background: var(--mac-light-grey);
+  border: 3px solid var(--mac-black);
+  border-radius: 8px 8px 4px 4px;
+  position: relative;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+
+  /* Mac body bottom notch */
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 6px;
+    background: var(--mac-platinum);
+    border: 2px solid var(--mac-black);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+  }
+
+  /* Mac stand */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 15px;
+    background: linear-gradient(180deg, var(--mac-mid-grey) 0%, var(--mac-light-grey) 100%);
+    border: 2px solid var(--mac-black);
+    border-radius: 0 0 6px 6px;
+  }
+}
+
+.powerpc-happy-mac.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.powerpc-happy-mac.chime {
+  animation: macChime 0.3s ease;
+}
+
+@keyframes macChime {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Mac screen area */
+.powerpc-mac-screen {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  height: 55px;
+  background: var(--mac-platinum);
+  border: 2px solid var(--mac-border-dark);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Happy face using CSS */
+.powerpc-mac-face {
+  position: relative;
+  width: 40px;
+  height: 35px;
+
+  /* Eyes */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    background: var(--mac-black);
+    border-radius: 50%;
+    box-shadow: 20px 0 0 var(--mac-black);
+  }
+
+  /* Smile */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 10px;
+    border: 3px solid var(--mac-black);
+    border-top: none;
+    border-radius: 0 0 20px 20px;
+    background: transparent;
+  }
+}
+
+/* Progress bar container */
+.powerpc-progress-container {
+  width: 200px;
+  height: 20px;
+  background: white;
+  border: 2px solid var(--mac-black);
+  border-radius: 4px;
+  padding: 3px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  box-shadow:
+    inset 1px 1px 0 var(--mac-mid-grey),
+    inset -1px -1px 0 var(--mac-border-light);
+}
+
+.powerpc-progress-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Progress bar */
+.powerpc-progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(
+    180deg,
+    var(--mac-blue) 0%,
+    #0055aa 50%,
+    var(--mac-blue) 100%
+  );
+  border-radius: 2px;
+  transition: width 0.15s ease-out;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Welcome text */
+.powerpc-welcome {
+  font-family: 'Chicago', 'VT323', monospace;
+  font-size: 1.2rem;
+  color: var(--mac-black);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  letter-spacing: 0.02em;
+}
+
+.powerpc-welcome.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

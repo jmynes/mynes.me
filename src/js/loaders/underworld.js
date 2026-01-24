@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Underworld Theme Loader — Hellish Ascent
-// Flames rise from below, lava cracks glow, infernal energy builds
+// Underworld Theme Loader — Hellish Ascent with Canvas Burn Effect
+// Embers rise, title appears, then burns away like paper
 // ═══════════════════════════════════════════════════════════════════════════
 
 export const themeName = 'underworld';
@@ -10,6 +10,117 @@ export const themeName = 'underworld';
  */
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * Fast burn effect using expanding circles with organic edges
+ * Much smoother and more performant than cellular automata
+ */
+function createBurnEffect(canvas, onComplete, isCancelled) {
+  const ctx = canvas.getContext('2d');
+  const width = canvas.width;
+  const height = canvas.height;
+
+  // Burn holes - each grows over time with slight irregularity
+  const baseSpeed = Math.max(width, height) * 0.02; // Scale speed to screen size
+  const holes = [
+    { x: 0.15, y: 0.2 },
+    { x: 0.85, y: 0.15 },
+    { x: 0.5, y: 0.5 },
+    { x: 0.2, y: 0.75 },
+    { x: 0.8, y: 0.8 },
+    { x: 0.4, y: 0.3 },
+    { x: 0.7, y: 0.6 },
+  ].map((h) => ({
+    x: (h.x + (Math.random() - 0.5) * 0.1) * width,
+    y: (h.y + (Math.random() - 0.5) * 0.1) * height,
+    radius: 0,
+    speed: baseSpeed * (0.8 + Math.random() * 0.4), // Vary speed slightly
+    wobble: Math.random() * Math.PI * 2, // phase offset for organic edges
+  }));
+
+  const maxRadius = Math.max(width, height) * 0.8;
+  const edgeWidth = Math.max(2, width * 0.003); // Scale edge width to screen
+
+  // Helper to draw a wobbly circle path
+  function drawWobblyPath(hole, radiusOffset = 0) {
+    ctx.beginPath();
+    const segments = 16;
+    for (let i = 0; i <= segments; i++) {
+      const angle = (i / segments) * Math.PI * 2;
+      const wobbleAmount =
+        Math.sin(angle * 3 + hole.wobble) * (hole.radius * 0.12);
+      const r = hole.radius + wobbleAmount + radiusOffset;
+      const px = hole.x + Math.cos(angle) * r;
+      const py = hole.y + Math.sin(angle) * r;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+  }
+
+  function draw() {
+    if (isCancelled()) {
+      onComplete();
+      return;
+    }
+
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Draw the overlay base
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#0d0503';
+    ctx.fillRect(0, 0, width, height);
+
+    let allDone = true;
+
+    // Update hole sizes
+    for (const hole of holes) {
+      if (hole.radius < maxRadius) {
+        hole.radius += hole.speed;
+        allDone = false;
+      }
+      hole.wobble += 0.08;
+    }
+
+    // Cut out ALL holes first (so edges don't overlap with any hole)
+    ctx.globalCompositeOperation = 'destination-out';
+    for (const hole of holes) {
+      if (hole.radius > 0) {
+        drawWobblyPath(hole);
+        ctx.fill();
+      }
+    }
+
+    // Now draw edges using source-atop - this only draws where there's still opaque paper
+    ctx.globalCompositeOperation = 'source-atop';
+    for (const hole of holes) {
+      if (hole.radius > 0 && hole.radius < maxRadius) {
+        // Draw glowing edge just outside the hole (on the remaining paper)
+        ctx.strokeStyle = 'rgba(255, 120, 40, 0.95)';
+        ctx.lineWidth = edgeWidth;
+        drawWobblyPath(hole, edgeWidth * 0.5);
+        ctx.stroke();
+
+        // Inner brighter edge
+        ctx.strokeStyle = 'rgba(255, 200, 100, 0.7)';
+        ctx.lineWidth = edgeWidth * 0.5;
+        drawWobblyPath(hole, edgeWidth * 0.2);
+        ctx.stroke();
+      }
+    }
+
+    ctx.globalCompositeOperation = 'source-over';
+
+    if (allDone) {
+      onComplete();
+    } else {
+      requestAnimationFrame(draw);
+    }
+  }
+
+  draw();
 }
 
 /**
@@ -32,7 +143,7 @@ export async function animate(overlay, isCancelled) {
     document.documentElement.style.overflow = '';
   };
 
-  // Create container
+  // Create container for scene elements (embers, title)
   const container = document.createElement('div');
   container.className = 'underworld-scene';
   overlay.appendChild(container);
@@ -76,17 +187,37 @@ export async function animate(overlay, isCancelled) {
   // Title appears
   title.classList.add('visible');
 
-  // Let it play
-  await sleep(1200);
+  // Let title be visible
+  await sleep(1000);
   if (isCancelled()) {
     restoreScrollbar();
     return;
   }
 
-  // Fade everything out
-  container.classList.add('fade-out');
+  // Create canvas for burn effect DIRECTLY on overlay (not inside container)
+  // This way, when it burns transparent, the page content underneath shows through
+  const canvas = document.createElement('canvas');
+  canvas.className = 'underworld-burn-canvas';
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  overlay.appendChild(canvas); // Append to overlay, not container
 
-  await sleep(400);
+  // Fill canvas with the overlay color
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#0d0503'; // --uw-black
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Hide the scene elements, let canvas take over as the overlay
+  container.style.display = 'none';
+
+  // Make overlay transparent so page shows through burned canvas holes
+  overlay.style.background = 'transparent';
+
+  // Run burn effect - when canvas pixels become transparent, the page shows through
+  await new Promise((resolve) => {
+    createBurnEffect(canvas, resolve, isCancelled);
+  });
+
   if (isCancelled()) {
     restoreScrollbar();
     return;

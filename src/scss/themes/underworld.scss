@@ -644,6 +644,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--uw-black);
 }
 
 .underworld-scene.fade-out {
@@ -709,4 +710,28 @@ body {
 .underworld-title.visible {
   opacity: 1;
   transform: scale(1);
+}
+
+.underworld-title.burning {
+  animation: titleBurn 1s ease-out forwards;
+}
+
+@keyframes titleBurn {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// Canvas burn effect
+.underworld-burn-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
 }

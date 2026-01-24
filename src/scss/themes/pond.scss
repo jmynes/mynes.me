@@ -196,7 +196,7 @@ body {
 }
 
 /* Wisteria Clusters — Hanging flower formations */
-.theme-effects .bubble {
+.theme-effects .particle {
   position: absolute;
   background:
     /* Multiple layered purple gradients for flower clusters */
@@ -215,7 +215,7 @@ body {
 }
 
 /* Hanging stem effect */
-.theme-effects .bubble::before {
+.theme-effects .particle::before {
   content: '';
   position: absolute;
   top: -15px;
@@ -228,7 +228,7 @@ body {
 }
 
 /* Individual flower details */
-.theme-effects .bubble::after {
+.theme-effects .particle::after {
   content: '';
   position: absolute;
   top: 10%;
@@ -242,49 +242,49 @@ body {
 }
 
 /* Individual wisteria positions - hanging from top */
-.theme-effects .bubble:nth-child(1) {
+.theme-effects .particle:nth-child(1) {
   width: 45px; height: 90px;
   left: 8%; top: 5%;
   animation-delay: 0s;
   animation-duration: 7s;
 }
 
-.theme-effects .bubble:nth-child(2) {
+.theme-effects .particle:nth-child(2) {
   width: 55px; height: 120px;
   left: 22%; top: 2%;
   animation-delay: -1.5s;
   animation-duration: 9s;
 }
 
-.theme-effects .bubble:nth-child(3) {
+.theme-effects .particle:nth-child(3) {
   width: 40px; height: 85px;
   left: 38%; top: 8%;
   animation-delay: -3s;
   animation-duration: 6.5s;
 }
 
-.theme-effects .bubble:nth-child(4) {
+.theme-effects .particle:nth-child(4) {
   width: 60px; height: 130px;
   left: 52%; top: 0%;
   animation-delay: -2s;
   animation-duration: 8.5s;
 }
 
-.theme-effects .bubble:nth-child(5) {
+.theme-effects .particle:nth-child(5) {
   width: 48px; height: 100px;
   left: 68%; top: 4%;
   animation-delay: -4s;
   animation-duration: 7.5s;
 }
 
-.theme-effects .bubble:nth-child(6) {
+.theme-effects .particle:nth-child(6) {
   width: 52px; height: 110px;
   left: 82%; top: 1%;
   animation-delay: -1s;
   animation-duration: 8s;
 }
 
-.theme-effects .bubble:nth-child(7) {
+.theme-effects .particle:nth-child(7) {
   width: 35px; height: 75px;
   left: 15%; top: 12%;
   animation-delay: -2.5s;
@@ -292,7 +292,7 @@ body {
   opacity: 0.7;
 }
 
-.theme-effects .bubble:nth-child(8) {
+.theme-effects .particle:nth-child(8) {
   width: 38px; height: 80px;
   left: 75%; top: 10%;
   animation-delay: -3.5s;
@@ -825,14 +825,14 @@ body {
   }
 
   /* Smaller wisteria on mobile */
-  .theme-effects .bubble:nth-child(1) { width: 30px; height: 60px; left: 5%; }
-  .theme-effects .bubble:nth-child(2) { width: 38px; height: 80px; left: 20%; }
-  .theme-effects .bubble:nth-child(3) { width: 28px; height: 55px; left: 40%; }
-  .theme-effects .bubble:nth-child(4) { width: 42px; height: 90px; left: 55%; }
-  .theme-effects .bubble:nth-child(5) { width: 32px; height: 65px; left: 75%; }
-  .theme-effects .bubble:nth-child(6) { width: 35px; height: 70px; left: 90%; }
-  .theme-effects .bubble:nth-child(7),
-  .theme-effects .bubble:nth-child(8) {
+  .theme-effects .particle:nth-child(1) { width: 30px; height: 60px; left: 5%; }
+  .theme-effects .particle:nth-child(2) { width: 38px; height: 80px; left: 20%; }
+  .theme-effects .particle:nth-child(3) { width: 28px; height: 55px; left: 40%; }
+  .theme-effects .particle:nth-child(4) { width: 42px; height: 90px; left: 55%; }
+  .theme-effects .particle:nth-child(5) { width: 32px; height: 65px; left: 75%; }
+  .theme-effects .particle:nth-child(6) { width: 35px; height: 70px; left: 90%; }
+  .theme-effects .particle:nth-child(7),
+  .theme-effects .particle:nth-child(8) {
     display: none;
   }
 
@@ -870,7 +870,7 @@ body {
   contain: strict;
 }
 
-.theme-effects .bubble {
+.theme-effects .particle {
   contain: layout style;
 }
 

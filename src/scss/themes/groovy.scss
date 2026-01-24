@@ -71,7 +71,7 @@ body {
    Lava Blobs - GPU-accelerated, authentic lava lamp
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.theme-effects .bubble {
+.theme-effects .particle {
   position: absolute;
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   opacity: 0.7;
@@ -81,53 +81,53 @@ body {
   animation: blobFloat 18s ease-in-out infinite;
 }
 
-.theme-effects .bubble::before,
-.theme-effects .bubble::after {
+.theme-effects .particle::before,
+.theme-effects .particle::after {
   display: none;
 }
 
-.theme-effects .bubble:nth-child(1) {
+.theme-effects .particle:nth-child(1) {
   width: 180px; height: 200px; left: 5%; top: 10%;
   background: linear-gradient(180deg, var(--pink) 0%, var(--magenta) 100%);
   animation-duration: 20s;
 }
-.theme-effects .bubble:nth-child(2) {
+.theme-effects .particle:nth-child(2) {
   width: 140px; height: 160px; left: 82%; top: 12%;
   background: linear-gradient(180deg, var(--orange) 0%, var(--yellow) 100%);
   animation-delay: -4s;
   animation-duration: 22s;
 }
-.theme-effects .bubble:nth-child(3) {
+.theme-effects .particle:nth-child(3) {
   width: 100px; height: 120px; left: 12%; top: 55%;
   background: linear-gradient(180deg, var(--purple) 0%, var(--magenta) 100%);
   animation-delay: -8s;
   animation-duration: 19s;
 }
-.theme-effects .bubble:nth-child(4) {
+.theme-effects .particle:nth-child(4) {
   width: 160px; height: 180px; left: 72%; top: 50%;
   background: linear-gradient(180deg, var(--pink) 0%, var(--orange) 100%);
   animation-delay: -2s;
   animation-duration: 24s;
 }
-.theme-effects .bubble:nth-child(5) {
+.theme-effects .particle:nth-child(5) {
   width: 90px; height: 100px; left: 45%; top: 78%;
   background: linear-gradient(180deg, var(--yellow) 0%, var(--orange) 100%);
   animation-delay: -12s;
   animation-duration: 17s;
 }
-.theme-effects .bubble:nth-child(6) {
+.theme-effects .particle:nth-child(6) {
   width: 120px; height: 140px; left: 28%; top: 28%;
   background: linear-gradient(180deg, var(--magenta) 0%, var(--purple) 100%);
   animation-delay: -6s;
   animation-duration: 21s;
 }
-.theme-effects .bubble:nth-child(7) {
+.theme-effects .particle:nth-child(7) {
   width: 70px; height: 85px; left: 60%; top: 30%;
   background: linear-gradient(180deg, var(--orange) 0%, var(--pink) 100%);
   animation-delay: -10s;
   animation-duration: 16s;
 }
-.theme-effects .bubble:nth-child(8) {
+.theme-effects .particle:nth-child(8) {
   width: 130px; height: 150px; left: 52%; top: 65%;
   background: linear-gradient(180deg, var(--purple) 0%, var(--pink) 100%);
   animation-delay: -14s;
@@ -573,12 +573,12 @@ body {
     border-radius: var(--radius-sm);
   }
 
-  .theme-effects .bubble:nth-child(1) { width: 100px; height: 110px; }
-  .theme-effects .bubble:nth-child(2) { width: 80px; height: 90px; }
-  .theme-effects .bubble:nth-child(4) { width: 90px; height: 100px; }
-  .theme-effects .bubble:nth-child(6),
-  .theme-effects .bubble:nth-child(7),
-  .theme-effects .bubble:nth-child(8) { display: none; }
+  .theme-effects .particle:nth-child(1) { width: 100px; height: 110px; }
+  .theme-effects .particle:nth-child(2) { width: 80px; height: 90px; }
+  .theme-effects .particle:nth-child(4) { width: 90px; height: 100px; }
+  .theme-effects .particle:nth-child(6),
+  .theme-effects .particle:nth-child(7),
+  .theme-effects .particle:nth-child(8) { display: none; }
 
   .lightbox-content,
   .lightbox-image {

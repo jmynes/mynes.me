@@ -125,7 +125,7 @@ body {
 }
 
 /* Distant stars as floating elements */
-.theme-effects .bubble {
+.theme-effects .particle {
   position: absolute;
   border-radius: 50%;
   background: var(--sw-white);
@@ -133,19 +133,19 @@ body {
   will-change: opacity;
 }
 
-.theme-effects .bubble::before,
-.theme-effects .bubble::after {
+.theme-effects .particle::before,
+.theme-effects .particle::after {
   display: none;
 }
 
-.theme-effects .bubble:nth-child(1) { width: 1px; height: 1px; left: 10%; top: 20%; animation-delay: 0s; }
-.theme-effects .bubble:nth-child(2) { width: 2px; height: 2px; left: 85%; top: 15%; animation-delay: -1s; }
-.theme-effects .bubble:nth-child(3) { width: 1px; height: 1px; left: 20%; top: 60%; animation-delay: -0.5s; }
-.theme-effects .bubble:nth-child(4) { width: 2px; height: 2px; left: 70%; top: 45%; animation-delay: -1.5s; }
-.theme-effects .bubble:nth-child(5) { width: 1px; height: 1px; left: 50%; top: 80%; animation-delay: -2s; }
-.theme-effects .bubble:nth-child(6) { width: 1px; height: 1px; left: 30%; top: 35%; animation-delay: -0.8s; }
-.theme-effects .bubble:nth-child(7) { width: 2px; height: 2px; left: 60%; top: 25%; animation-delay: -1.2s; }
-.theme-effects .bubble:nth-child(8) { width: 1px; height: 1px; left: 45%; top: 70%; animation-delay: -2.5s; }
+.theme-effects .particle:nth-child(1) { width: 1px; height: 1px; left: 10%; top: 20%; animation-delay: 0s; }
+.theme-effects .particle:nth-child(2) { width: 2px; height: 2px; left: 85%; top: 15%; animation-delay: -1s; }
+.theme-effects .particle:nth-child(3) { width: 1px; height: 1px; left: 20%; top: 60%; animation-delay: -0.5s; }
+.theme-effects .particle:nth-child(4) { width: 2px; height: 2px; left: 70%; top: 45%; animation-delay: -1.5s; }
+.theme-effects .particle:nth-child(5) { width: 1px; height: 1px; left: 50%; top: 80%; animation-delay: -2s; }
+.theme-effects .particle:nth-child(6) { width: 1px; height: 1px; left: 30%; top: 35%; animation-delay: -0.8s; }
+.theme-effects .particle:nth-child(7) { width: 2px; height: 2px; left: 60%; top: 25%; animation-delay: -1.2s; }
+.theme-effects .particle:nth-child(8) { width: 1px; height: 1px; left: 45%; top: 70%; animation-delay: -2.5s; }
 
 @keyframes starTwinkle {
   0%, 100% { opacity: 1; }
@@ -533,8 +533,8 @@ body {
     letter-spacing: 0.08em;
   }
 
-  .theme-effects .bubble:nth-child(7),
-  .theme-effects .bubble:nth-child(8) { display: none; }
+  .theme-effects .particle:nth-child(7),
+  .theme-effects .particle:nth-child(8) { display: none; }
 
   .lightbox-content,
   .lightbox-image {
@@ -610,10 +610,10 @@ body {
 /* Hide static theme stars and make theme-bg transparent so animated stars show */
 body:has(.theme-loader--starwars) .theme-bg::before,
 body:has(.theme-loader--starwars) .theme-bg::after,
-body:has(.theme-loader--starwars) .theme-effects .bubble,
+body:has(.theme-loader--starwars) .theme-effects .particle,
 body.starwars-intro-complete .theme-bg::before,
 body.starwars-intro-complete .theme-bg::after,
-body.starwars-intro-complete .theme-effects .bubble {
+body.starwars-intro-complete .theme-effects .particle {
   opacity: 0 !important;
 }
 

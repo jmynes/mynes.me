@@ -92,7 +92,7 @@ body {
    Floating Elements - Pixel sprites
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.theme-effects .bubble {
+.theme-effects .particle {
   position: absolute;
   width: 16px;
   height: 16px;
@@ -105,19 +105,19 @@ body {
   animation: pixelBounce 1s step-start infinite;
 }
 
-.theme-effects .bubble::before,
-.theme-effects .bubble::after {
+.theme-effects .particle::before,
+.theme-effects .particle::after {
   display: none;
 }
 
-.theme-effects .bubble:nth-child(1) { left: 8%; top: 15%; animation-delay: 0s; background: var(--nes-red); box-shadow: 4px 0 0 var(--nes-orange), 0 4px 0 var(--nes-orange); }
-.theme-effects .bubble:nth-child(2) { left: 85%; top: 20%; animation-delay: -0.2s; background: var(--nes-green); box-shadow: 4px 0 0 var(--nes-blue), 0 4px 0 var(--nes-blue); }
-.theme-effects .bubble:nth-child(3) { left: 20%; top: 60%; animation-delay: -0.4s; background: var(--nes-light-blue); box-shadow: 4px 0 0 var(--nes-blue), 0 4px 0 var(--nes-blue); }
-.theme-effects .bubble:nth-child(4) { left: 75%; top: 50%; animation-delay: -0.6s; background: var(--nes-yellow); box-shadow: 4px 0 0 var(--nes-orange), 0 4px 0 var(--nes-orange); }
-.theme-effects .bubble:nth-child(5) { left: 50%; top: 80%; animation-delay: -0.8s; background: var(--nes-orange); box-shadow: 4px 0 0 var(--nes-red), 0 4px 0 var(--nes-red); }
-.theme-effects .bubble:nth-child(6) { left: 35%; top: 30%; animation-delay: -0.3s; background: var(--nes-white); box-shadow: 4px 0 0 var(--nes-light-gray), 0 4px 0 var(--nes-light-gray); }
-.theme-effects .bubble:nth-child(7) { left: 65%; top: 70%; animation-delay: -0.5s; background: var(--nes-green); box-shadow: 4px 0 0 var(--nes-blue), 0 4px 0 var(--nes-blue); }
-.theme-effects .bubble:nth-child(8) { left: 92%; top: 45%; animation-delay: -0.7s; background: var(--nes-red); box-shadow: 4px 0 0 var(--nes-orange), 0 4px 0 var(--nes-orange); }
+.theme-effects .particle:nth-child(1) { left: 8%; top: 15%; animation-delay: 0s; background: var(--nes-red); box-shadow: 4px 0 0 var(--nes-orange), 0 4px 0 var(--nes-orange); }
+.theme-effects .particle:nth-child(2) { left: 85%; top: 20%; animation-delay: -0.2s; background: var(--nes-green); box-shadow: 4px 0 0 var(--nes-blue), 0 4px 0 var(--nes-blue); }
+.theme-effects .particle:nth-child(3) { left: 20%; top: 60%; animation-delay: -0.4s; background: var(--nes-light-blue); box-shadow: 4px 0 0 var(--nes-blue), 0 4px 0 var(--nes-blue); }
+.theme-effects .particle:nth-child(4) { left: 75%; top: 50%; animation-delay: -0.6s; background: var(--nes-yellow); box-shadow: 4px 0 0 var(--nes-orange), 0 4px 0 var(--nes-orange); }
+.theme-effects .particle:nth-child(5) { left: 50%; top: 80%; animation-delay: -0.8s; background: var(--nes-orange); box-shadow: 4px 0 0 var(--nes-red), 0 4px 0 var(--nes-red); }
+.theme-effects .particle:nth-child(6) { left: 35%; top: 30%; animation-delay: -0.3s; background: var(--nes-white); box-shadow: 4px 0 0 var(--nes-light-gray), 0 4px 0 var(--nes-light-gray); }
+.theme-effects .particle:nth-child(7) { left: 65%; top: 70%; animation-delay: -0.5s; background: var(--nes-green); box-shadow: 4px 0 0 var(--nes-blue), 0 4px 0 var(--nes-blue); }
+.theme-effects .particle:nth-child(8) { left: 92%; top: 45%; animation-delay: -0.7s; background: var(--nes-red); box-shadow: 4px 0 0 var(--nes-orange), 0 4px 0 var(--nes-orange); }
 
 @keyframes pixelBounce {
   0%, 100% { transform: translateY(0); }
@@ -540,7 +540,7 @@ body {
     font-size: 1rem;
   }
 
-  .theme-effects .bubble:nth-child(n+5) {
+  .theme-effects .particle:nth-child(n+5) {
     display: none;
   }
 

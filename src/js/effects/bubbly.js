@@ -139,10 +139,10 @@ export function start() {
   navbar = document.querySelector('.site-header');
   if (!container || !navbar) return;
 
-  // Hide any CSS-animated bubbles
-  const cssBubbles = container.querySelectorAll('.bubble:not(.bubble-js)');
-  for (const b of cssBubbles) {
-    b.style.display = 'none';
+  // Hide CSS particles (this theme uses JS bubbles instead)
+  const cssParticles = container.querySelectorAll('.particle');
+  for (const p of cssParticles) {
+    p.style.display = 'none';
   }
 
   // Spawn initial bubbles with staggered positions
@@ -176,11 +176,11 @@ export function stop() {
   }
   bubbles = [];
 
-  // Restore CSS bubbles
+  // Restore CSS particles
   if (container) {
-    const cssBubbles = container.querySelectorAll('.bubble:not(.bubble-js)');
-    for (const b of cssBubbles) {
-      b.style.display = '';
+    const cssParticles = container.querySelectorAll('.particle');
+    for (const p of cssParticles) {
+      p.style.display = '';
     }
   }
 

@@ -44,12 +44,12 @@ async function startSnow() {
   `;
   document.body.appendChild(snowContainer);
 
-  // Hide CSS bubbles
+  // Hide CSS particles (this theme uses tsparticles instead)
   const effectsContainer = document.querySelector('.theme-effects');
   if (effectsContainer) {
-    const cssBubbles = effectsContainer.querySelectorAll('.bubble');
-    for (const b of cssBubbles) {
-      b.style.display = 'none';
+    const cssParticles = effectsContainer.querySelectorAll('.particle');
+    for (const p of cssParticles) {
+      p.style.display = 'none';
     }
   }
 
@@ -115,12 +115,12 @@ function stopSnow() {
     snowContainer = null;
   }
 
-  // Restore CSS bubbles
+  // Restore CSS particles
   const effectsContainer = document.querySelector('.theme-effects');
   if (effectsContainer) {
-    const cssBubbles = effectsContainer.querySelectorAll('.bubble');
-    for (const b of cssBubbles) {
-      b.style.display = '';
+    const cssParticles = effectsContainer.querySelectorAll('.particle');
+    for (const p of cssParticles) {
+      p.style.display = '';
     }
   }
 }

@@ -124,7 +124,7 @@ body {
     display: none;
   }
 
-  .bubble {
+  .particle {
     position: absolute;
     border-radius: 50%;
     background: var(--christmas-snow);
@@ -582,7 +582,7 @@ body {
     border-radius: var(--radius-sm);
   }
 
-  .theme-effects .bubble {
+  .theme-effects .particle {
     &:nth-child(n+13) { display: none; }
   }
 

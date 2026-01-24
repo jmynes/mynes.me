@@ -103,7 +103,7 @@ body {
     display: none;
   }
 
-  .bubble {
+  .particle {
     position: absolute;
     width: 4px;
     height: 4px;
@@ -613,7 +613,7 @@ body {
     border-radius: var(--radius-sm);
   }
 
-  .theme-effects .bubble {
+  .theme-effects .particle {
     &:nth-child(7),
     &:nth-child(8) { display: none; }
   }

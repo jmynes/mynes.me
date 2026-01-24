@@ -299,7 +299,7 @@ body {
 }
 
 /* Hide all CSS bubbles - using canvas ghost effect instead */
-.theme-effects .bubble {
+.theme-effects .particle {
   display: none;
 }
 
@@ -683,8 +683,8 @@ body {
     border-radius: var(--radius-sm);
   }
 
-  .theme-effects .bubble:nth-child(7),
-  .theme-effects .bubble:nth-child(8) { display: none; }
+  .theme-effects .particle:nth-child(7),
+  .theme-effects .particle:nth-child(8) { display: none; }
 
   .lightbox-content,
   .lightbox-image {

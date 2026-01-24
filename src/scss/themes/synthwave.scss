@@ -136,7 +136,7 @@ body {
 }
 
 /* Static neon stars in the sky area */
-.theme-effects .bubble {
+.theme-effects .particle {
   position: absolute;
   border-radius: 50%;
   background: white;
@@ -145,20 +145,20 @@ body {
     0 0 8px white;
 }
 
-.theme-effects .bubble::before,
-.theme-effects .bubble::after {
+.theme-effects .particle::before,
+.theme-effects .particle::after {
   display: none;
 }
 
 /* Stars positioned in the upper "sky" area */
-.theme-effects .bubble:nth-child(1) { width: 3px; height: 3px; left: 10%; top: 8%; }
-.theme-effects .bubble:nth-child(2) { width: 2px; height: 2px; left: 25%; top: 15%; }
-.theme-effects .bubble:nth-child(3) { width: 3px; height: 3px; left: 40%; top: 5%; }
-.theme-effects .bubble:nth-child(4) { width: 2px; height: 2px; left: 55%; top: 12%; }
-.theme-effects .bubble:nth-child(5) { width: 3px; height: 3px; left: 70%; top: 7%; }
-.theme-effects .bubble:nth-child(6) { width: 2px; height: 2px; left: 85%; top: 18%; }
-.theme-effects .bubble:nth-child(7) { width: 2px; height: 2px; left: 15%; top: 22%; }
-.theme-effects .bubble:nth-child(8) { width: 3px; height: 3px; left: 92%; top: 10%; }
+.theme-effects .particle:nth-child(1) { width: 3px; height: 3px; left: 10%; top: 8%; }
+.theme-effects .particle:nth-child(2) { width: 2px; height: 2px; left: 25%; top: 15%; }
+.theme-effects .particle:nth-child(3) { width: 3px; height: 3px; left: 40%; top: 5%; }
+.theme-effects .particle:nth-child(4) { width: 2px; height: 2px; left: 55%; top: 12%; }
+.theme-effects .particle:nth-child(5) { width: 3px; height: 3px; left: 70%; top: 7%; }
+.theme-effects .particle:nth-child(6) { width: 2px; height: 2px; left: 85%; top: 18%; }
+.theme-effects .particle:nth-child(7) { width: 2px; height: 2px; left: 15%; top: 22%; }
+.theme-effects .particle:nth-child(8) { width: 3px; height: 3px; left: 92%; top: 10%; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    Overlay - Subtle Strobe
@@ -552,7 +552,7 @@ body {
   }
 
   // Hide stars on mobile (no sky area)
-  .theme-effects .bubble { display: none; }
+  .theme-effects .particle { display: none; }
 
   // Hide horizon line on mobile
   .theme-effects::before {

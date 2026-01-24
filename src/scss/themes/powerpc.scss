@@ -101,7 +101,7 @@ body {
   display: none;
 }
 
-.theme-effects .bubble {
+.theme-effects .particle {
   position: absolute;
   background: var(--mac-platinum);
   border: 1px solid var(--mac-border-dark);
@@ -113,48 +113,48 @@ body {
   animation: iconFloat 15s ease-in-out infinite;
 }
 
-.theme-effects .bubble::before,
-.theme-effects .bubble::after {
+.theme-effects .particle::before,
+.theme-effects .particle::after {
   display: none;
 }
 
 /* Different icon shapes */
-.theme-effects .bubble:nth-child(1) {
+.theme-effects .particle:nth-child(1) {
   width: 32px; height: 32px; left: 5%; top: 15%;
   border-radius: var(--radius-sm);
   animation-delay: 0s;
 }
-.theme-effects .bubble:nth-child(2) {
+.theme-effects .particle:nth-child(2) {
   width: 28px; height: 28px; left: 88%; top: 20%;
   border-radius: var(--radius-sm);
   animation-delay: -3s;
 }
-.theme-effects .bubble:nth-child(3) {
+.theme-effects .particle:nth-child(3) {
   width: 24px; height: 24px; left: 15%; top: 65%;
   border-radius: var(--radius-sm);
   animation-delay: -6s;
 }
-.theme-effects .bubble:nth-child(4) {
+.theme-effects .particle:nth-child(4) {
   width: 30px; height: 30px; left: 75%; top: 55%;
   border-radius: var(--radius-sm);
   animation-delay: -9s;
 }
-.theme-effects .bubble:nth-child(5) {
+.theme-effects .particle:nth-child(5) {
   width: 26px; height: 26px; left: 45%; top: 75%;
   border-radius: var(--radius-sm);
   animation-delay: -2s;
 }
-.theme-effects .bubble:nth-child(6) {
+.theme-effects .particle:nth-child(6) {
   width: 22px; height: 22px; left: 60%; top: 25%;
   border-radius: var(--radius-sm);
   animation-delay: -5s;
 }
-.theme-effects .bubble:nth-child(7) {
+.theme-effects .particle:nth-child(7) {
   width: 28px; height: 28px; left: 30%; top: 40%;
   border-radius: var(--radius-sm);
   animation-delay: -8s;
 }
-.theme-effects .bubble:nth-child(8) {
+.theme-effects .particle:nth-child(8) {
   width: 20px; height: 20px; left: 92%; top: 70%;
   border-radius: var(--radius-sm);
   animation-delay: -11s;
@@ -592,8 +592,8 @@ body {
     border-radius: var(--radius-sm);
   }
 
-  .theme-effects .bubble:nth-child(7),
-  .theme-effects .bubble:nth-child(8) { display: none; }
+  .theme-effects .particle:nth-child(7),
+  .theme-effects .particle:nth-child(8) { display: none; }
 
   .lightbox-content,
   .lightbox-image {

@@ -77,16 +77,22 @@ function replayEntryAnimations() {
     '.site-header, .intro, .project, .theme-bg, .theme-effects, .theme-overlay',
   );
 
+  // First, hide all elements and remove animations
   elements.forEach((el) => {
-    // Get current animation
     const animation = getComputedStyle(el).animation;
     if (animation && animation !== 'none') {
-      // Remove and re-add animation to replay it
       el.style.animation = 'none';
-      // Force reflow
-      el.offsetHeight;
-      el.style.animation = '';
+      el.style.opacity = '0';
     }
+  });
+
+  // Force reflow
+  document.body.offsetHeight;
+
+  // Then restore animations (elements will animate from their start state)
+  elements.forEach((el) => {
+    el.style.animation = '';
+    el.style.opacity = '';
   });
 }
 

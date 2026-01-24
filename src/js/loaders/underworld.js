@@ -22,7 +22,7 @@ function createBurnEffect(canvas, onComplete, isCancelled) {
   const height = canvas.height;
 
   // Burn holes - each grows over time with slight irregularity
-  const baseSpeed = Math.max(width, height) * 0.02; // Scale speed to screen size
+  const baseSpeed = Math.max(width, height) * 0.018; // Scale speed to screen size
   const holes = [
     { x: 0.15, y: 0.2 },
     { x: 0.85, y: 0.15 },
@@ -35,21 +35,23 @@ function createBurnEffect(canvas, onComplete, isCancelled) {
     x: (h.x + (Math.random() - 0.5) * 0.1) * width,
     y: (h.y + (Math.random() - 0.5) * 0.1) * height,
     radius: 0,
-    speed: baseSpeed * (0.8 + Math.random() * 0.4), // Vary speed slightly
+    speed: baseSpeed * (0.9 + Math.random() * 0.2), // Vary speed slightly
     wobble: Math.random() * Math.PI * 2, // phase offset for organic edges
   }));
 
   const maxRadius = Math.max(width, height) * 0.8;
-  const edgeWidth = Math.max(2, width * 0.003); // Scale edge width to screen
+  const edgeWidth = Math.max(3, width * 0.004); // Scale edge width to screen
 
   // Helper to draw a wobbly circle path
   function drawWobblyPath(hole, radiusOffset = 0) {
     ctx.beginPath();
-    const segments = 16;
+    const segments = 32; // More segments for smoother curves
     for (let i = 0; i <= segments; i++) {
       const angle = (i / segments) * Math.PI * 2;
+      // Gentler wobble with multiple frequencies for organic look
       const wobbleAmount =
-        Math.sin(angle * 3 + hole.wobble) * (hole.radius * 0.12);
+        Math.sin(angle * 3 + hole.wobble) * (hole.radius * 0.08) +
+        Math.sin(angle * 5 + hole.wobble * 1.3) * (hole.radius * 0.04);
       const r = hole.radius + wobbleAmount + radiusOffset;
       const px = hole.x + Math.cos(angle) * r;
       const py = hole.y + Math.sin(angle) * r;
@@ -81,7 +83,7 @@ function createBurnEffect(canvas, onComplete, isCancelled) {
         hole.radius += hole.speed;
         allDone = false;
       }
-      hole.wobble += 0.08;
+      hole.wobble += 0.03; // Slower wobble for smoother animation
     }
 
     // Cut out ALL holes first (so edges don't overlap with any hole)

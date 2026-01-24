@@ -1,10 +1,129 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Christmas Theme — String Lights on Project Cards
-// Colorful twinkling lights along the top of each card
+// Christmas Theme — String Lights on Project Cards + tsParticles Snow
+// Colorful twinkling lights along the top of each card, plus falling snow
 // ═══════════════════════════════════════════════════════════════════════════
 
 let isActive = false;
 let resizeTimeout;
+let snowContainer = null;
+let tsParticlesInstance = null;
+
+const TSPARTICLES_CDN =
+  'https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js';
+
+/**
+ * Load tsParticles from CDN
+ */
+function loadTsParticles() {
+  return new Promise((resolve, reject) => {
+    if (window.tsParticles) {
+      resolve(window.tsParticles);
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = TSPARTICLES_CDN;
+    script.onload = () => resolve(window.tsParticles);
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
+/**
+ * Start the snow effect using tsParticles
+ */
+async function startSnow() {
+  // Create container for snow
+  snowContainer = document.createElement('div');
+  snowContainer.id = 'christmas-snow';
+  snowContainer.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+  `;
+  document.body.appendChild(snowContainer);
+
+  // Hide CSS bubbles
+  const effectsContainer = document.querySelector('.theme-effects');
+  if (effectsContainer) {
+    const cssBubbles = effectsContainer.querySelectorAll('.bubble');
+    for (const b of cssBubbles) {
+      b.style.display = 'none';
+    }
+  }
+
+  try {
+    const tsParticles = await loadTsParticles();
+    tsParticlesInstance = await tsParticles.load('christmas-snow', {
+      background: {
+        color: 'transparent',
+      },
+      particles: {
+        color: {
+          value: '#ffffff',
+        },
+        number: {
+          value: 50,
+          density: {
+            enable: true,
+            area: 800,
+          },
+        },
+        opacity: {
+          value: { min: 0.2, max: 0.6 },
+        },
+        shape: {
+          type: 'circle',
+        },
+        size: {
+          value: { min: 1, max: 8 },
+        },
+        move: {
+          enable: true,
+          speed: 1,
+          direction: 'bottom',
+          random: false,
+          straight: false,
+          outModes: {
+            default: 'out',
+          },
+        },
+        wobble: {
+          enable: true,
+          distance: 5,
+          speed: 3,
+        },
+      },
+    });
+  } catch (err) {
+    console.warn('Failed to load tsParticles for snow:', err);
+  }
+}
+
+/**
+ * Stop the snow effect
+ */
+function stopSnow() {
+  if (tsParticlesInstance) {
+    tsParticlesInstance.destroy();
+    tsParticlesInstance = null;
+  }
+
+  if (snowContainer) {
+    snowContainer.remove();
+    snowContainer = null;
+  }
+
+  // Restore CSS bubbles
+  const effectsContainer = document.querySelector('.theme-effects');
+  if (effectsContainer) {
+    const cssBubbles = effectsContainer.querySelectorAll('.bubble');
+    for (const b of cssBubbles) {
+      b.style.display = '';
+    }
+  }
+}
 
 const lightColors = [
   { bg: '#ff4444', glow: 'rgba(255, 68, 68, 0.8)' }, // Red
@@ -137,6 +256,7 @@ export function start() {
   if (isActive) return;
   isActive = true;
   addLights();
+  startSnow(); // async but we don't need to wait
   window.addEventListener('resize', handleResize);
 }
 
@@ -144,6 +264,7 @@ export function stop() {
   if (!isActive) return;
   isActive = false;
   removeLights();
+  stopSnow();
   window.removeEventListener('resize', handleResize);
 }
 

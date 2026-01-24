@@ -85,18 +85,25 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 350px;
+    height: 450px;
     background:
-      radial-gradient(ellipse 70% 120px at 15% 100%, rgba(240, 248, 255, 0.95) 0%, rgba(220, 235, 245, 0.9) 40%, transparent 70%),
-      radial-gradient(ellipse 60% 100px at 85% 100%, rgba(240, 248, 255, 0.92) 0%, rgba(215, 230, 240, 0.85) 45%, transparent 70%),
-      radial-gradient(ellipse 90% 140px at 50% 100%, rgba(200, 220, 235, 0.85) 0%, rgba(180, 200, 220, 0.7) 50%, transparent 75%),
-      radial-gradient(ellipse 50% 90px at 30% 100%, rgba(160, 185, 210, 0.7) 0%, rgba(140, 165, 190, 0.5) 50%, transparent 70%),
-      radial-gradient(ellipse 55% 80px at 70% 100%, rgba(150, 175, 200, 0.65) 0%, rgba(130, 155, 180, 0.45) 50%, transparent 70%),
-      radial-gradient(ellipse 80% 60px at 20% 100%, rgba(140, 160, 190, 0.5) 0%, transparent 60%),
-      radial-gradient(ellipse 70% 50px at 60% 100%, rgba(130, 150, 180, 0.45) 0%, transparent 55%),
-      radial-gradient(ellipse 60% 45px at 90% 100%, rgba(135, 155, 185, 0.4) 0%, transparent 55%),
-      radial-gradient(ellipse 40% 30px at 25% 100%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
-      radial-gradient(ellipse 35% 25px at 75% 100%, rgba(255, 255, 255, 0.35) 0%, transparent 45%);
+      // Front layer - bright white snow drifts
+      radial-gradient(ellipse 80% 180px at 10% 100%, rgba(255, 255, 255, 0.98) 0%, rgba(245, 250, 255, 0.9) 30%, transparent 65%),
+      radial-gradient(ellipse 70% 160px at 90% 100%, rgba(255, 255, 255, 0.96) 0%, rgba(240, 248, 255, 0.85) 35%, transparent 65%),
+      radial-gradient(ellipse 100% 200px at 50% 100%, rgba(250, 252, 255, 0.95) 0%, rgba(235, 245, 255, 0.85) 40%, transparent 70%),
+      // Mid layer - snow banks
+      radial-gradient(ellipse 60% 140px at 25% 100%, rgba(240, 248, 255, 0.9) 0%, rgba(220, 235, 250, 0.7) 45%, transparent 70%),
+      radial-gradient(ellipse 55% 130px at 75% 100%, rgba(240, 248, 255, 0.88) 0%, rgba(215, 230, 245, 0.65) 45%, transparent 70%),
+      radial-gradient(ellipse 45% 110px at 40% 100%, rgba(230, 242, 255, 0.8) 0%, rgba(200, 220, 240, 0.6) 50%, transparent 70%),
+      radial-gradient(ellipse 50% 100px at 65% 100%, rgba(235, 245, 255, 0.75) 0%, rgba(205, 225, 245, 0.55) 50%, transparent 70%),
+      // Back layer - subtle depth
+      radial-gradient(ellipse 90% 80px at 15% 100%, rgba(200, 220, 240, 0.5) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 70px at 55% 100%, rgba(190, 210, 235, 0.45) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 60px at 85% 100%, rgba(195, 215, 238, 0.4) 0%, transparent 55%),
+      // Sparkle highlights
+      radial-gradient(ellipse 30% 40px at 20% 100%, rgba(255, 255, 255, 0.6) 0%, transparent 50%),
+      radial-gradient(ellipse 25% 35px at 50% 100%, rgba(255, 255, 255, 0.5) 0%, transparent 45%),
+      radial-gradient(ellipse 28% 38px at 80% 100%, rgba(255, 255, 255, 0.55) 0%, transparent 48%);
   }
 }
 
@@ -137,14 +144,22 @@ body {
       display: none;
     }
 
-    &:nth-child(1) { width: 6px; height: 6px; left: 5%; top: -10px; animation-duration: 8s; animation-delay: 0s; }
-    &:nth-child(2) { width: 4px; height: 4px; left: 15%; top: -10px; animation-duration: 12s; animation-delay: -2s; }
-    &:nth-child(3) { width: 8px; height: 8px; left: 30%; top: -10px; animation-duration: 7s; animation-delay: -4s; }
-    &:nth-child(4) { width: 5px; height: 5px; left: 45%; top: -10px; animation-duration: 10s; animation-delay: -1s; }
-    &:nth-child(5) { width: 3px; height: 3px; left: 60%; top: -10px; animation-duration: 9s; animation-delay: -5s; }
-    &:nth-child(6) { width: 7px; height: 7px; left: 75%; top: -10px; animation-duration: 11s; animation-delay: -3s; }
-    &:nth-child(7) { width: 4px; height: 4px; left: 88%; top: -10px; animation-duration: 8s; animation-delay: -6s; }
-    &:nth-child(8) { width: 6px; height: 6px; left: 95%; top: -10px; animation-duration: 13s; animation-delay: -2s; }
+    &:nth-child(1) { width: 6px; height: 6px; left: 3%; top: -10px; animation-duration: 9s; animation-delay: 0s; }
+    &:nth-child(2) { width: 4px; height: 4px; left: 10%; top: -10px; animation-duration: 12s; animation-delay: -2s; }
+    &:nth-child(3) { width: 8px; height: 8px; left: 18%; top: -10px; animation-duration: 8s; animation-delay: -4s; }
+    &:nth-child(4) { width: 5px; height: 5px; left: 26%; top: -10px; animation-duration: 11s; animation-delay: -1s; }
+    &:nth-child(5) { width: 3px; height: 3px; left: 34%; top: -10px; animation-duration: 10s; animation-delay: -5s; }
+    &:nth-child(6) { width: 7px; height: 7px; left: 42%; top: -10px; animation-duration: 13s; animation-delay: -3s; }
+    &:nth-child(7) { width: 4px; height: 4px; left: 50%; top: -10px; animation-duration: 9s; animation-delay: -6s; }
+    &:nth-child(8) { width: 6px; height: 6px; left: 58%; top: -10px; animation-duration: 11s; animation-delay: -2s; }
+    &:nth-child(9) { width: 5px; height: 5px; left: 66%; top: -10px; animation-duration: 10s; animation-delay: -7s; }
+    &:nth-child(10) { width: 3px; height: 3px; left: 74%; top: -10px; animation-duration: 8s; animation-delay: -4s; }
+    &:nth-child(11) { width: 7px; height: 7px; left: 82%; top: -10px; animation-duration: 12s; animation-delay: -1s; }
+    &:nth-child(12) { width: 4px; height: 4px; left: 90%; top: -10px; animation-duration: 9s; animation-delay: -5s; }
+    &:nth-child(13) { width: 6px; height: 6px; left: 97%; top: -10px; animation-duration: 11s; animation-delay: -3s; }
+    &:nth-child(14) { width: 5px; height: 5px; left: 22%; top: -10px; animation-duration: 10s; animation-delay: -8s; }
+    &:nth-child(15) { width: 3px; height: 3px; left: 54%; top: -10px; animation-duration: 13s; animation-delay: -6s; }
+    &:nth-child(16) { width: 8px; height: 8px; left: 78%; top: -10px; animation-duration: 8s; animation-delay: -2s; }
   }
 }
 
@@ -561,8 +576,7 @@ body {
   }
 
   .theme-effects .bubble {
-    &:nth-child(7),
-    &:nth-child(8) { display: none; }
+    &:nth-child(n+13) { display: none; }
   }
 
   .lightbox-content,

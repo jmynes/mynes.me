@@ -6,7 +6,7 @@ A portfolio landing page showcasing projects built with vibes.
 
 - **13 Themes**: Aero, Bubbly, Christmas, Fireflies, Groovy, Hacker, Halloween, Lilypond, PowerPC, Retrogame, Starwars, Synthwave, and Underworld — each with unique visual effects
 - **Shuffle Mode**: Randomly picks a different theme on each visit (default on)
-- **Lightbox**: Click screenshots to view full-size
+- **Portfolio Modal**: Click screenshots to open a split-panel lightbox with large image preview, project links, description, and tech stack
 - **Responsive**: Works on desktop and mobile
 
 ## Projects

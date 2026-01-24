@@ -254,7 +254,7 @@ function removeCanvas() {
 function spawnGhost() {
   if (!isActive) return;
   ghosts.push(new Ghost());
-  spawnTimeout = setTimeout(spawnGhost, Math.random() * 500);
+  spawnTimeout = setTimeout(spawnGhost, Math.random() * 625);
 }
 
 function animate() {

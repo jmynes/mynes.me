@@ -2,45 +2,12 @@
 // Mixins — Reusable style patterns
 // ═══════════════════════════════════════════════════════════════════════════
 
-@use 'variables' as *;
-
 // Glass panel effect - used by header, project cards, tooltips
 @mixin glass-panel($bg: var(--glass-frost), $blur: 12px, $border: var(--glass-border)) {
   background: $bg;
   backdrop-filter: blur($blur);
   -webkit-backdrop-filter: blur($blur);
   border: 1px solid $border;
-}
-
-// Entry animation with cascade delays
-@mixin entry-cascade($animation-name, $duration: 0.8s, $easing: ease-out) {
-  .site-header {
-    animation: $animation-name $duration $easing $cascade-header forwards;
-  }
-
-  .intro {
-    animation: $animation-name $duration $easing $cascade-intro forwards;
-  }
-
-  .project:nth-child(1) {
-    animation: $animation-name $duration $easing $cascade-project-1 forwards;
-  }
-
-  .project:nth-child(2) {
-    animation: $animation-name $duration $easing $cascade-project-2 forwards;
-  }
-}
-
-// Background layer fade in
-@mixin bg-layer-fade($animation-name, $duration: 2s, $easing: ease) {
-  .theme-bg,
-  .theme-effects {
-    animation: $animation-name $duration $easing forwards;
-  }
-
-  .theme-overlay {
-    animation: $animation-name #{$duration * 0.75} $easing $cascade-overlay forwards;
-  }
 }
 
 // Firefox performance fix - backdrop-filter is slow
@@ -90,14 +57,4 @@
   &::after {
     display: none;
   }
-}
-
-// Glow text effect
-@mixin text-glow($color, $size: 20px) {
-  text-shadow: 0 0 $size $color;
-}
-
-// Box glow effect
-@mixin box-glow($color, $size: 15px) {
-  box-shadow: 0 0 $size $color;
 }

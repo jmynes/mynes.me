@@ -2,48 +2,6 @@
 // Animations — Common @keyframes definitions
 // ═══════════════════════════════════════════════════════════════════════════
 
-// Simple fade in
-@mixin define-fade-in($name) {
-  @keyframes #{$name} {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-}
-
-// Fade in with upward movement and blur clear
-@mixin define-fade-in-up($name, $y-offset: 30px, $blur-start: 10px) {
-  @keyframes #{$name} {
-    0% {
-      opacity: 0;
-      transform: translateY($y-offset);
-      filter: blur($blur-start);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0);
-    }
-  }
-}
-
-// Fade in with scale
-@mixin define-fade-in-scale($name, $scale-start: 0.95) {
-  @keyframes #{$name} {
-    0% {
-      opacity: 0;
-      transform: scale($scale-start);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-}
-
 // Generic float animation for bubbles
 @keyframes bubbleFloat {
   0%, 100% {
@@ -71,17 +29,5 @@
   }
   50% {
     opacity: 1;
-  }
-}
-
-// Pulse glow
-@keyframes pulseGlow {
-  0%, 100% {
-    filter: brightness(1);
-    transform: scale(1);
-  }
-  50% {
-    filter: brightness(1.2);
-    transform: scale(1.02);
   }
 }

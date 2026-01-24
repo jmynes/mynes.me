@@ -9,14 +9,6 @@ A portfolio landing page showcasing projects built with vibes.
 - **Portfolio Modal**: Click screenshots to open a split-panel lightbox with large image preview, project links, description, and tech stack
 - **Responsive**: Works on desktop and mobile
 
-## Projects
-
-### PUNT
-A self-hosted issue tracker with backlog and Kanban views. Features drag-and-drop boards, sprint planning with carryover tracking, multi-select bulk actions, undo/redo, and real-time sync via SSE.
-
-### Pokeraoke
-Turn any lyrics into a Pokemon sprite karaoke performance. Map words to Pokemon, sync with timed LRC files, and watch sprites bounce along to the music.
-
 ## Development
 
 ```bash

@@ -651,35 +651,18 @@ body {
   clip-path: inset(50% 0 0 0);
   transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
+  z-index: 2;
 }
 
 .synthwave-sun.rising {
   opacity: 1;
   transform: translate(-50%, -50%);
-  clip-path: inset(0 0 0 0);
+  clip-path: none;
 }
 
-// Sun stripes (horizontal lines cutting through)
+// Sun stripes (disabled)
 .synthwave-sun-stripe {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 8px;
-  background: var(--synthwave-black);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  transition-delay: calc(0.8s + var(--stripe-index) * 0.05s);
-
-  &:nth-child(1) { bottom: 15%; height: 6px; }
-  &:nth-child(2) { bottom: 25%; height: 8px; }
-  &:nth-child(3) { bottom: 35%; height: 10px; }
-  &:nth-child(4) { bottom: 45%; height: 14px; }
-  &:nth-child(5) { bottom: 57%; height: 18px; }
-  &:nth-child(6) { bottom: 72%; height: 24px; }
-}
-
-.synthwave-sun.rising .synthwave-sun-stripe {
-  opacity: 1;
+  display: none;
 }
 
 // Perspective grid
@@ -761,6 +744,7 @@ body {
   );
   pointer-events: none;
   animation: synthwaveScanFlicker 0.1s steps(2) infinite;
+  z-index: 10;
 }
 
 @keyframes synthwaveScanFlicker {

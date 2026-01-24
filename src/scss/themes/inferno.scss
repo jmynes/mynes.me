@@ -45,14 +45,7 @@
 body {
   font-family: var(--font-body);
   color: var(--text-primary);
-  background: linear-gradient(
-    180deg,
-    var(--inf-black) 0%,
-    var(--inf-abyss) 40%,
-    var(--inf-dark) 70%,
-    var(--inf-blood) 100%
-  );
-  background-attachment: fixed;
+  background: var(--inf-black);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -61,6 +54,13 @@ body {
 
 .theme-bg {
   overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    var(--inf-black) 0%,
+    var(--inf-abyss) 40%,
+    var(--inf-dark) 70%,
+    var(--inf-blood) 100%
+  );
 }
 
 /* Lava pools at bottom - intensified */

@@ -72,6 +72,15 @@
 body {
   font-family: var(--font-body);
   color: var(--text-primary);
+  background: var(--pond-abyss);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Theme Background — Garden atmosphere
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.theme-bg {
+  overflow: hidden;
   background:
     /* Warm golden light from above */
     radial-gradient(ellipse 80% 35% at 50% 0%, rgba(255, 248, 200, 0.1) 0%, transparent 60%),
@@ -91,15 +100,6 @@ body {
       var(--pond-surface) 80%,
       var(--pond-light) 100%
     );
-  background-attachment: fixed;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   Theme Background — Garden atmosphere
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.theme-bg {
-  overflow: hidden;
 }
 
 /* Dappled sunlight through leaves */

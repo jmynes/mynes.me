@@ -52,14 +52,7 @@
 body {
   font-family: var(--font-body);
   color: var(--text-primary);
-  background: linear-gradient(
-    180deg,
-    var(--void) 0%,
-    var(--deep) 30%,
-    var(--dark) 60%,
-    var(--night) 100%
-  );
-  background-attachment: fixed;
+  background: var(--void);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -67,7 +60,15 @@ body {
 // ═══════════════════════════════════════════════════════════════════════════
 
 .theme-bg {
-  background: radial-gradient(ellipse 150% 80% at 20% 120%, rgba(29, 95, 122, 0.5) 0%, transparent 60%);
+  background:
+    radial-gradient(ellipse 150% 80% at 20% 120%, rgba(29, 95, 122, 0.5) 0%, transparent 60%),
+    linear-gradient(
+      180deg,
+      var(--void) 0%,
+      var(--deep) 30%,
+      var(--dark) 60%,
+      var(--night) 100%
+    );
 }
 
 // Aurora SVG container - override base display:none

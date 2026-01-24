@@ -47,7 +47,6 @@ body {
   font-family: var(--font-body);
   color: var(--text-primary);
   background: var(--mac-platinum);
-  background-attachment: fixed;
   padding-top: 0; /* Override fixed header padding - PowerPC scrolls normally */
 }
 

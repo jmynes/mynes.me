@@ -16,7 +16,7 @@ html {
 
 body {
   font-size: 16px;
-  min-height: 100vh;
+  min-height: 100vh; // Large viewport - covers max possible height
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -31,6 +31,7 @@ body {
 .theme-bg {
   position: fixed;
   inset: 0;
+  min-height: 110lvh;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
@@ -44,6 +45,7 @@ body {
 .theme-effects {
   position: fixed;
   inset: 0;
+  min-height: 110lvh;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
@@ -52,6 +54,7 @@ body {
 .theme-overlay {
   position: fixed;
   inset: 0;
+  min-height: 110lvh;
   pointer-events: none;
   z-index: 2;
   overflow: hidden;

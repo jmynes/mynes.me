@@ -45,6 +45,10 @@
 body {
   font-family: var(--font-body);
   color: var(--text-primary);
+  background: var(--sky-zenith);
+}
+
+.theme-bg {
   background:
     radial-gradient(ellipse 120% 50% at 50% 100%, rgba(251, 133, 0, 0.2) 0%, transparent 50%),
     linear-gradient(
@@ -57,7 +61,6 @@ body {
       var(--sky-glow) 90%,
       #ffffff 100%
     );
-  background-attachment: fixed;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

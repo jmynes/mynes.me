@@ -149,32 +149,20 @@ body {
   }
 }
 
-/* Ghosts - soft glowing shapes (no blur for performance) */
+/* Hide CSS bubble ghosts - using canvas effect instead */
 .theme-effects .bubble:nth-child(5),
 .theme-effects .bubble:nth-child(6),
 .theme-effects .bubble:nth-child(7),
 .theme-effects .bubble:nth-child(8) {
-  width: 20px;
-  height: 30px;
-  background: radial-gradient(ellipse at 50% 30%, rgba(244, 228, 212, 0.25) 0%, rgba(244, 228, 212, 0.08) 50%, transparent 70%);
-  border-radius: 50% 50% 40% 40%;
-  animation: ghostFloat 10s ease-in-out infinite;
+  display: none;
 }
 
-.theme-effects .bubble:nth-child(5) { left: 10%; top: 50%; animation-delay: 0s; }
-.theme-effects .bubble:nth-child(6) { left: 30%; top: 40%; animation-delay: -2.5s; transform: scale(0.6); }
-.theme-effects .bubble:nth-child(7) { left: 60%; top: 55%; animation-delay: -5s; transform: scale(0.8); }
-.theme-effects .bubble:nth-child(8) { left: 80%; top: 45%; animation-delay: -7.5s; transform: scale(0.5); }
-
-@keyframes ghostFloat {
-  0%, 100% {
-    transform: translateY(0);
-    opacity: 0.4;
-  }
-  50% {
-    transform: translateY(-40px);
-    opacity: 0.7;
-  }
+/* Canvas ghost effect */
+#halloween-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

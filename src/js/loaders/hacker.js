@@ -44,6 +44,9 @@ export async function animate(overlay, isCancelled) {
   }
   overlay.className = 'theme-loader theme-loader--hacker';
 
+  // Hide scrollbar during animation
+  document.documentElement.style.overflow = 'hidden';
+
   // Create terminal container
   const terminal = document.createElement('div');
   terminal.className = 'hacker-terminal';
@@ -72,22 +75,39 @@ export async function animate(overlay, isCancelled) {
   // Pick random message
   const message = messages[Math.floor(Math.random() * messages.length)];
 
+  // Helper to restore scrollbar on cancel
+  const restoreScrollbar = () => {
+    document.documentElement.style.overflow = '';
+  };
+
   // Type out the message
   await typeText(text, message, 40, isCancelled);
 
-  if (isCancelled()) return;
+  if (isCancelled()) {
+    restoreScrollbar();
+    return;
+  }
 
   // Hold for a moment
   await sleep(400);
 
-  if (isCancelled()) return;
+  if (isCancelled()) {
+    restoreScrollbar();
+    return;
+  }
 
   // Clear and show "READY"
   text.textContent = '';
   await typeText(text, 'READY', 60, isCancelled);
 
-  if (isCancelled()) return;
+  if (isCancelled()) {
+    restoreScrollbar();
+    return;
+  }
 
   // Brief pause before fade out
   await sleep(300);
+
+  // Restore scrollbar
+  restoreScrollbar();
 }

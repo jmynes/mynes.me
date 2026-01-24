@@ -69,6 +69,28 @@ function fadeOut(element, duration) {
 }
 
 /**
+ * Re-trigger entry animations on page elements
+ * This makes elements animate in after the loader finishes
+ */
+function replayEntryAnimations() {
+  const elements = document.querySelectorAll(
+    '.site-header, .intro, .project, .theme-bg, .theme-effects, .theme-overlay',
+  );
+
+  elements.forEach((el) => {
+    // Get current animation
+    const animation = getComputedStyle(el).animation;
+    if (animation && animation !== 'none') {
+      // Remove and re-add animation to replay it
+      el.style.animation = 'none';
+      // Force reflow
+      el.offsetHeight;
+      el.style.animation = '';
+    }
+  });
+}
+
+/**
  * Show loader for a theme transition
  * Returns a Promise that resolves when the loader finishes
  */
@@ -111,6 +133,9 @@ export async function showLoader(themeName) {
     await loader.animate(overlay, () => isCancelled);
 
     if (!isCancelled) {
+      // Re-trigger entry animations so they play after the loader
+      replayEntryAnimations();
+
       // Fade out
       await fadeOut(overlay, 300);
       removeOverlay();

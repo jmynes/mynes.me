@@ -491,10 +491,6 @@ body {
   100% { opacity: 1; transform: scale(1); }
 }
 
-.site-header {
-  animation: groovyWobble 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
 .intro {
   animation: groovyWobble 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
 }

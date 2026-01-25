@@ -85,13 +85,16 @@ export async function animate(overlay, isCancelled) {
 
   const loadingText = document.createElement('div');
   loadingText.className = 'retro-loading-text';
-  loadingText.textContent = 'LOADING';
+
+  const textSpan = document.createElement('span');
+  textSpan.textContent = 'LOADING';
 
   const dots = document.createElement('span');
   dots.className = 'retro-dots';
 
+  loadingText.appendChild(textSpan);
+  loadingText.appendChild(dots);
   textContainer.appendChild(loadingText);
-  textContainer.appendChild(dots);
   crt.appendChild(textContainer);
 
   // Animate dots
@@ -110,7 +113,7 @@ export async function animate(overlay, isCancelled) {
   }
 
   // Show READY
-  loadingText.textContent = 'READY';
+  textSpan.textContent = 'READY';
   dots.textContent = '';
   loadingText.classList.add('retro-ready');
 

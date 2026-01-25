@@ -9,6 +9,7 @@ let ghosts = [];
 let animationId = null;
 let isActive = false;
 let spawnTimeout = null;
+let isPageVisible = true;
 
 // Mobile detection for performance tuning (using matchMedia for reliability)
 const isMobile = () =>
@@ -259,9 +260,20 @@ function removeCanvas() {
 }
 
 function spawnGhost() {
-  if (!isActive) return;
+  if (!isActive || !isPageVisible) return;
   ghosts.push(new Ghost());
   spawnTimeout = setTimeout(spawnGhost, Math.random() * 625);
+}
+
+function handleVisibilityChange() {
+  isPageVisible = !document.hidden;
+  if (isPageVisible && isActive) {
+    // Clear existing ghosts when returning to prevent buildup
+    ghosts = [];
+    // Restart spawning
+    if (spawnTimeout) clearTimeout(spawnTimeout);
+    spawnGhost();
+  }
 }
 
 function animate() {
@@ -288,11 +300,13 @@ function handleResize() {
 export function start() {
   if (isActive) return;
   isActive = true;
+  isPageVisible = !document.hidden;
   createCanvas();
   ghosts = [];
   spawnGhost();
   animationId = requestAnimationFrame(animate);
   window.addEventListener('resize', handleResize);
+  document.addEventListener('visibilitychange', handleVisibilityChange);
 }
 
 export function stop() {
@@ -309,6 +323,7 @@ export function stop() {
   removeCanvas();
   ghosts = [];
   window.removeEventListener('resize', handleResize);
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
 }
 
 export const themeName = 'halloween';

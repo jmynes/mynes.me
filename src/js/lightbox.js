@@ -9,8 +9,8 @@ const projectInfo = {
     description:
       'A self-hosted issue tracker with backlog and Kanban views. Lightweight, local-first project management for teams who want the essentials without the overhead—drag-and-drop boards, sprint planning with carryover tracking, multi-select bulk actions, undo/redo, and real-time sync via SSE. Keep your data on your own infrastructure.',
     github: 'https://github.com/jmynes/punt',
-    live: null,
-    comingSoon: true,
+    live: 'https://punt-demo-production.up.railway.app',
+    comingSoon: false,
     tech: ['Next.js', 'TypeScript', 'Prisma', 'SQLite', 'Tailwind'],
   },
   pokeraoke: {

@@ -10,6 +10,7 @@ const projectInfo = {
       'A self-hosted issue tracker with backlog and Kanban views. Lightweight, local-first project management for teams who want the essentials without the overhead—drag-and-drop boards, sprint planning with carryover tracking, multi-select bulk actions, undo/redo, and real-time sync via SSE. Keep your data on your own infrastructure.',
     github: 'https://github.com/jmynes/punt',
     live: 'https://punt-demo-production.up.railway.app',
+    liveLabel: 'Try Demo',
     comingSoon: false,
     tech: ['Next.js', 'TypeScript', 'Prisma', 'SQLite', 'Tailwind'],
   },
@@ -129,7 +130,7 @@ export function initLightbox() {
         liveLink.rel = 'noopener';
         liveLink.appendChild(createIcon('external'));
         const liveText = document.createElement('span');
-        liveText.textContent = 'Visit Live';
+        liveText.textContent = info.liveLabel || 'Visit Live';
         liveLink.appendChild(liveText);
         lightboxActions.appendChild(liveLink);
       } else if (info.comingSoon) {

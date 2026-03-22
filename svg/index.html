@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUNT Logo Color Editor</title>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Outfit', system-ui, sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; }
+  .checkerboard {
+    background-image: linear-gradient(45deg, #1a1a1a 25%, transparent 25%), linear-gradient(-45deg, #1a1a1a 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #1a1a1a 75%), linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
+    background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px; background-color: #111;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .icon-btn { transition: color 0.15s, background 0.15s, border-color 0.15s; }
+  .icon-btn:hover { color: #ddd !important; background: #2a2a2a !important; border-color: #555 !important; }
+  @keyframes toast-in { from { opacity: 0; transform: translateX(-50%) translateY(8px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+  @keyframes pulse-link { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useCallback, useRef, useEffect } = React;
+
+// === Toast notification ===
+let toastTimeout = null;
+function Toast({ message }) {
+  return message ? (
+    <div style={{
+      position: 'fixed', bottom: 24, left: '50%', transform: 'translateX(-50%)',
+      background: '#222', border: '1px solid #444', borderRadius: 8,
+      padding: '8px 20px', color: '#ddd', fontSize: 13, fontWeight: 500,
+      boxShadow: '0 8px 24px rgba(0,0,0,0.6)', zIndex: 9999,
+      animation: 'toast-in 0.2s ease-out',
+      fontFamily: 'JetBrains Mono, monospace',
+    }}>{message}</div>
+  ) : null;
+}
+
+function useToast() {
+  const [msg, setMsg] = useState(null);
+  const show = useCallback((text) => {
+    setMsg(text);
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => setMsg(null), 1800);
+  }, []);
+  return [msg, show];
+}
+
+// === Color conversion utilities ===
+function hexToHsv(hex) {
+  hex = hex.replace('#', '');
+  const r = parseInt(hex.substr(0, 2), 16) / 255;
+  const g = parseInt(hex.substr(2, 2), 16) / 255;
+  const b = parseInt(hex.substr(4, 2), 16) / 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  const d = max - min;
+  let h = 0;
+  if (d !== 0) {
+    if (max === r) h = ((g - b) / d + 6) % 6;
+    else if (max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+    h *= 60;
+  }
+  const s = max === 0 ? 0 : d / max;
+  return { h, s, v: max };
+}
+
+function hsvToHex(h, s, v) {
+  const c = v * s;
+  const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+  const m = v - c;
+  let r, g, b;
+  if (h < 60) { r = c; g = x; b = 0; }
+  else if (h < 120) { r = x; g = c; b = 0; }
+  else if (h < 180) { r = 0; g = c; b = x; }
+  else if (h < 240) { r = 0; g = x; b = c; }
+  else if (h < 300) { r = x; g = 0; b = c; }
+  else { r = c; g = 0; b = x; }
+  const toHex = n => Math.round((n + m) * 255).toString(16).padStart(2, '0');
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
+}
+
+// === Saturation/Value square + Hue bar picker ===
+function parseColor(color) {
+  if (!color || color === 'transparent') return { hex: '#000000', alpha: 0 };
+  // Parse rgba(r, g, b, a)
+  if (color.startsWith('rgba') || color.startsWith('rgb(')) {
+    const m = color.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+)\s*)?\)/);
+    if (m) return { hex: `#${[m[1],m[2],m[3]].map(n => parseInt(n).toString(16).padStart(2,'0')).join('').toUpperCase()}`, alpha: m[4] !== undefined ? parseFloat(m[4]) : 1 };
+  }
+  // Parse hsla(h, s%, l%, a)
+  if (color.startsWith('hsla') || color.startsWith('hsl(')) {
+    const m = color.match(/hsla?\(\s*([\d.]+)\s*,\s*([\d.]+)%?\s*,\s*([\d.]+)%?\s*(?:,\s*([\d.]+)\s*)?\)/);
+    if (m) {
+      const h = parseFloat(m[1]), s = parseFloat(m[2]) / 100, l = parseFloat(m[3]) / 100;
+      const a = m[4] !== undefined ? parseFloat(m[4]) : 1;
+      // HSL to RGB
+      const c = (1 - Math.abs(2 * l - 1)) * s;
+      const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+      const m2 = l - c / 2;
+      let r, g, b;
+      if (h < 60) { r = c; g = x; b = 0; }
+      else if (h < 120) { r = x; g = c; b = 0; }
+      else if (h < 180) { r = 0; g = c; b = x; }
+      else if (h < 240) { r = 0; g = x; b = c; }
+      else if (h < 300) { r = x; g = 0; b = c; }
+      else { r = c; g = 0; b = x; }
+      const toHex = n => Math.round((n + m2) * 255).toString(16).padStart(2, '0');
+      return { hex: `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase(), alpha: a };
+    }
+  }
+  // Parse hex
+  let hex = color.trim().toUpperCase();
+  if (/^#[0-9A-F]{3}$/.test(hex)) hex = `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`;
+  if (/^#[0-9A-F]{6}$/.test(hex)) return { hex, alpha: 1 };
+  // Hex with alpha notation: #RRGGBB / 50%
+  const slashMatch = color.match(/^(#[0-9A-Fa-f]{6})\s*\/\s*(\d+)%$/);
+  if (slashMatch) return { hex: slashMatch[1].toUpperCase(), alpha: parseInt(slashMatch[2]) / 100 };
+  return { hex: '#000000', alpha: 1 };
+}
+
+function colorWithAlpha(hex, alpha) {
+  if (alpha >= 1) return hex;
+  const r = parseInt(hex.substr(1, 2), 16);
+  const g = parseInt(hex.substr(3, 2), 16);
+  const b = parseInt(hex.substr(5, 2), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(2)})`;
+}
+
+function ColorPicker({ color, onChange }) {
+  const parsed = parseColor(color);
+  const hsv = hexToHsv(parsed.hex);
+  const [h, setH] = useState(hsv.h);
+  const [s, setS] = useState(hsv.s);
+  const [v, setV] = useState(hsv.v);
+  const [alpha, setAlpha] = useState(parsed.alpha);
+  const satRef = useRef(null);
+  const hueRef = useRef(null);
+  const alphaRef = useRef(null);
+  const dragging = useRef(null);
+
+  useEffect(() => {
+    const p = parseColor(color);
+    const newHsv = hexToHsv(p.hex);
+    if (Math.abs(newHsv.h - h) > 1 || Math.abs(newHsv.s - s) > 0.01 || Math.abs(newHsv.v - v) > 0.01) {
+      setH(newHsv.h); setS(newHsv.s); setV(newHsv.v);
+    }
+    if (Math.abs(p.alpha - alpha) > 0.01) setAlpha(p.alpha);
+  }, [color]);
+
+  const emitColor = (newH, newS, newV, newA) => {
+    const hex = hsvToHex(newH, newS, newV);
+    onChange(newA < 1 ? colorWithAlpha(hex, newA) : hex);
+  };
+
+  const handleSatMove = useCallback((e) => {
+    const rect = satRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    const y = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+    setS(x); setV(1 - y);
+    emitColor(h, x, 1 - y, alpha);
+  }, [h, alpha]);
+
+  const handleHueMove = useCallback((e) => {
+    const rect = hueRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    const newH = x * 360;
+    setH(newH);
+    emitColor(newH, s, v, alpha);
+  }, [s, v, alpha]);
+
+  const handleAlphaMove = useCallback((e) => {
+    const rect = alphaRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    setAlpha(x);
+    emitColor(h, s, v, x);
+  }, [h, s, v]);
+
+  useEffect(() => {
+    const onMove = (e) => {
+      if (dragging.current === 'sat') handleSatMove(e);
+      else if (dragging.current === 'hue') handleHueMove(e);
+      else if (dragging.current === 'alpha') handleAlphaMove(e);
+    };
+    const onUp = () => { dragging.current = null; };
+    document.addEventListener('pointermove', onMove);
+    document.addEventListener('pointerup', onUp);
+    return () => {
+      document.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerup', onUp);
+    };
+  }, [handleSatMove, handleHueMove, handleAlphaMove]);
+
+  const hueColor = hsvToHex(h, 1, 1);
+  const currentHex = hsvToHex(h, s, v);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      {/* Saturation/Value square */}
+      <div
+        ref={satRef}
+        onPointerDown={(e) => { dragging.current = 'sat'; handleSatMove(e); }}
+        style={{
+          width: '100%', height: 160, borderRadius: 8, cursor: 'crosshair', position: 'relative',
+          background: `linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, ${hueColor})`,
+          border: '1px solid #333',
+        }}
+      >
+        <div style={{
+          position: 'absolute',
+          left: `calc(${s * 100}% - 7px)`, top: `calc(${(1 - v) * 100}% - 7px)`,
+          width: 14, height: 14, borderRadius: '50%',
+          border: '2px solid #fff', boxShadow: '0 0 4px rgba(0,0,0,0.8)',
+          pointerEvents: 'none', background: currentHex,
+        }} />
+      </div>
+
+      {/* Hue bar */}
+      <div
+        ref={hueRef}
+        onPointerDown={(e) => { dragging.current = 'hue'; handleHueMove(e); }}
+        style={{
+          width: '100%', height: 16, borderRadius: 8, cursor: 'pointer', position: 'relative',
+          background: 'linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%)',
+          border: '1px solid #333',
+        }}
+      >
+        <div style={{
+          position: 'absolute',
+          left: `calc(${(h / 360) * 100}% - 5px)`, top: -1,
+          width: 10, height: 18, borderRadius: 4,
+          border: '2px solid #fff', boxShadow: '0 0 4px rgba(0,0,0,0.8)',
+          pointerEvents: 'none', background: hueColor,
+        }} />
+      </div>
+
+      {/* Alpha/opacity bar */}
+      <div
+        ref={alphaRef}
+        onPointerDown={(e) => { dragging.current = 'alpha'; handleAlphaMove(e); }}
+        style={{
+          width: '100%', height: 16, borderRadius: 8, cursor: 'pointer', position: 'relative',
+          border: '1px solid #333',
+          backgroundImage: `linear-gradient(to right, transparent, ${currentHex}), repeating-conic-gradient(#333 0% 25%, #1a1a1a 0% 50%)`,
+          backgroundSize: '100% 100%, 8px 8px',
+        }}
+      >
+        <div style={{
+          position: 'absolute',
+          left: `calc(${alpha * 100}% - 5px)`, top: -1,
+          width: 10, height: 18, borderRadius: 4,
+          border: '2px solid #fff', boxShadow: '0 0 4px rgba(0,0,0,0.8)',
+          pointerEvents: 'none',
+          background: alpha < 1 ? colorWithAlpha(currentHex, alpha) : currentHex,
+        }} />
+      </div>
+    </div>
+  );
+}
+
+// === Color field with expandable picker ===
+const FORMATS = ['hex', 'rgba', 'hsla'];
+
+function isValidColor(value) {
+  if (value === 'transparent') return true;
+  if (/^#[0-9A-Fa-f]{3}$/.test(value)) return true;
+  if (/^#[0-9A-Fa-f]{6}$/.test(value)) return true;
+  if (/^#[0-9A-Fa-f]{6}\s*\/\s*\d+%$/.test(value)) return true;
+  if (/^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(,\s*[\d.]+\s*)?\)$/.test(value)) return true;
+  if (/^hsla?\(\s*[\d.]+\s*,\s*[\d.]+%?\s*,\s*[\d.]+%?\s*(,\s*[\d.]+\s*)?\)$/.test(value)) return true;
+  return false;
+}
+
+function formatColor(value, fmt) {
+  if (value === 'transparent') return 'transparent';
+  const p = parseColor(value);
+  const r = parseInt(p.hex.substr(1, 2), 16);
+  const g = parseInt(p.hex.substr(3, 2), 16);
+  const b = parseInt(p.hex.substr(5, 2), 16);
+  if (fmt === 'rgba') return `rgba(${r}, ${g}, ${b}, ${p.alpha.toFixed(2)})`;
+  if (fmt === 'hsla') {
+    const hsv = hexToHsv(p.hex);
+    const l = hsv.v * (1 - hsv.s / 2);
+    const sl = l === 0 || l === 1 ? 0 : (hsv.v - l) / Math.min(l, 1 - l);
+    return `hsla(${Math.round(hsv.h)}, ${Math.round(sl * 100)}%, ${Math.round(l * 100)}%, ${p.alpha.toFixed(2)})`;
+  }
+  return p.alpha < 1 ? `${p.hex} / ${Math.round(p.alpha * 100)}%` : p.hex;
+}
+
+function ColorInput({ value, fmt, onChange, onToast }) {
+  const inputRef = useRef(null);
+  const formatted = formatColor(value, FORMATS[fmt]);
+  const [localVal, setLocalVal] = useState(formatted);
+  const debounceRef = useRef(null);
+
+  // Sync from external changes (picker, presets)
+  useEffect(() => {
+    if (document.activeElement !== inputRef.current) {
+      setLocalVal(formatColor(value, FORMATS[fmt]));
+    }
+  }, [value, fmt]);
+
+  const tryApply = (v) => {
+    const trimmed = v.trim();
+    if (trimmed === 'transparent') { onChange('transparent'); return; }
+    if (isValidColor(trimmed)) { onChange(trimmed); }
+  };
+
+  const handleChange = (e) => {
+    const v = e.target.value;
+    setLocalVal(v);
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => tryApply(v), 300);
+  };
+
+  const handleBlur = () => {
+    clearTimeout(debounceRef.current);
+    const trimmed = localVal.trim();
+    if (trimmed === 'transparent') { onChange('transparent'); }
+    else if (isValidColor(trimmed)) { onChange(trimmed); }
+    else { onChange('#000000'); onToast && onToast('Invalid color — reset to black'); }
+    // Re-sync display
+    setTimeout(() => setLocalVal(formatColor(
+      isValidColor(trimmed) ? trimmed : '#000000', FORMATS[fmt]
+    )), 0);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') { e.target.blur(); return; }
+    if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+
+    const curFmt = FORMATS[fmt];
+    const text = localVal;
+
+    // For hex without alpha (no /), skip arrow handling
+    if (curFmt === 'hex' && !text.includes('/')) return;
+
+    e.preventDefault();
+    const delta = e.key === 'ArrowUp' ? 1 : -1;
+    const pos = e.target.selectionStart || 0;
+
+    // Find all numbers in the string
+    const nums = [];
+    const re = /[\d.]+/g;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      nums.push({ val: m[0], start: m.index, end: m.index + m[0].length });
+    }
+    if (nums.length === 0) return;
+
+    // Find which number the cursor is in or nearest to
+    let idx = nums.findIndex(n => pos >= n.start && pos <= n.end);
+    if (idx === -1) {
+      let minDist = Infinity;
+      nums.forEach((n, i) => {
+        const d = Math.min(Math.abs(pos - n.start), Math.abs(pos - n.end));
+        if (d < minDist) { minDist = d; idx = i; }
+      });
+    }
+    if (idx === -1) return;
+    const target = nums[idx];
+
+    // Determine step size
+    let isPercent = false;
+    let isAlpha = false;
+    if (curFmt === 'hex') {
+      // Hex alpha: #RRGGBB / NN% — the number is a percentage
+      isPercent = true;
+    } else {
+      isAlpha = idx === 3;
+    }
+    const step = isAlpha ? (e.shiftKey ? 0.10 : 0.01)
+      : isPercent ? (e.shiftKey ? 10 : 1)
+      : (e.shiftKey ? 10 : 1);
+
+    let num = parseFloat(target.val) + delta * step;
+
+    // Clamp
+    if (curFmt === 'hex') {
+      num = Math.max(0, Math.min(100, Math.round(num)));
+    } else if (curFmt === 'rgba') {
+      if (idx < 3) num = Math.max(0, Math.min(255, Math.round(num)));
+      else num = Math.max(0, Math.min(1, Math.round(num * 100) / 100));
+    } else if (curFmt === 'hsla') {
+      if (idx === 0) num = ((Math.round(num) % 360) + 360) % 360;
+      else if (idx < 3) num = Math.max(0, Math.min(100, Math.round(num)));
+      else num = Math.max(0, Math.min(1, Math.round(num * 100) / 100));
+    }
+
+    const newStr = isAlpha ? num.toFixed(2) : String(num);
+    const newText = text.substring(0, target.start) + newStr + text.substring(target.end);
+    setLocalVal(newText);
+    tryApply(newText);
+
+    const restoreStart = target.start;
+    const restoreEnd = target.start + newStr.length;
+    setTimeout(() => {
+      if (inputRef.current) inputRef.current.setSelectionRange(restoreStart, restoreEnd);
+    }, 0);
+  };
+
+  return (
+    <input
+      ref={inputRef}
+      className="mono"
+      type="text"
+      value={localVal}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      onKeyDown={handleKeyDown}
+      style={{
+        width: 220, padding: '6px 8px', background: '#1a1a1a', border: '1px solid #333',
+        borderRadius: 0, color: '#ccc', fontSize: 11, textAlign: 'center',
+      }}
+    />
+  );
+}
+
+function ColorField({ label, value, onChange, element, visible, onToggleVisibility, onHover, onLeave, onToast, fmt, onFmtChange }) {
+  const [open, setOpen] = useState(false);
+  const [lastColor, setLastColor] = useState('#1D1627');
+  const setFmt = (fn) => onFmtChange(typeof fn === 'function' ? fn(fmt) : fn);
+  const isTransparent = value === 'transparent';
+
+  useEffect(() => {
+    if (value !== 'transparent') setLastColor(value);
+  }, [value]);
+
+  return (
+    <div style={{ padding: '8px 0', opacity: visible ? 1 : 0.4, transition: 'opacity 0.2s' }}
+      onMouseEnter={onHover} onMouseLeave={onLeave}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer' }} onClick={() => setOpen(!open)}>
+        <button className="icon-btn" onClick={(e) => { e.stopPropagation(); onToggleVisibility(); }} style={{
+          width: 24, height: 24, flexShrink: 0, background: 'none', border: '1px solid transparent',
+          borderRadius: 4, cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }} title={visible ? 'Hide layer' : 'Show layer'}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={visible ? '#888' : '#444'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {visible ? (
+              <>
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </>
+            ) : (
+              <>
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </>
+            )}
+          </svg>
+        </button>
+        <div style={{
+          width: 44, height: 44, flexShrink: 0, borderRadius: 8, border: '2px solid #333',
+          background: isTransparent ? 'repeating-conic-gradient(#222 0% 25%, #111 0% 50%) 50%/12px 12px' : value,
+          transition: 'border-color 0.2s',
+          ...(open ? { borderColor: '#E53935' } : {}),
+        }} />
+        <div style={{ flex: 1, minWidth: 0 }} onClick={e => e.stopPropagation()}>
+          <input type="text" defaultValue={label} style={{
+            fontSize: 13, fontWeight: 600, color: '#aaa', background: 'none',
+            border: '1px solid transparent', borderRadius: 4,
+            outline: 'none', width: '100%', padding: '1px 4px', marginBottom: 1, marginLeft: -4,
+            cursor: 'text', transition: 'all 0.2s',
+          }}
+          onFocus={e => { e.target.style.borderColor = '#E53935'; e.target.style.background = '#1a1a1a'; e.target.style.color = '#ddd'; }}
+          onBlur={e => { e.target.style.borderColor = 'transparent'; e.target.style.background = 'none'; e.target.style.color = '#aaa'; }}
+          onClick={e => e.stopPropagation()} />
+          <input type="text" defaultValue={element} style={{
+            fontSize: 11, color: '#777', background: 'none',
+            border: '1px solid transparent', borderRadius: 4,
+            outline: 'none', width: '100%', padding: '1px 4px', marginLeft: -4,
+            cursor: 'text', transition: 'all 0.2s',
+          }}
+          onFocus={e => { e.target.style.borderColor = '#444'; e.target.style.background = '#1a1a1a'; e.target.style.color = '#999'; }}
+          onBlur={e => { e.target.style.borderColor = 'transparent'; e.target.style.background = 'none'; e.target.style.color = '#555'; }}
+          onClick={e => e.stopPropagation()} />
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 0 }} onClick={e => e.stopPropagation()}>
+          <button className="icon-btn" onClick={() => { const t = formatColor(value, FORMATS[fmt]); navigator.clipboard.writeText(t); onToast && onToast(`Copied ${t}`); }} title="Copy" style={{
+            width: 28, height: 28, background: '#1a1a1a', border: '1px solid #333', borderRight: 'none',
+            borderRadius: '4px 0 0 4px', color: '#999', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+          }}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+          </button>
+          <ColorInput value={value} fmt={fmt} onChange={onChange} onToast={onToast} />
+          <div style={{ display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+            <button className="icon-btn" onClick={() => setFmt(f => (f - 1 + FORMATS.length) % FORMATS.length)} title={FORMATS[(fmt - 1 + FORMATS.length) % FORMATS.length]} style={{
+              width: 22, height: 14, background: '#1a1a1a', border: '1px solid #333', borderLeft: 'none', borderBottom: 'none',
+              borderRadius: '0 4px 0 0', color: '#888', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0,
+            }}>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8l-6 6h12z"/></svg>
+            </button>
+            <button className="icon-btn" onClick={() => setFmt(f => (f + 1) % FORMATS.length)} title={FORMATS[(fmt + 1) % FORMATS.length]} style={{
+              width: 22, height: 14, background: '#1a1a1a', border: '1px solid #333', borderLeft: 'none',
+              borderRadius: '0 0 4px 0', color: '#888', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0,
+            }}>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l6-6H6z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      {open && (
+        <div style={{ marginTop: 10 }}>
+          <ColorPicker
+            color={isTransparent ? lastColor : value}
+            onChange={(c) => onChange(c)}
+          />
+          <button onClick={(e) => {
+            e.stopPropagation();
+            onChange(isTransparent ? lastColor : 'transparent');
+          }} style={{
+            marginTop: 8, padding: '6px 12px', width: '100%',
+            background: isTransparent ? '#E53935' : 'transparent',
+            border: isTransparent ? '1px solid #E53935' : '1px dashed #444',
+            borderRadius: 6, color: isTransparent ? '#fff' : '#666', cursor: 'pointer',
+            fontSize: 12, fontWeight: 600, transition: 'all 0.2s',
+            backgroundImage: isTransparent ? 'none' : 'repeating-conic-gradient(#222 0% 25%, #161616 0% 50%)',
+            backgroundSize: '10px 10px',
+          }}>
+            {isTransparent ? 'Transparent ✓' : 'Transparent'}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// SVG path data constants
+const PATHS = {
+  letter: "M57.53,218.85c-4.97-0.11-6.87-2.48-6.11-7.39c7.04-45.24,14.28-90.46,20.9-135.76c1-6.82,3.97-10.96,8.9-15.12c24.8-20.95,68.51-23.97,96.66-8.24c27.64,15.45,37.33,48.23,22.78,76.89c-9.84,19.37-26.38,30.4-46.51,36.65c-11.39,3.53-23.15,4.68-35.07,4.04c-5.35-0.29-6.86-2.13-5.93-7.35c1.25-7.05,2.59-14.08,3.9-21.11c1-5.39,2.2-6.58,7.6-6.37c10.31,0.41,19.87-2.1,28.58-7.41c9.08-5.54,14.42-13.7,14.99-24.53c0.55-10.41-4.39-18.48-14.02-22.6c-11.06-4.73-22.36-5.01-33.56-0.47c-6.61,2.68-10.65,7.51-11.88,14.82c-6.6,39.41-12.34,78.94-17.83,118.51c-0.57,4.09-2.14,5.94-6.39,5.68",
+  line1: "M175.91,191.12l-36.68,9.83c-2.03,0.54-4.11-0.66-4.65-2.68v0c-0.54-2.03,0.66-4.11,2.68-4.65l36.68-9.83c2.03-0.54,4.11,0.66,4.65,2.68l0,0C179.14,188.5,177.93,190.58,175.91,191.12z",
+  line2: "M179.67,205.16l-66.02,17.69c-2.03,0.54-4.11-0.66-4.65-2.68v0c-0.54-2.03,0.66-4.11,2.68-4.65l66.02-17.69c2.03-0.54,4.11,0.66,4.65,2.68l0,0C182.9,202.53,181.7,204.62,179.67,205.16z",
+  line3: "M183.43,219.2l-36.68,9.83c-2.03,0.54-4.11-0.66-4.65-2.68v0c-0.54-2.03,0.66-4.11,2.68-4.65l36.68-9.83c2.03-0.54,4.11,0.66,4.65,2.68l0,0C186.66,216.57,185.46,218.65,183.43,219.2z",
+  box: "M232.26,210.72l-29.34,7.86c-4.05,1.09-8.22-1.32-9.3-5.37l-7.86-29.34c-1.09-4.05,1.32-8.22,5.37-9.3l29.34-7.86c4.05-1.09,8.22,1.32,9.3,5.37l7.86,29.34C238.72,205.47,236.31,209.64,232.26,210.72z",
+};
+
+const DEFAULT_PRESETS = [
+  { name: 'Original', bg: '#1D1627', letter: '#FEFEFE', line1: '#F74344', line2: '#F74344', line3: '#FFFFFF', box: '#FFFFFF' },
+  { name: 'Signal Red', bg: '#E53935', letter: '#FFFFFF', line1: '#FFCDD2', line2: '#FFCDD2', line3: '#FFFFFF', box: '#FFFFFF' },
+  { name: 'Onyx Vermillion', bg: '#121212', letter: '#FFFFFF', line1: '#FF3D00', line2: '#FF3D00', line3: '#FFFFFF', box: '#FFFFFF' },
+  { name: 'Noir Signal', bg: '#1A1A1A', letter: '#FFFFFF', line1: '#E53935', line2: '#E53935', line3: '#FFFFFF', box: '#FFFFFF' },
+  { name: 'Midnight Teal', bg: '#0F2027', letter: '#FFFFFF', line1: '#00BCD4', line2: '#00BCD4', line3: '#FFFFFF', box: '#FFFFFF' },
+  { name: 'Deep Indigo', bg: '#1A1040', letter: '#FFFFFF', line1: '#536DFE', line2: '#536DFE', line3: '#FFFFFF', box: '#FFFFFF' },
+  { name: 'Noir Emerald', bg: '#1B2421', letter: '#FFFFFF', line1: '#2ECC71', line2: '#2ECC71', line3: '#FFFFFF', box: '#FFFFFF' },
+  { name: 'Charcoal Amber', bg: '#252525', letter: '#FFFFFF', line1: '#FFB300', line2: '#FFB300', line3: '#FFFFFF', box: '#FFFFFF' },
+  { name: 'Phantom Purple', bg: '#1E0A2E', letter: '#FFFFFF', line1: '#AB47BC', line2: '#AB47BC', line3: '#FFFFFF', box: '#FFFFFF' },
+  { name: 'Volcanic', bg: '#1C1410', letter: '#FFFFFF', line1: '#FF6D00', line2: '#FF6D00', line3: '#FFFFFF', box: '#FFFFFF' },
+  { name: 'Retrowave', bg: '#120024', letter: '#FF6EC7', line1: '#00FFFF', line2: '#00FFFF', line3: '#FF6EC7', box: '#FF6EC7' },
+  { name: 'Solar Eclipse', bg: '#0A0A0A', letter: '#FDD835', line1: '#FF6F00', line2: '#FF6F00', line3: '#FDD835', box: '#FDD835' },
+  { name: 'Neon Noir', bg: '#0A0A0A', letter: '#00FF41', line1: '#39FF14', line2: '#39FF14', line3: '#00FF41', box: '#00FF41' },
+  { name: 'Cloud', bg: '#F8F9FA', letter: '#1A1A2E', line1: '#E53935', line2: '#E53935', line3: '#1A1A2E', box: '#1A1A2E' },
+  { name: 'Cream', bg: '#FFF8F0', letter: '#2D2226', line1: '#D84315', line2: '#D84315', line3: '#2D2226', box: '#2D2226' },
+  { name: 'Transparent', bg: 'transparent', letter: '#FFFFFF', line1: '#F74344', line2: '#F74344', line3: '#FFFFFF', box: '#FFFFFF' },
+];
+
+function PuntIcon({ bg, letter, line1, line2, line3, box, vis = {}, hoveredSet = null, size = 264 }) {
+  const v = { bg: true, letter: true, line1: true, line2: true, line3: true, box: true, ...vis };
+  const isHovered = (key) => hoveredSet && hoveredSet.has(key);
+  const glow = (key) => isHovered(key) ? { filter: 'drop-shadow(0 0 6px rgba(229,57,53,0.9))', transition: 'filter 0.15s' } : { transition: 'filter 0.15s' };
+  const dim = (key) => (hoveredSet && !isHovered(key)) ? 0.25 : 1;
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="8 7 264 264" width={size} height={size}>
+      {v.bg && bg !== 'transparent' && <rect fill={bg} opacity={dim('bg')} x="0" y="0" width="290" height="290" style={glow('bg')}/>}
+      {v.letter && <path fill={letter} opacity={dim('letter')} d={PATHS.letter} style={glow('letter')}/>}
+      {v.line1 && <path fill={line1} opacity={dim('line1')} d={PATHS.line1} style={glow('line1')}/>}
+      {v.line2 && <path fill={line2} opacity={dim('line2')} d={PATHS.line2} style={glow('line2')}/>}
+      {v.line3 && <path fill={line3} opacity={dim('line3')} d={PATHS.line3} style={glow('line3')}/>}
+      {v.box && <path fill={box} opacity={dim('box')} d={PATHS.box} style={glow('box')}/>}
+    </svg>
+  );
+}
+
+function App() {
+  const [bg, setBg] = useState('#1D1627');
+  const [letter, setLetter] = useState('#FEFEFE');
+  const [line1, setLine1] = useState('#F74344');
+  const [line2, setLine2] = useState('#F74344');
+  const [line3, setLine3] = useState('#FFFFFF');
+  const [box, setBox] = useState('#FFFFFF');
+  const [previewBg, setPreviewBg] = useState('#0a0a0a');
+  const [vis, setVis] = useState({ bg: true, letter: true, line1: true, line2: true, line3: true, box: true });
+  const toggleVis = (key) => setVis(v => ({ ...v, [key]: !v[key] }));
+  const [fmts, setFmts] = useState({ bg: 0, letter: 0, line1: 0, line2: 0, line3: 0, box: 0 });
+  const setFmt = (key, val) => setFmts(f => ({ ...f, [key]: val }));
+  const [hoveredLayer, setHoveredLayer] = useState(null);
+  const [highlightOnHover, setHighlightOnHover] = useState(true);
+  // Link groups: array of Sets. Each Set contains layer IDs that are synced.
+  const [linkGroups, setLinkGroups] = useState([]);
+  const [linkingFrom, setLinkingFrom] = useState(null); // ID of layer waiting to be linked
+  const LINK_COLORS = ['#E53935', '#2196F3', '#4CAF50', '#FF9800', '#AB47BC'];
+
+  const getGroupForLayer = (id) => linkGroups.findIndex(g => g.has(id));
+  const getGroupColor = (idx) => idx >= 0 ? LINK_COLORS[idx % LINK_COLORS.length] : null;
+
+  // Click a layer's link button: first click selects, second links/unlinks
+  const handleLinkClick = (id) => {
+    if (linkingFrom === null) {
+      // Start linking from this layer
+      setLinkingFrom(id);
+      showToast('Click another layer to link (click self to unlink)');
+    } else if (linkingFrom === id) {
+      // Clicked self — if in a group, unlink this layer from it
+      const gi = getGroupForLayer(id);
+      if (gi >= 0) {
+        setLinkGroups(prev => {
+          const groups = prev.map(g => new Set(g));
+          groups[gi].delete(id);
+          if (groups[gi].size < 2) groups.splice(gi, 1);
+          return groups;
+        });
+        showToast('Unlinked layer');
+      }
+      setLinkingFrom(null);
+    } else {
+      // Clicked a different layer — check if already linked
+      const gFrom = getGroupForLayer(linkingFrom);
+      const gTo = getGroupForLayer(id);
+      if (gFrom >= 0 && gFrom === gTo) {
+        // Already in same group — unlink the target
+        setLinkGroups(prev => {
+          const groups = prev.map(g => new Set(g));
+          groups[gFrom].delete(id);
+          if (groups[gFrom].size < 2) groups.splice(gFrom, 1);
+          return groups;
+        });
+        // Stay in linking mode with the original layer
+        showToast('Unlinked — click another to link');
+      } else {
+        // Link them
+        setLinkGroups(prev => {
+          const groups = prev.map(g => new Set(g));
+          const gA = groups.findIndex(g => g.has(linkingFrom));
+          const gB = groups.findIndex(g => g.has(id));
+          if (gA >= 0 && gB >= 0) {
+            for (const x of groups[gB]) groups[gA].add(x);
+            groups.splice(gB, 1);
+          } else if (gA >= 0) { groups[gA].add(id); }
+          else if (gB >= 0) { groups[gB].add(linkingFrom); }
+          else { groups.push(new Set([linkingFrom, id])); }
+          return groups;
+        });
+        // Stay in linking mode so you can keep adding
+        showToast('Linked — click another or press Esc');
+      }
+    }
+  };
+
+  // Escape cancels linking mode
+  useEffect(() => {
+    if (linkingFrom === null) return;
+    const handler = (e) => { if (e.key === 'Escape') { setLinkingFrom(null); showToast('Link cancelled'); } };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [linkingFrom]);
+
+  // Expand hovered layer to include linked layers
+  const getHoveredLayers = () => {
+    if (!hoveredLayer || !highlightOnHover) return null;
+    const gi = getGroupForLayer(hoveredLayer);
+    if (gi >= 0) return linkGroups[gi];
+    return new Set([hoveredLayer]);
+  };
+  const hoveredSet = getHoveredLayers();
+
+  // Wrap a setter to propagate to linked layers
+  const SETTERS = { bg: setBg, letter: setLetter, line1: setLine1, line2: setLine2, line3: setLine3, box: setBox };
+  const linkedSet = (id, value) => {
+    SETTERS[id](value);
+    const gi = linkGroups.findIndex(g => g.has(id));
+    if (gi >= 0) {
+      for (const otherId of linkGroups[gi]) {
+        if (otherId !== id) SETTERS[otherId](value);
+      }
+    }
+  };
+  const [toastMsg, showToast] = useToast();
+  const [showSettings, setShowSettings] = useState(false);
+  const settingsRef = useRef(null);
+
+  useEffect(() => {
+    if (!showSettings) return;
+    const handleClick = (e) => { if (settingsRef.current && !settingsRef.current.contains(e.target)) setShowSettings(false); };
+    const handleKey = (e) => { if (e.key === 'Escape') setShowSettings(false); };
+    document.addEventListener('pointerdown', handleClick);
+    document.addEventListener('keydown', handleKey);
+    return () => { document.removeEventListener('pointerdown', handleClick); document.removeEventListener('keydown', handleKey); };
+  }, [showSettings]);
+
+  // Presets: built-ins + user-saved (persisted to localStorage)
+  const [userPresets, setUserPresets] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('spe-user-presets') || '[]'); } catch { return []; }
+  });
+  useEffect(() => { localStorage.setItem('spe-user-presets', JSON.stringify(userPresets)); }, [userPresets]);
+
+  const allPresets = [...DEFAULT_PRESETS, ...userPresets];
+  const applyPreset = (p) => { setBg(p.bg); setLetter(p.letter); setLine1(p.line1); setLine2(p.line2); setLine3(p.line3); setBox(p.box); };
+
+  const savePreset = () => {
+    const name = `Custom ${userPresets.length + 1}`;
+    setUserPresets(prev => [...prev, { name, bg, letter, line1, line2, line3, box }]);
+    showToast(`Saved preset "${name}"`);
+  };
+
+  const renamePreset = (idx, newName) => {
+    setUserPresets(prev => prev.map((p, i) => i === idx ? { ...p, name: newName } : p));
+  };
+
+  const deletePreset = (idx) => {
+    const name = userPresets[idx].name;
+    setUserPresets(prev => prev.filter((_, i) => i !== idx));
+    showToast(`Deleted "${name}"`);
+  };
+
+  const downloadSvg = () => {
+    const parts = [`<svg xmlns="http://www.w3.org/2000/svg" viewBox="8 7 264 264">`];
+    if (vis.bg && bg !== 'transparent') parts.push(`<rect fill="${bg}" x="0" y="0" width="290" height="290"/>`);
+    if (vis.letter) parts.push(`<path fill="${letter}" d="${PATHS.letter}"/>`);
+    if (vis.line1) parts.push(`<path fill="${line1}" d="${PATHS.line1}"/>`);
+    if (vis.line2) parts.push(`<path fill="${line2}" d="${PATHS.line2}"/>`);
+    if (vis.line3) parts.push(`<path fill="${line3}" d="${PATHS.line3}"/>`);
+    if (vis.box) parts.push(`<path fill="${box}" d="${PATHS.box}"/>`);
+    parts.push('</svg>');
+    const svg = parts.join('\n');
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `punt-icon-${bg.replace('#','')}-${line1.replace('#','')}.svg`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const copyAll = () => {
+    const vals = { bg, letter, line1, line2, line3, box };
+    const text = Object.entries(vals).map(([k, v]) => `${k}: ${formatColor(v, FORMATS[fmts[k]])}`).join(', ');
+    navigator.clipboard.writeText(text);
+    showToast('Copied all colors');
+  };
+
+  const colors = { bg, letter, line1, line2, line3, box, vis, hoveredSet };
+
+  return (
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+      {/* Left: Preview */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 32, padding: 40 }}>
+        <div className={bg === 'transparent' ? 'checkerboard' : undefined}
+          style={{ padding: 32, borderRadius: 24, background: previewBg, transition: 'background 0.3s' }}>
+          <PuntIcon {...colors} size={280} />
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'end', gap: 24 }}>
+          {[128, 64, 32, 16].map(sz => (
+            <div key={sz} style={{ textAlign: 'center' }}>
+              <div className={bg === 'transparent' ? 'checkerboard' : undefined}
+                style={{ padding: Math.max(3, sz/20), borderRadius: Math.max(4, sz/12), background: previewBg, display: 'inline-block' }}>
+                <PuntIcon {...colors} size={sz} />
+              </div>
+              <div style={{ fontSize: 11, color: '#555', marginTop: 6 }}>{sz}px</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', gap: 8 }}>
+          <span style={{ fontSize: 12, color: '#555', marginRight: 4, alignSelf: 'center' }}>Preview on:</span>
+          {['#0a0a0a', '#1a1a1a', '#333333', '#888888', '#cccccc', '#f0f0f0', '#ffffff'].map(c => (
+            <button key={c} onClick={() => setPreviewBg(c)} style={{
+              width: 24, height: 24, borderRadius: 6, border: previewBg === c ? '2px solid #E53935' : '1px solid #333',
+              background: c, cursor: 'pointer',
+            }} />
+          ))}
+        </div>
+      </div>
+
+      {/* Right: Controls */}
+      <div style={{
+        width: 620, background: '#111', borderLeft: '1px solid #222',
+        padding: 24, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 20,
+        maxHeight: '100vh', flexShrink: 0,
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <h1 style={{ fontFamily: 'Outfit', fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em' }}>
+            PUNT Color Editor
+          </h1>
+          <div ref={settingsRef} style={{ position: 'relative' }}>
+            <button className="icon-btn" onClick={() => setShowSettings(!showSettings)} style={{
+              width: 32, height: 32, background: showSettings ? '#222' : 'none', border: '1px solid #333',
+              borderRadius: 6, color: '#888', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </button>
+            {showSettings && (
+              <div style={{
+                position: 'absolute', top: 38, right: 0, width: 220, background: '#1a1a1a',
+                border: '1px solid #333', borderRadius: 8, padding: 12, zIndex: 10,
+                boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+              }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', fontSize: 13, color: '#aaa' }}>
+                  <input type="checkbox" checked={highlightOnHover} onChange={e => setHighlightOnHover(e.target.checked)}
+                    style={{ accentColor: '#E53935', width: 16, height: 16, cursor: 'pointer' }} />
+                  Highlight layer on hover
+                </label>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div style={{ background: '#161616', borderRadius: 12, padding: 16, border: '1px solid #222' }}>
+          {(() => {
+            const fields = [
+              { id: 'bg', label: 'Background', element: 'Rounded rect fill', value: bg },
+              { id: 'letter', label: 'P Letter', element: 'Main letterform', value: letter },
+              { id: 'line1', label: 'Line 1', element: 'Short top speed line', value: line1 },
+              { id: 'line2', label: 'Line 2', element: 'Long middle speed line', value: line2 },
+              { id: 'line3', label: 'Line 3', element: 'Bottom speed line', value: line3 },
+              { id: 'box', label: 'Box', element: 'Tilted square', value: box },
+            ];
+            return fields.map((f, i) => {
+              const gi = getGroupForLayer(f.id);
+              const groupColor = getGroupColor(gi);
+              const isLinking = linkingFrom === f.id;
+              const isLinkTarget = linkingFrom !== null && linkingFrom !== f.id;
+              return (
+                <React.Fragment key={f.id}>
+                  <div style={{
+                    display: 'flex',
+                    borderLeft: `3px solid ${groupColor || 'transparent'}`,
+                    paddingLeft: 4,
+                    transition: 'border-color 0.2s',
+                    ...(isLinking ? { background: '#1a1a1a', borderRadius: 6 } : {}),
+                    ...(isLinkTarget ? { cursor: 'pointer' } : {}),
+                  }}
+                  onClick={isLinkTarget ? () => handleLinkClick(f.id) : undefined}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <ColorField label={f.label} element={f.element} value={f.value}
+                        onChange={(v) => linkedSet(f.id, v)}
+                        visible={vis[f.id]} onToggleVisibility={() => toggleVis(f.id)}
+                        onHover={() => setHoveredLayer(f.id)} onLeave={() => setHoveredLayer(null)}
+                        onToast={showToast} fmt={fmts[f.id]} onFmtChange={(v) => setFmt(f.id, v)} />
+                    </div>
+                    {/* Link button */}
+                    <button className="icon-btn" onClick={(e) => { e.stopPropagation(); handleLinkClick(f.id); }}
+                      title={gi >= 0 ? 'Unlink' : linkingFrom ? 'Link to this layer' : 'Link to another layer'}
+                      style={{
+                        width: 28, height: 28, background: isLinking ? '#2a2a2a' : 'none',
+                        border: '1px solid transparent', borderRadius: 4, cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        flexShrink: 0, alignSelf: 'center',
+                        color: isLinking ? '#E53935' : groupColor || (isLinkTarget ? '#888' : '#333'),
+                        animation: isLinkTarget ? 'pulse-link 1.5s ease infinite' : 'none',
+                      }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        {gi >= 0 ? (
+                          <>
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                          </>
+                        ) : (
+                          <>
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" strokeDasharray="4 3"/>
+                          </>
+                        )}
+                      </svg>
+                    </button>
+                  </div>
+                  {i < fields.length - 1 && <div style={{ borderTop: '1px solid #222', margin: '2px 0' }} />}
+                </React.Fragment>
+              );
+            });
+          })()}
+        </div>
+
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button onClick={downloadSvg} style={{
+            flex: 1, padding: '12px 16px', background: '#E53935', border: '1px solid #E53935',
+            borderRadius: 8, color: '#fff', cursor: 'pointer', fontSize: 13, fontWeight: 700,
+            transition: 'background 0.15s, border-color 0.15s',
+          }} onMouseOver={e => { e.currentTarget.style.background = '#FF5252'; e.currentTarget.style.borderColor = '#FF5252'; }}
+             onMouseOut={e => { e.currentTarget.style.background = '#E53935'; e.currentTarget.style.borderColor = '#E53935'; }}
+          >Download SVG</button>
+          <button className="icon-btn" onClick={copyAll} style={{
+            padding: '12px 16px', background: '#1a1a1a', border: '1px solid #333',
+            borderRadius: 8, color: '#aaa', cursor: 'pointer', fontSize: 13,
+          }}>Copy All</button>
+        </div>
+
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: '#666', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Presets</div>
+            <button className="icon-btn" onClick={savePreset} style={{
+              padding: '4px 10px', background: '#1a1a1a', border: '1px solid #333',
+              borderRadius: 6, color: '#aaa', cursor: 'pointer', fontSize: 11, fontWeight: 600,
+              display: 'flex', alignItems: 'center', gap: 4,
+            }}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Save
+            </button>
+          </div>
+
+          {/* User presets */}
+          {userPresets.length > 0 && (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, marginBottom: 8 }}>
+              {userPresets.map((p, idx) => (
+                <div key={`user-${idx}`} style={{
+                  display: 'flex', alignItems: 'center', gap: 4, padding: '6px 8px',
+                  background: '#1a1a1a', border: '1px solid #262626', borderRadius: 8,
+                }} onMouseOver={e => e.currentTarget.style.borderColor = '#444'}
+                   onMouseOut={e => e.currentTarget.style.borderColor = '#262626'}>
+                  <div onClick={() => applyPreset(p)} style={{ cursor: 'pointer', flexShrink: 0 }}>
+                    <div style={{ width: 28, height: 28, borderRadius: 6, overflow: 'hidden', border: '1px solid #333',
+                      background: p.bg === 'transparent' ? 'repeating-conic-gradient(#222 0% 25%, #111 0% 50%) 50%/12px 12px' : p.bg,
+                    }}>
+                      <PuntIcon bg={p.bg} letter={p.letter} line1={p.line1} line2={p.line2} line3={p.line3} box={p.box} size={28} />
+                    </div>
+                  </div>
+                  <input type="text" defaultValue={p.name} key={p.name}
+                    onBlur={e => renamePreset(idx, e.target.value)}
+                    onKeyDown={e => { if (e.key === 'Enter') e.target.blur(); }}
+                    style={{
+                      flex: 1, minWidth: 0, fontSize: 11, color: '#ccc', background: 'none',
+                      border: '1px solid transparent', borderRadius: 3, padding: '2px 4px',
+                      outline: 'none', cursor: 'text', transition: 'all 0.2s',
+                    }}
+                    onFocus={e => { e.target.style.borderColor = '#E53935'; e.target.style.background = '#111'; }}
+                    onBlurCapture={e => { e.target.style.borderColor = 'transparent'; e.target.style.background = 'none'; }}
+                  />
+                  <button className="icon-btn" onClick={() => deletePreset(idx)} title="Delete preset" style={{
+                    width: 20, height: 20, background: 'none', border: '1px solid transparent',
+                    borderRadius: 4, color: '#555', cursor: 'pointer', flexShrink: 0,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0,
+                  }}>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Built-in presets */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+            {DEFAULT_PRESETS.map(p => (
+              <button key={p.name} onClick={() => applyPreset(p)} style={{
+                display: 'flex', alignItems: 'center', gap: 8, padding: '8px 10px',
+                background: '#1a1a1a', border: '1px solid #262626', borderRadius: 8,
+                cursor: 'pointer', textAlign: 'left',
+              }}
+              onMouseOver={e => e.currentTarget.style.borderColor = '#444'}
+              onMouseOut={e => e.currentTarget.style.borderColor = '#262626'}>
+                <div style={{ width: 28, height: 28, borderRadius: 6, flexShrink: 0, overflow: 'hidden', border: '1px solid #333',
+                  background: p.bg === 'transparent' ? 'repeating-conic-gradient(#222 0% 25%, #111 0% 50%) 50%/12px 12px' : p.bg,
+                }}>
+                  <PuntIcon bg={p.bg} letter={p.letter} line1={p.line1} line2={p.line2} line3={p.line3} box={p.box} size={28} />
+                </div>
+                <span style={{ fontSize: 12, color: '#aaa' }}>{p.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      <Toast message={toastMsg} />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

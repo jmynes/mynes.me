@@ -20,9 +20,53 @@
   .icon-btn:hover { color: #ddd !important; background: #2a2a2a !important; border-color: #555 !important; }
   @keyframes toast-in { from { opacity: 0; transform: translateX(-50%) translateY(8px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
   @keyframes pulse-link { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  /* Mobile disclaimer overlay */
+  #mobile-disclaimer {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw; min-height: 100dvh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%);
+    color: white; display: none; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 24px; z-index: 99999; text-align: center;
+    box-sizing: border-box; overflow: hidden;
+  }
+  #mobile-disclaimer .icon-circle {
+    background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+    border-radius: 50%; width: 70px; height: 70px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px; flex-shrink: 0;
+  }
+  #mobile-disclaimer h1 {
+    font-size: 22px; font-weight: 700; margin-bottom: 12px; line-height: 1.2;
+  }
+  #mobile-disclaimer p {
+    color: #94a3b8; font-size: 15px; margin-bottom: 28px;
+    max-width: 280px; line-height: 1.6;
+  }
+  #mobile-disclaimer button {
+    background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+    border: none; border-radius: 12px; color: white;
+    padding: 14px 28px; font-size: 15px; font-weight: 600;
+    cursor: pointer; font-family: 'Outfit', system-ui, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (max-width: 767px) {
+    #mobile-disclaimer { display: flex; }
+    #mobile-disclaimer.dismissed { display: none; }
+  }
 </style>
 </head>
 <body>
+<div id="mobile-disclaimer">
+  <div class="icon-circle">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+  </div>
+  <h1>Desktop Recommended</h1>
+  <p>SVG Palette Editor is built for desktop browsers. For the best experience, please use a larger screen.</p>
+  <button onclick="this.parentElement.classList.add('dismissed');document.body.style.overflow='';sessionStorage.setItem('svgMobileDismissed','1')">Continue Anyway</button>
+</div>
+<script>if(sessionStorage.getItem('svgMobileDismissed'))document.getElementById('mobile-disclaimer').classList.add('dismissed');else if(window.innerWidth<768){document.body.style.overflow='hidden';}</script>
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useCallback, useRef, useEffect } = React;

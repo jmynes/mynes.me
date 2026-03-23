@@ -51,7 +51,7 @@
     cursor: pointer; font-family: 'Outfit', system-ui, sans-serif;
     -webkit-tap-highlight-color: transparent;
   }
-  @media (max-width: 767px) {
+  @media (max-width: 1099px) {
     #mobile-disclaimer { display: flex; }
     #mobile-disclaimer.dismissed { display: none; }
   }
@@ -66,7 +66,7 @@
   <p>SVG Palette Editor is built for desktop browsers. For the best experience, please use a larger screen.</p>
   <button onclick="this.parentElement.classList.add('dismissed');document.body.style.overflow='';sessionStorage.setItem('svgMobileDismissed','1')">Continue Anyway</button>
 </div>
-<script>if(sessionStorage.getItem('svgMobileDismissed'))document.getElementById('mobile-disclaimer').classList.add('dismissed');else if(window.innerWidth<768){document.body.style.overflow='hidden';}</script>
+<script>if(sessionStorage.getItem('svgMobileDismissed'))document.getElementById('mobile-disclaimer').classList.add('dismissed');else if(window.innerWidth<1100){document.body.style.overflow='hidden';}</script>
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useCallback, useRef, useEffect } = React;

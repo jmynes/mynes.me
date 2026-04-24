@@ -1,4 +1,4 @@
-/vpc8/*     https://nerdcorevpc.com/vpc8/:splat          302
-/vpc8       https://nerdcorevpc.com/vpc8                 302
-/pokeraoke  https://pokeraoke.pages.dev                  302
-/punt       https://punt-demo-production.up.railway.app  302
+/vpc8/*     https://nerdcorevpc.com/:splat              302
+/vpc8       https://nerdcorevpc.com                     302
+/pokeraoke  https://pokeraoke.pages.dev                 302
+/punt       https://punt-demo-production.up.railway.app 302

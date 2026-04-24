@@ -4,6 +4,15 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 const projectInfo = {
+  vpc8: {
+    title: 'VPC8',
+    description:
+      "Vocalist Producer Challenge VIII — a nerdcore hiphop competition where vocalist/producer teams battle across gameshow-style rounds. Punch-Out-inspired fight-card aesthetic, full streaming audio player with MediaSession controls, live leaderboard, and per-entry judges' feedback.",
+    live: 'https://nerdcorevpc.com',
+    liveLabel: 'Visit Live',
+    comingSoon: false,
+    tech: ['SvelteKit', 'Bun', 'Tailwind v4', 'Howler.js'],
+  },
   punt: {
     title: 'PUNT',
     description:

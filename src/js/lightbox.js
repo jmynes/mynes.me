@@ -19,7 +19,8 @@ const projectInfo = {
     title: 'HexHive',
     status: 'WIP',
     description:
-      'A Pokémon ROM-hack asset hub for browsing and uploading romhacks, sprites, sounds, and scripts. OAuth + passkeys, direct browser-to-R2 presigned uploads, version history with changelog timeline, SQLite FTS5 search with typo-tolerant trigram fallback, anonymous-allowed moderation, and a unified 4-step upload wizard with hexagon-bead progress.',
+      "A Pokémon ROM-hack asset hub built for the Gen 3 binary (hex-editing) romhacking scene. The community's knowledge has long been scattered across Discord pinned messages, tiny preview thumbnails, and GitHub gists with no way to audition MIDIs — HexHive gives it a real home: browse and upload romhacks, sprites, sounds, and scripts with proper previews, durable version history, and full-text search. Backed by OAuth + passkeys, direct browser-to-R2 presigned uploads, SQLite FTS5 with typo-tolerant trigram fallback, and a unified 4-step upload wizard.",
+    discord: 'https://discord.gg/YSVdnqjHE',
     live: 'https://hexhive.app',
     liveLabel: 'Try It',
     comingSoon: false,

@@ -416,9 +416,6 @@ main {
 .project-title {
   font-size: 2rem;
   font-weight: 700;
-}
-
-.project-title-vpc8 {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -429,7 +426,7 @@ main {
   width: auto;
   max-width: none;
   flex: 0 0 auto;
-  aspect-ratio: 47 / 48;
+  aspect-ratio: 1;
 }
 
 .project-desc {

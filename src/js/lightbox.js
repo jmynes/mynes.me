@@ -34,7 +34,7 @@ const projectInfo = {
     ],
   },
   punt: {
-    title: 'PUNT',
+    title: 'Punt',
     status: 'Stable',
     description:
       'A self-hosted issue tracker with backlog and Kanban views. Lightweight, local-first project management for teams who want the essentials without the overhead—drag-and-drop boards, sprint planning with carryover tracking, multi-select bulk actions, undo/redo, and real-time sync via SSE. Keep your data on your own infrastructure.',

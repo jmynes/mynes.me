@@ -6,16 +6,35 @@
 const projectInfo = {
   vpc8: {
     title: 'VPC8',
+    status: 'Live',
     description:
       "Vocalist Producer Challenge VIII — a nerdcore hiphop competition where vocalist/producer teams battle across gameshow-style rounds. Punch-Out-inspired fight-card aesthetic, full streaming audio player with MediaSession controls, live leaderboard, and per-entry judges' feedback.",
     discord: 'https://discord.gg/JDJrW5h67U',
     live: 'https://nerdcorevpc.com',
-    liveLabel: 'Visit Live',
+    liveLabel: 'Listen In',
     comingSoon: false,
     tech: ['SvelteKit', 'Bun', 'Tailwind v4', 'Howler.js'],
   },
+  hexhive: {
+    title: 'HexHive',
+    status: 'WIP',
+    description:
+      'A Pokémon ROM-hack asset hub for browsing and uploading romhacks, sprites, sounds, and scripts. OAuth + passkeys, direct browser-to-R2 presigned uploads, version history with changelog timeline, SQLite FTS5 search with typo-tolerant trigram fallback, anonymous-allowed moderation, and a unified 4-step upload wizard with hexagon-bead progress.',
+    live: 'https://hexhive.app',
+    liveLabel: 'Try It',
+    comingSoon: false,
+    tech: [
+      'SvelteKit',
+      'Bun',
+      'Drizzle',
+      'Turso',
+      'Cloudflare R2',
+      'Better Auth',
+    ],
+  },
   punt: {
     title: 'PUNT',
+    status: 'Stable',
     description:
       'A self-hosted issue tracker with backlog and Kanban views. Lightweight, local-first project management for teams who want the essentials without the overhead—drag-and-drop boards, sprint planning with carryover tracking, multi-select bulk actions, undo/redo, and real-time sync via SSE. Keep your data on your own infrastructure.',
     github: 'https://github.com/jmynes/punt',
@@ -26,6 +45,7 @@ const projectInfo = {
   },
   pokeraoke: {
     title: 'Pokeraoke',
+    status: 'Demo',
     description:
       'Built for BradleyRose\'s "21st Night of September" Twitch stream—a semi-nuzlocke run of Pokémon Fire Red Omega++ themed around the Earth, Wind & Fire song. Every caught Pokémon was named after lyrics from the track. This karaoke machine syncs trainer sprites and Pokémon to the music, visualizing Bradley\'s actual catches from the run.',
     github: 'https://github.com/jmynes/pokeraoke',
@@ -121,8 +141,16 @@ export function initLightbox() {
       lightboxImage.src = img.src;
       lightboxImage.alt = img.alt;
 
-      // Set title
-      lightboxTitle.textContent = info.title;
+      // Set title (with optional status badge)
+      lightboxTitle.replaceChildren();
+      lightboxTitle.appendChild(document.createTextNode(info.title));
+      if (info.status) {
+        const badge = document.createElement('span');
+        badge.className = 'project-badge';
+        badge.textContent = info.status;
+        badge.style.marginLeft = '0.75rem';
+        lightboxTitle.appendChild(badge);
+      }
 
       // Set description
       lightboxDescription.textContent = info.description;

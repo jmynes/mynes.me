@@ -429,6 +429,23 @@ main {
   aspect-ratio: 1;
 }
 
+.project-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: inherit;
+  font-size: 0.6em;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
+  padding: 0.35em 0.75em;
+  border-radius: 999px;
+  line-height: 1;
+  flex: 0 0 auto;
+  color: currentColor;
+  background: transparent;
+  border: 2px solid var(--badge-border, currentColor);
+}
+
 .project-desc {
   font-size: 1.125rem;
   line-height: 1.7;

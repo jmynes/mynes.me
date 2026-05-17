@@ -418,6 +418,20 @@ main {
   font-weight: 700;
 }
 
+.project-title-vpc8 {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.project-title-logo {
+  height: 1.75em;
+  width: auto;
+  max-width: none;
+  flex: 0 0 auto;
+  aspect-ratio: 47 / 48;
+}
+
 .project-desc {
   font-size: 1.125rem;
   line-height: 1.7;

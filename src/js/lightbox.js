@@ -48,7 +48,7 @@ const projectInfo = {
     title: 'Pokeraoke',
     status: 'Demo',
     description:
-      'Built for BradleyRose\'s "21st Night of September" Twitch stream—a semi-nuzlocke run of Pokémon Fire Red Omega++ themed around the Earth, Wind & Fire song. Every caught Pokémon was named after lyrics from the track. This karaoke machine syncs trainer sprites and Pokémon to the music, visualizing Bradley\'s actual catches from the run.',
+      'Twitch streamer BradleyRose picked up my Gen 3 binary romhack Pokémon Fire Red Omega++ (a hack of Drayano\'s 2009 Fire Red Omega) for a "21st Night of September" themed semi-nuzlocke, restricted to Fire, Flying, and Ground types, with every caught Pokémon named after a lyric from the Earth, Wind & Fire track. Pokeraoke is the karaoke machine I built for the series: it loads real .lrc files, fuzzy-matches lyrics to Pokémon, and reveals his roster line by line as the song plays. Reassign Pokémon or rewrite the lyric sheet on the fly.',
     github: 'https://github.com/jmynes/pokeraoke',
     live: 'https://pokeraoke.pages.dev',
     comingSoon: false,

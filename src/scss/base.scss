@@ -450,6 +450,22 @@ main {
   font-size: 1.125rem;
   line-height: 1.7;
   margin-bottom: 1rem;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    text-decoration-color: currentColor;
+    opacity: 0.95;
+    transition: text-decoration-thickness 0.15s ease, opacity 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration-thickness: 2px;
+      opacity: 1;
+    }
+  }
 }
 
 .project-tech {
@@ -681,6 +697,20 @@ main {
   line-height: 1.7;
   margin: 0;
   opacity: 0.85;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    text-decoration-color: currentColor;
+    transition: text-decoration-thickness 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration-thickness: 2px;
+    }
+  }
 }
 
 .lightbox-footer {

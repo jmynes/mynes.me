@@ -48,7 +48,7 @@ const projectInfo = {
     title: 'Pokeraoke',
     status: 'Demo',
     description:
-      'Twitch streamer BradleyRose picked up my Gen 3 binary romhack Pokémon Fire Red Omega++ (a hack of Drayano\'s 2009 Fire Red Omega) for a "21st Night of September" themed semi-nuzlocke, restricted to Fire, Flying, and Ground types, with every caught Pokémon named after a lyric from the Earth, Wind & Fire track. Pokeraoke is the karaoke machine I built for the series: it loads real .lrc files, fuzzy-matches lyrics to Pokémon, and reveals his roster line by line as the song plays. Reassign Pokémon or rewrite the lyric sheet on the fly.',
+      'Twitch streamer <a href="https://www.twitch.tv/bradleyrose" target="_blank" rel="noopener">BradleyRose</a> picked up my Gen 3 binary romhack Pokémon Fire Red Omega++ (a hack of Drayano\'s 2009 Fire Red Omega) for a "21st Night of September" themed semi-nuzlocke, restricted to Ground, Flying, and Fire types, with every caught Pokémon named after a lyric from the Earth, Wind & Fire track. Pokeraoke is the karaoke machine I built for the series: it loads real .lrc files, fuzzy-matches lyrics to Pokémon, and reveals his roster line by line as the song plays. Reassign Pokémon or rewrite the lyric sheet on the fly. <a href="https://www.twitch.tv/bradleyrose/clip/CrepuscularHelplessHamsterLitFam-VDW-tyw4MdtuAkdh?filter=clips&range=all" target="_blank" rel="noopener">Here\'s a clip.</a>',
     github: 'https://github.com/jmynes/pokeraoke',
     live: 'https://pokeraoke.pages.dev',
     comingSoon: false,
@@ -153,8 +153,8 @@ export function initLightbox() {
         lightboxTitle.appendChild(badge);
       }
 
-      // Set description
-      lightboxDescription.textContent = info.description;
+      // Set description (HTML allowed — content is statically authored above)
+      lightboxDescription.innerHTML = info.description;
 
       // Build action buttons using DOM methods
       lightboxActions.replaceChildren();

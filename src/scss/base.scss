@@ -440,6 +440,9 @@ main {
   padding: 0.35em 0.75em;
   border-radius: 999px;
   line-height: 1;
+  // Trim the line box to the glyphs so the label optically centers
+  // (cancels the unused ascender/descender space the font reserves).
+  text-box: trim-both cap alphabetic;
   flex: 0 0 auto;
   color: currentColor;
   background: transparent;
@@ -739,6 +742,11 @@ main {
 
   svg {
     flex-shrink: 0;
+  }
+
+  // Trim the label's line box so the text optically centers with the icon
+  span {
+    text-box: trim-both cap alphabetic;
   }
 
   &.coming-soon {

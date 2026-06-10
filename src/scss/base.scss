@@ -689,13 +689,16 @@ main {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  padding: 2rem;
+  // No right padding: the scrolling body spans to the panel edge so the
+  // scrollbar sits flush right. Header/footer re-add their own right inset.
+  padding: 2rem 0 2rem 2rem;
   overflow: hidden;
 }
 
 .lightbox-header {
   flex-shrink: 0;
   margin-bottom: 1.5rem;
+  padding-right: 2rem;
 }
 
 .lightbox-title {
@@ -735,7 +738,8 @@ main {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 1.5rem;
-  padding-right: 0.5rem;
+  // Inset the text from the flush-right scrollbar
+  padding-right: 1.5rem;
 
   // Subtle scrollbar
   scrollbar-width: thin;
@@ -775,6 +779,7 @@ main {
 .lightbox-footer {
   flex-shrink: 0;
   padding-top: 1rem;
+  padding-right: 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -940,6 +945,12 @@ main {
   .lightbox-info {
     padding: 1.25rem;
     overflow-y: auto;
+  }
+
+  .lightbox-header,
+  .lightbox-body,
+  .lightbox-footer {
+    padding-right: 0;
   }
 
   .lightbox-title {

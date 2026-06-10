@@ -406,7 +406,10 @@ body {
 }
 
 .lightbox-panel {
-  background: rgba(60, 40, 100, 0.95);
+  background:
+    radial-gradient(ellipse 90% 70% at 10% 100%, rgba(253, 93, 168, 0.45) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(255, 140, 66, 0.4) 0%, transparent 60%),
+    linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 65%, var(--magenta) 100%);
   border: 2px solid rgba(255, 245, 230, 0.2);
   border-radius: var(--radius-lg);
   box-shadow: 0 32px 80px rgba(45, 27, 78, 0.5);

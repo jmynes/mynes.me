@@ -554,12 +554,15 @@ main {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 320px;
-  // Cap the row to the viewport so a tall info column (e.g. the pixel-font
-  // retrogame theme) scrolls internally instead of running off-screen.
-  grid-template-rows: minmax(0, 92vh);
+  // Always leave a fixed margin from the screen edges so the panel (and its
+  // footer) never touch the bottom; the info column scrolls to absorb the
+  // rest. Fixed rem margin (not proportional vh) guarantees the gap on any
+  // screen height, including tall themes like the pixel-font retrogame.
+  --lightbox-max-h: calc(100dvh - 7rem);
+  grid-template-rows: minmax(0, var(--lightbox-max-h));
   width: 100%;
   max-width: 95vw;
-  max-height: 92vh;
+  max-height: var(--lightbox-max-h);
   overflow: hidden;
   transform: translateY(20px) scale(0.98);
   opacity: 0;

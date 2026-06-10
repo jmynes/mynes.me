@@ -604,6 +604,10 @@ main {
   width: auto;
   height: auto;
   object-fit: contain;
+
+  &.is-carousel {
+    cursor: pointer;
+  }
 }
 
 .lightbox-image-counter {

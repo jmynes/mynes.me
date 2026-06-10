@@ -44,6 +44,26 @@ const projectInfo = {
     comingSoon: false,
     tech: ['Next.js', 'TypeScript', 'Prisma', 'SQLite', 'Tailwind'],
   },
+  clopen: {
+    title: 'Clopen',
+    status: 'Stable',
+    description:
+      "A personal timesheet that tracks the hours you've worked against the hours you were supposed to work, and what that means for your pay. Pick a period — week, bi-week, month, quarter, year — and the dashboard shows a running balance in hours and dollars; long days offset short ones, the comparison is always totals, never day by day. Entries go in however you have them: clock in/out that parses '2pm' or '14:00', plain hours, a week grid you can paste into from a spreadsheet, or CSV import. PTO, sick, holiday, and vacation each come paid or unpaid — paid leave credits the baseline, unpaid is drawn hatched so the difference is visible. Everything is local: one SQLite file on disk, no accounts, no network. The name comes from the close-then-open shift (and, yes, the topology term).",
+    github: 'https://github.com/jmynes/clopen',
+    live: null,
+    comingSoon: false,
+    tech: ['SvelteKit', 'Bun', 'Drizzle', 'SQLite', 'Tailwind v4'],
+    images: [
+      {
+        src: 'src/assets/images/clopen-screenshot.png',
+        alt: 'Clopen - timesheet dashboard showing period balance in hours and dollars with a weekly hours chart',
+      },
+      {
+        src: 'src/assets/images/clopen-screenshot-log.png',
+        alt: 'Clopen - log page with clock in/out entry form, leave buttons, and a paste-friendly week grid',
+      },
+    ],
+  },
   pokeraoke: {
     title: 'Pokeraoke',
     status: 'Demo',
@@ -119,11 +139,27 @@ export function initLightbox() {
   const lightboxDescription = document.getElementById('lightbox-description');
   const lightboxActions = document.getElementById('lightbox-actions');
   const lightboxTech = document.getElementById('lightbox-tech');
+  const lightboxCounter = document.getElementById('lightbox-counter');
+  const counterCurrent = lightboxCounter?.querySelector('.counter-current');
+  const counterTotal = lightboxCounter?.querySelector('.counter-total');
   const screenshotWrappers = document.querySelectorAll(
     '.project-screenshot-wrapper',
   );
 
   if (!lightbox || !lightboxImage) return;
+
+  // Carousel state for the currently open project
+  let galleryImages = [];
+  let galleryIndex = 0;
+
+  function showImage(index) {
+    if (!galleryImages.length) return;
+    galleryIndex = (index + galleryImages.length) % galleryImages.length;
+    const image = galleryImages[galleryIndex];
+    lightboxImage.src = image.src;
+    lightboxImage.alt = image.alt;
+    if (counterCurrent) counterCurrent.textContent = galleryIndex + 1;
+  }
 
   // Open lightbox on screenshot click
   screenshotWrappers.forEach((wrapper) => {
@@ -138,9 +174,13 @@ export function initLightbox() {
         tech: [],
       };
 
-      // Set image
-      lightboxImage.src = img.src;
-      lightboxImage.alt = img.alt;
+      // Set image(s) — projects with an images array get a carousel
+      galleryImages = info.images || [{ src: img.src, alt: img.alt }];
+      const multiple = galleryImages.length > 1;
+      if (counterTotal) counterTotal.textContent = galleryImages.length;
+      lightboxCounter?.setAttribute('aria-hidden', multiple ? 'false' : 'true');
+      lightboxImage.classList.toggle('is-carousel', multiple);
+      showImage(0);
 
       // Set title (with optional status badge)
       lightboxTitle.replaceChildren();
@@ -228,13 +268,20 @@ export function initLightbox() {
     }
   });
 
-  // Close on Escape key
+  // Clicking the image advances the carousel
+  lightboxImage.addEventListener('click', () => {
+    if (galleryImages.length > 1) showImage(galleryIndex + 1);
+  });
+
+  // Keyboard: Escape closes, arrows navigate the carousel
   document.addEventListener('keydown', (e) => {
-    if (
-      e.key === 'Escape' &&
-      lightbox.getAttribute('aria-hidden') === 'false'
-    ) {
+    if (lightbox.getAttribute('aria-hidden') !== 'false') return;
+    if (e.key === 'Escape') {
       closeLightbox();
+    } else if (e.key === 'ArrowRight' && galleryImages.length > 1) {
+      showImage(galleryIndex + 1);
+    } else if (e.key === 'ArrowLeft' && galleryImages.length > 1) {
+      showImage(galleryIndex - 1);
     }
   });
 

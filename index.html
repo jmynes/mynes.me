@@ -623,8 +623,18 @@
       <div class="lightbox-media">
         <div class="lightbox-image-container">
           <img src="" alt="" class="lightbox-image" id="lightbox-image">
+          <button class="lightbox-nav lightbox-nav-prev" id="lightbox-prev" aria-label="Previous image" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
+          <button class="lightbox-nav lightbox-nav-next" id="lightbox-next" aria-label="Next image" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
         </div>
-        <!-- Image counter for future carousel -->
+        <!-- Image counter, shown when a project has multiple screenshots -->
         <div class="lightbox-image-counter" id="lightbox-counter" aria-hidden="true">
           <span class="counter-current">1</span>
           <span class="counter-sep">/</span>

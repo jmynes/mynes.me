@@ -143,6 +143,8 @@ export function initLightbox() {
   const lightboxCounter = document.getElementById('lightbox-counter');
   const counterCurrent = lightboxCounter?.querySelector('.counter-current');
   const counterTotal = lightboxCounter?.querySelector('.counter-total');
+  const lightboxPrev = document.getElementById('lightbox-prev');
+  const lightboxNext = document.getElementById('lightbox-next');
   const screenshotWrappers = document.querySelectorAll(
     '.project-screenshot-wrapper',
   );
@@ -180,6 +182,8 @@ export function initLightbox() {
       const multiple = galleryImages.length > 1;
       if (counterTotal) counterTotal.textContent = galleryImages.length;
       lightboxCounter?.setAttribute('aria-hidden', multiple ? 'false' : 'true');
+      lightboxPrev?.setAttribute('aria-hidden', multiple ? 'false' : 'true');
+      lightboxNext?.setAttribute('aria-hidden', multiple ? 'false' : 'true');
       lightboxImage.classList.toggle('is-carousel', multiple);
       showImage(0);
 
@@ -272,6 +276,16 @@ export function initLightbox() {
   // Clicking the image advances the carousel
   lightboxImage.addEventListener('click', () => {
     if (galleryImages.length > 1) showImage(galleryIndex + 1);
+  });
+
+  // Arrow buttons navigate the carousel
+  lightboxPrev?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showImage(galleryIndex - 1);
+  });
+  lightboxNext?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showImage(galleryIndex + 1);
   });
 
   // Keyboard: Escape closes, arrows navigate the carousel

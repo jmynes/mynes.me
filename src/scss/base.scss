@@ -571,7 +571,9 @@ main {
 
 .lightbox-close {
   position: absolute;
-  top: 1rem;
+  // Aligned with the title row's band (info column top padding is 2rem) so
+  // the X is vertically centered with the project title + status badge.
+  top: 2rem;
   right: 1rem;
   z-index: 10;
   width: 48px;
@@ -705,9 +707,17 @@ main {
 }
 
 .lightbox-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  // Match the close button height so the title row, badge, and X all share
+  // one vertically-centered band.
+  min-height: 48px;
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 1.2;
+  // Reserve room on the right so a title never runs under the close button.
+  padding-right: 3rem;
   margin: 0 0 1.25rem 0;
 }
 

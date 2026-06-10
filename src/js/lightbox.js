@@ -194,7 +194,6 @@ export function initLightbox() {
         const badge = document.createElement('span');
         badge.className = 'project-badge';
         badge.textContent = info.status;
-        badge.style.marginLeft = '0.75rem';
         lightboxTitle.appendChild(badge);
       }
 

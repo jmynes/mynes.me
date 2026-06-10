@@ -50,7 +50,8 @@ const projectInfo = {
     description:
       "A personal timesheet that tracks the hours you've worked against the hours you were supposed to work, and what that means for your pay. Pick a period — week, bi-week, month, quarter, year — and the dashboard shows a running balance in hours and dollars; long days offset short ones, the comparison is always totals, never day by day. Entries go in however you have them: clock in/out that parses '2pm' or '14:00', plain hours, a week grid you can paste into from a spreadsheet, or CSV import. PTO, sick, holiday, and vacation each come paid or unpaid — paid leave credits the baseline, unpaid is drawn hatched so the difference is visible. Everything is local: one SQLite file on disk, no accounts, no network. The name comes from the close-then-open shift (and, yes, the topology term).",
     github: 'https://github.com/jmynes/clopen',
-    live: null,
+    live: 'https://clopen-production.up.railway.app/',
+    liveLabel: 'Try Demo',
     comingSoon: false,
     tech: ['SvelteKit', 'Bun', 'Drizzle', 'SQLite', 'Tailwind v4'],
     images: [

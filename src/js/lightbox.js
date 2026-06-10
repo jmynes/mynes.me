@@ -260,8 +260,10 @@ export function initLightbox() {
         lightboxTech.appendChild(tagEl);
       });
 
-      // Show lightbox
+      // Show lightbox and lock background scroll (lock both <html> and <body>
+      // since the scrolling element varies across browsers)
       lightbox.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
     });
   });
@@ -302,6 +304,7 @@ export function initLightbox() {
 
   function closeLightbox() {
     lightbox.setAttribute('aria-hidden', 'true');
+    document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
   }
 }

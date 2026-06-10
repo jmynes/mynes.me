@@ -535,6 +535,8 @@ main {
   padding: 1rem;
   opacity: 0;
   visibility: hidden;
+  // Keep wheel/touch scrolling inside the modal from chaining to the page
+  overscroll-behavior: contain;
   transition: opacity 0.4s ease, visibility 0.4s ease;
 
   &[aria-hidden="false"] {

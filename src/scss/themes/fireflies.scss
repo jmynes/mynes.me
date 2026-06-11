@@ -287,16 +287,6 @@ body {
     inset 0 1px 0 var(--glass-shine);
 }
 
-.logo-mark {
-  background: var(--firefly-forest);
-  border: 2px solid var(--firefly-glow);
-  border-radius: 50%;
-  color: var(--firefly-glow);
-  box-shadow:
-    0 0 15px rgba(232, 255, 107, 0.4),
-    inset 0 0 10px rgba(232, 255, 107, 0.1);
-}
-
 .logo-text {
   font-family: var(--font-display);
   font-weight: 600;

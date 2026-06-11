@@ -261,17 +261,6 @@ body {
   z-index: 10;
 }
 
-.logo-mark {
-  background: var(--mac-blue);
-  border: 2px solid var(--mac-border-dark);
-  border-radius: var(--radius-md);
-  color: white;
-  font-family: var(--font-display);
-  box-shadow:
-    inset 1px 1px 0 rgba(255, 255, 255, 0.3),
-    inset -1px -1px 0 rgba(0, 0, 0, 0.2);
-}
-
 .logo-text {
   font-family: var(--font-display);
   font-size: 1.4em;

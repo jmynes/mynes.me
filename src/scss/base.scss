@@ -100,6 +100,12 @@ body {
   overflow: hidden;
 }
 
+// The favicon is pixel art ("?" block) — keep the grid crisp when scaled.
+.logo-favicon {
+  display: block;
+  image-rendering: pixelated;
+}
+
 .logo-text {
   font-size: 2rem;
   font-weight: 700;
@@ -427,6 +433,11 @@ main {
   max-width: none;
   flex: 0 0 auto;
   aspect-ratio: 1;
+
+  // Logos that aren't square (e.g. the Clopen doors mark) keep their own ratio
+  &--tall {
+    aspect-ratio: auto;
+  }
 }
 
 .project-badge {

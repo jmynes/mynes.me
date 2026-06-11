@@ -380,16 +380,6 @@ body {
   pointer-events: none;
 }
 
-.logo-mark {
-  background:
-    radial-gradient(circle at 30% 30%, var(--bridge-highlight) 0%, var(--bridge-main) 50%, var(--bridge-dark) 100%);
-  border-radius: 50%;
-  color: var(--pond-abyss);
-  box-shadow:
-    0 4px 20px rgba(64, 176, 136, 0.4),
-    inset 0 2px 8px rgba(96, 208, 168, 0.3);
-}
-
 .logo-text {
   font-family: var(--font-display);
   font-weight: 600;

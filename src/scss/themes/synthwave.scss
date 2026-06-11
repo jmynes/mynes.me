@@ -246,16 +246,6 @@ body {
   background: linear-gradient(90deg, transparent, var(--synthwave-cyan), transparent);
 }
 
-.logo-mark {
-  background: var(--synthwave-black);
-  border: 2px solid var(--synthwave-magenta);
-  border-radius: 50%;
-  color: var(--synthwave-magenta);
-  box-shadow:
-    0 0 15px rgba(255, 0, 255, 0.5),
-    inset 0 0 10px rgba(255, 0, 255, 0.2);
-}
-
 .logo-text {
   font-family: var(--font-display);
   color: var(--text-primary);
